@@ -1,8 +1,9 @@
-import Image from "next/image";
-import { HeroSection } from "@/components/hero";
+import Home from "@/components/Home.js";
 
-export default function Home() {
+export default function Render() {
   return (
-    <HeroSection />
+    <>
+      <Home />
+    </>
   );
 }
