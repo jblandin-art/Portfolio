@@ -41,7 +41,7 @@ export default function RootLayout({ children }) {
       lang="en" suppressHydrationWarning
     >
       <body className={`${geistSans.variable} ${geistMono.variable} ${poppins.variable} ${playfairDisplay.variable} ${inter.variable} px-6 py-4`}>
-        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
           {children}
         </ThemeProvider>
       </body>

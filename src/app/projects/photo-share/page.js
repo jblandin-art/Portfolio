@@ -39,7 +39,7 @@ export default function PhotoShareCaseStudy() {
       <header className="mb-10">
         <p className="text-sm font-semibold uppercase tracking-widest text-purple-300">Case Study</p>
         <h1 className="mt-2 max-w-3xl text-3xl font-bold font-poppins leading-tight text-purple-400 sm:text-4xl lg:text-5xl">
-          PhotoShare - Sprint-Based Social Photo Platform
+          PhotoShare - Sprint Based Social Media Platform
         </h1>
         <p className="mt-4 max-w-3xl text-lg leading-8 text-gray-300">
           PhotoShare is a team-built web app focused on helping everyday users share photos and
