@@ -84,12 +84,12 @@ export default function Home() {
             <section id="contact" className="mt-10 mb-8">
                 <div className="mb-4">
                     <h2 className="text-2xl font-bold font-poppins text-purple-400">Contact</h2>
-                    <p className="mt-1 text-sm text-muted-foreground">I'm currently taking internships and looking to contribute to impactful projects. Feel free to reach out at josiahblanding.dev@gmail.com and my resume is available for download below.</p>
+                    <p className="mt-1 text-sm text-muted-foreground">I'm currently taking internships and looking to contribute to impactful projects. Feel free to reach out at josiahblanding@gmail.com and my resume is available for download below.</p>
                 </div>
 
                 <div className="flex flex-wrap items-center gap-3 text-sm">
-                    <a href="mailto:josiahblanding.dev@gmail.com" className="rounded-md bg-purple-500 px-4 py-2 text-sm font-semibold text-white transition hover:bg-purple-400">Email me</a>
-                    <a target="_blank" rel="noopener noreferrer" href="https://drive.google.com/file/d/1pvUNSCnxiU-hUif2pOD446nHeo6X_AjH/view?usp=sharing" className="rounded-md border border-purple-500/50 px-4 py-2 text-sm text-purple-200 transition hover:bg-purple-800/40">Download resume</a>
+                    <a href="mailto:josiahblanding@gmail.com" className="rounded-md bg-purple-500 px-4 py-2 text-sm font-semibold text-white transition hover:bg-purple-400">Email Me</a>
+                    <a target="_blank" rel="noopener noreferrer" href="https://drive.google.com/file/d/1pvUNSCnxiU-hUif2pOD446nHeo6X_AjH/view?usp=sharing" className="rounded-md border border-purple-500/50 px-4 py-2 text-sm text-purple-200 transition hover:bg-purple-800/40">Download Resume</a>
                 </div>
             </section>
         </main>

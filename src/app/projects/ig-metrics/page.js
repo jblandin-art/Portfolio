@@ -222,7 +222,7 @@ ipcMain.handle("save-csv", async (_, csvContent) => {
           Download App
         </a>
         <a
-          href="mailto:josiahblanding.dev@gmail.com"
+          href="mailto:josiahblanding@gmail.com"
           className="rounded-md border border-purple-500/70 px-4 py-2 text-sm text-purple-200 hover:bg-purple-800/40 transition"
         >
           Contact Me
