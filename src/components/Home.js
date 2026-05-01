@@ -89,7 +89,7 @@ export default function Home() {
 
                 <div className="flex flex-wrap items-center gap-3 text-sm">
                     <a href="mailto:josiahblanding@gmail.com" className="rounded-md bg-purple-500 px-4 py-2 text-sm font-semibold text-white transition hover:bg-purple-400">Email Me</a>
-                    <a target="_blank" rel="noopener noreferrer" href="https://drive.google.com/file/d/1pvUNSCnxiU-hUif2pOD446nHeo6X_AjH/view?usp=sharing" className="rounded-md border border-purple-500/50 px-4 py-2 text-sm text-purple-200 transition hover:bg-purple-800/40">Download Resume</a>
+                    <a target="_blank" rel="noopener noreferrer" href="/Resume%20v1.7.pdf" className="rounded-md border border-purple-500/50 px-4 py-2 text-sm text-purple-200 transition hover:bg-purple-800/40">Download Resume</a>
                 </div>
             </section>
         </main>
