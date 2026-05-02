@@ -40,19 +40,46 @@ export default function Home() {
                 </div>
 
                 <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                    <article className="group rounded-2xl border border-purple-700/60 bg-gradient-to-br from-slate-900/80 to-purple-950/70 p-5 transition hover:-translate-y-1 hover:shadow-[0_15px_60px_-20px_rgba(80,0,200,0.6)]">
+                    <article className="group flex h-full flex-col rounded-2xl border border-purple-700/60 bg-gradient-to-br from-slate-900/80 to-purple-950/70 p-5 transition hover:-translate-y-1 hover:shadow-[0_15px_60px_-20px_rgba(80,0,200,0.6)]">
                         <div className="mb-4 flex items-center justify-between">
                             <span className="rounded-lg bg-purple-900/40 px-3 py-1 text-xs font-semibold text-purple-200">Electron + React</span>
                             <span className="text-xs text-muted-foreground">2026</span>
                         </div>
                         <h3 className="text-xl font-semibold text-purple-50">IG Metrics - Desktop Analytics Tool</h3>
                         <p className="mt-2 text-sm text-gray-300 leading-7">A desktop application that analyzes exported Instagram follower data and visualizes relationship metrics. Features import/analysis of datasets, identification of non-followers, engagement stats, interactive charts, and CSV export for large username lists.</p>
-                        <div className="mt-4 flex gap-2">
+                        <div className="mt-auto pt-4 flex gap-2">
                             <Link href="/projects/ig-metrics" className="rounded-md bg-purple-500 px-3 py-1.5 text-sm font-medium text-white hover:bg-purple-400 transition">Case Study</Link>
                             <a target="_blank" href="https://github.com/jblandin-art/instagram-metrics-app/releases/tag/v1.0.0" className="rounded-md border border-purple-500/70 px-3 py-1.5 text-sm text-purple-200 hover:bg-purple-800/50 transition">Download</a>
                         </div>
                     </article>
 
+                    <article className="group flex h-full flex-col rounded-2xl border border-purple-700/60 bg-gradient-to-br from-slate-900/80 to-purple-950/70 p-5 transition hover:-translate-y-1 hover:shadow-[0_15px_60px_-20px_rgba(80,0,200,0.6)]">
+                        <div className="mb-4 flex items-center justify-between">
+                            <span className="rounded-lg bg-purple-900/40 px-3 py-1 text-xs font-semibold text-purple-200">Electron + React + Python</span>
+                            <span className="text-xs text-muted-foreground">2026</span>
+                        </div>
+                        <h3 className="text-xl font-semibold text-purple-50">NeuralEncoding - Neural Telemetry Dashboard</h3>
+                        <p className="mt-2 text-sm text-gray-300 leading-7">A desktop monitoring prototype that visualizes EEG-like telemetry in a full-screen Electron shell. Includes live waveform views, SNR and impedance metrics, system logs, and a Python backend stream (simulated data).</p>
+                        <div className="mt-auto pt-4 flex gap-2">
+                            <Link href="/projects/neural-encoding" className="rounded-md bg-purple-500 px-3 py-1.5 text-sm font-medium text-white hover:bg-purple-400 transition">Case Study</Link>
+                            <a target="_blank" rel="noopener noreferrer" href="https://github.com/jblandin-art/NeuralEncoding" className="rounded-md border border-purple-500/70 px-3 py-1.5 text-sm text-purple-200 hover:bg-purple-800/50 transition">Code & Demo</a>
+                        </div>
+                    </article>
+
+                    <article className="group flex h-full flex-col rounded-2xl border border-purple-700/60 bg-gradient-to-br from-slate-900/80 to-purple-950/70 p-5 transition hover:-translate-y-1 hover:shadow-[0_15px_60px_-20px_rgba(80,0,200,0.6)]">
+                        <div className="mb-4 flex items-center justify-between">
+                            <span className="rounded-lg bg-purple-900/40 px-3 py-1 text-xs font-semibold text-purple-200">React + Node + MongoDB</span>
+                            <span className="text-xs text-muted-foreground">2026</span>
+                        </div>
+                        <h3 className="text-xl font-semibold text-purple-50">PhotoShare - Social Media Platform</h3>
+                        <p className="mt-2 text-sm text-gray-300 leading-7">A sprint-based team build of a photo sharing app with route-aware UX, user detail/photo flows, MongoDB-backed APIs, and comment-thread user linking. I led as Scrum Master and completed major API and frontend integration work.</p>
+                        <div className="mt-auto pt-4 flex gap-2">
+                            <Link href="/projects/photo-share" className="rounded-md bg-purple-500 px-3 py-1.5 text-sm font-medium text-white hover:bg-purple-400 transition">Case Study</Link>
+                            <Link href="/projects/photo-share#sprint-highlights" className="rounded-md border border-purple-500/70 px-3 py-1.5 text-sm text-purple-200 hover:bg-purple-800/50 transition">Sprint Highlights</Link>
+                        </div>
+                    </article>
+
+                    {/*
                     <article className="group rounded-2xl border border-purple-700/60 bg-gradient-to-br from-slate-900/80 to-purple-950/70 p-5 transition hover:-translate-y-1 hover:shadow-[0_15px_60px_-20px_rgba(80,0,200,0.6)]">
                         <div className="mb-4 flex items-center justify-between">
                             <span className="rounded-lg bg-purple-900/40 px-3 py-1 text-xs font-semibold text-purple-200">PostgreSQL + Bash</span>
@@ -65,19 +92,8 @@ export default function Home() {
                             <a target="_blank" rel="noopener noreferrer" href="https://github.com/jblandin-art/Periodic-Table-Database" className="rounded-md border border-purple-500/70 px-3 py-1.5 text-sm text-purple-200 hover:bg-purple-800/50 transition">Code</a>
                         </div>
                     </article>
+                    */}
 
-                    <article className="group rounded-2xl border border-purple-700/60 bg-gradient-to-br from-slate-900/80 to-purple-950/70 p-5 transition hover:-translate-y-1 hover:shadow-[0_15px_60px_-20px_rgba(80,0,200,0.6)]">
-                        <div className="mb-4 flex items-center justify-between">
-                            <span className="rounded-lg bg-purple-900/40 px-3 py-1 text-xs font-semibold text-purple-200">React + Node + MongoDB</span>
-                            <span className="text-xs text-muted-foreground">2026</span>
-                        </div>
-                        <h3 className="text-xl font-semibold text-purple-50">PhotoShare - Social Media Platform</h3>
-                        <p className="mt-2 text-sm text-gray-300 leading-7">A sprint-based team build of a photo sharing app with route-aware UX, user detail/photo flows, MongoDB-backed APIs, and comment-thread user linking. I led as Scrum Master and completed major API and frontend integration work.</p>
-                        <div className="mt-4 flex gap-2">
-                            <Link href="/projects/photo-share" className="rounded-md bg-purple-500 px-3 py-1.5 text-sm font-medium text-white hover:bg-purple-400 transition">Case Study</Link>
-                            <Link href="/projects/photo-share#sprint-highlights" className="rounded-md border border-purple-500/70 px-3 py-1.5 text-sm text-purple-200 hover:bg-purple-800/50 transition">Sprint Highlights</Link>
-                        </div>
-                    </article>
                 </div>
             </section>
 
@@ -89,7 +105,7 @@ export default function Home() {
 
                 <div className="flex flex-wrap items-center gap-3 text-sm">
                     <a href="mailto:josiahblanding@gmail.com" className="rounded-md bg-purple-500 px-4 py-2 text-sm font-semibold text-white transition hover:bg-purple-400">Email Me</a>
-                    <a target="_blank" rel="noopener noreferrer" href="/Resume%20v1.7.pdf" className="rounded-md border border-purple-500/50 px-4 py-2 text-sm text-purple-200 transition hover:bg-purple-800/40">Download Resume</a>
+                    <a target="_blank" rel="noopener noreferrer" href="/jblandin/Resume%20v1.7.pdf" className="rounded-md border border-purple-500/50 px-4 py-2 text-sm text-purple-200 transition hover:bg-purple-800/40">Download Resume</a>
                 </div>
             </section>
         </main>
