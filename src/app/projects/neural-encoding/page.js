@@ -145,9 +145,7 @@ export default function NeuralEncodingCaseStudy() {
       <section className="mb-14">
         <h2 className="text-2xl font-bold font-poppins text-purple-400">Important Note</h2>
         <p className="mt-3 leading-8 text-gray-300">
-          Current stream behavior appears to be simulated for prototype and operator-testing scenarios.
-          This project is positioned as a neural telemetry monitoring prototype rather than a finalized
-          hardware-integrated medical acquisition system.
+          Current stream behavior appears is simulated for prototype and operator-testing scenarios.
         </p>
       </section>
 

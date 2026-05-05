@@ -28,15 +28,21 @@ export default function Home() {
                     Software Developer
                 </span>
             </p>
+            
             </header>
             <p className="font-sans text-gray-300 tracking-wide leading-8 max-w-2xl mt-2 text-lg">
                 Welcome to my domain. I'm Josiah, someone who spends the majority of their time coding and the rest being a secret agent. In my glory days I was a digital creator and now I aspire to be a part of the creation process through software development.
             </p>
+            <div className="mt-6 flex items-center gap-3">
+                <a target="_blank" rel="noopener noreferrer" href="https://www.linkedin.com/in/josiah-blanding" className="rounded-md bg-purple-500 px-4 py-2 text-sm font-medium text-white hover:bg-purple-400 transition">LinkedIn</a>
+                <a target="_blank" rel="noopener noreferrer" href="https://github.com/jblandin-art" className="rounded-md border border-purple-500/50 px-4 py-2 text-sm text-purple-200 hover:bg-purple-800/40 transition">GitHub</a>
+            </div>
 
             <section id="projects" className="mt-10 scroll-mt-20">
                 <div className="mb-6">
                     <h2 className="text-2xl font-bold font-poppins text-purple-400">Projects</h2>
-                    <p className="text-sm text-muted-foreground mt-1">Three curated builds that show real impact in UX, performance, and data management.</p>
+                    <p className="text-sm text-muted-foreground mt-1">Three curated builds that showcase experience in UX, data management, and deployment. 
+                    </p>
                 </div>
 
                 <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
@@ -46,7 +52,7 @@ export default function Home() {
                             <span className="text-xs text-muted-foreground">2026</span>
                         </div>
                         <h3 className="text-xl font-semibold text-purple-50">IG Metrics - Desktop Analytics Tool</h3>
-                        <p className="mt-2 text-sm text-gray-300 leading-7">A desktop application that analyzes exported Instagram follower data and visualizes relationship metrics. Features import/analysis of datasets, identification of non-followers, engagement stats, interactive charts, and CSV export for large username lists.</p>
+                        <p className="mt-2 text-sm text-gray-300 leading-7">A desktop application that analyzes exported Instagram follower data and visualizes relationship metrics. Features import/analysis of datasets, identification of non-followers, interactive charts, and CSV export for large username lists.</p>
                         <div className="mt-auto pt-4 flex gap-2">
                             <Link href="/projects/ig-metrics" className="rounded-md bg-purple-500 px-3 py-1.5 text-sm font-medium text-white hover:bg-purple-400 transition">Case Study</Link>
                             <a target="_blank" href="https://github.com/jblandin-art/instagram-metrics-app/releases/tag/v1.0.0" className="rounded-md border border-purple-500/70 px-3 py-1.5 text-sm text-purple-200 hover:bg-purple-800/50 transition">Download</a>
@@ -59,7 +65,7 @@ export default function Home() {
                             <span className="text-xs text-muted-foreground">2026</span>
                         </div>
                         <h3 className="text-xl font-semibold text-purple-50">NeuralEncoding - Neural Telemetry Dashboard</h3>
-                        <p className="mt-2 text-sm text-gray-300 leading-7">A desktop monitoring prototype that visualizes EEG-like telemetry in a full-screen Electron shell. Includes live waveform views, SNR and impedance metrics, system logs, and a Python backend stream (simulated data).</p>
+                        <p className="mt-2 text-sm text-gray-300 leading-7">A desktop monitoring prototype that visualizes EEG-like telemetry in a full-screen Electron shell. Includes a live waveform view, system logs, and a Python backend stream (simulated data).</p>
                         <div className="mt-auto pt-4 flex gap-2">
                             <Link href="/projects/neural-encoding" className="rounded-md bg-purple-500 px-3 py-1.5 text-sm font-medium text-white hover:bg-purple-400 transition">Case Study</Link>
                             <a target="_blank" rel="noopener noreferrer" href="https://github.com/jblandin-art/NeuralEncoding" className="rounded-md border border-purple-500/70 px-3 py-1.5 text-sm text-purple-200 hover:bg-purple-800/50 transition">Code & Demo</a>
@@ -72,7 +78,7 @@ export default function Home() {
                             <span className="text-xs text-muted-foreground">2026</span>
                         </div>
                         <h3 className="text-xl font-semibold text-purple-50">PhotoShare - Social Media Platform</h3>
-                        <p className="mt-2 text-sm text-gray-300 leading-7">A sprint-based team build of a photo sharing app with route-aware UX, user detail/photo flows, MongoDB-backed APIs, and comment-thread user linking. I led as Scrum Master and completed major API and frontend integration work.</p>
+                        <p className="mt-2 text-sm text-gray-300 leading-7">A sprint-based team build of a social media app with route-aware UX and MongoDB-backed APIs. Led as scrum master. Personally built login/logout functionality from scratch and backend structure for mentions.</p>
                         <div className="mt-auto pt-4 flex gap-2">
                             <Link href="/projects/photo-share" className="rounded-md bg-purple-500 px-3 py-1.5 text-sm font-medium text-white hover:bg-purple-400 transition">Case Study</Link>
                             <Link href="/projects/photo-share#sprint-highlights" className="rounded-md border border-purple-500/70 px-3 py-1.5 text-sm text-purple-200 hover:bg-purple-800/50 transition">Sprint Highlights</Link>
@@ -100,12 +106,12 @@ export default function Home() {
             <section id="contact" className="mt-10 mb-8">
                 <div className="mb-4">
                     <h2 className="text-2xl font-bold font-poppins text-purple-400">Contact</h2>
-                    <p className="mt-1 text-sm text-muted-foreground">I'm currently taking internships and looking to contribute to impactful projects. Feel free to reach out at josiahblanding@gmail.com and my resume is available for download below.</p>
+                    <p className="mt-1 text-sm text-muted-foreground">I'm currently interested in  internships and am looking to contribute to impactful projects. Feel free to reach out at josiahblanding@gmail.com, my resume is also available for download below.</p>
                 </div>
 
                 <div className="flex flex-wrap items-center gap-3 text-sm">
-                    <a href="mailto:josiahblanding@gmail.com" className="rounded-md bg-purple-500 px-4 py-2 text-sm font-semibold text-white transition hover:bg-purple-400">Email Me</a>
-                    <a target="_blank" rel="noopener noreferrer" href="/jblandin/Resume%20v1.7.pdf" className="rounded-md border border-purple-500/50 px-4 py-2 text-sm text-purple-200 transition hover:bg-purple-800/40">Download Resume</a>
+                    <a href="mailto:josiahblanding@gmail.com" className="rounded-md bg-purple-500 px-4 py-2 text-sm font-medium text-white transition hover:bg-purple-400">Email Me</a>
+                    <a target="_blank" rel="noopener noreferrer" href="/jblandin/Resume.pdf" className="rounded-md border border-purple-500/50 px-4 py-2 text-sm text-purple-200 transition hover:bg-purple-800/40">Download Resume</a>
                 </div>
             </section>
         </main>

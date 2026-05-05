@@ -30,9 +30,57 @@ const inter = Inter({
   weight: ["400", "500", "600", "700"],
 });
 
+const siteUrl = "https://webpages.charlotte.edu/jblandin";
+
 export const metadata = {
-  title: "Josiah Blanding's Portfolio",
-  description: "An up and coming software developer's portfolio.",
+  metadataBase: new URL(siteUrl),
+  title: "Josiah Blanding - Full Stack Developer",
+  description:
+    "Full stack software developer specializing in React, Next.js, and modern web development. Explore my portfolio and projects.",
+  keywords: [
+    "Josiah Blanding",
+    "software developer",
+    "full stack",
+    "React",
+    "Next.js",
+    "JavaScript",
+    "web development",
+  ],
+  authors: [{ name: "Josiah Blanding" }],
+  creator: "Josiah Blanding",
+  publisher: "Josiah Blanding",
+  robots: {
+    index: true,
+    follow: true,
+    nocache: false,
+    googleBot: {
+      index: true,
+      follow: true,
+      noimageindex: false,
+    },
+  },
+  openGraph: {
+    title: "Josiah Blanding - Full Stack Developer",
+    description:
+      "Explore my portfolio of web development projects and experience",
+    url: "/",
+    siteName: "Josiah Blanding Portfolio",
+    images: [
+      {
+        url: "/headshotExtended.jpg",
+        width: 1689,
+        height: 1127,
+        alt: "Josiah Blanding headshot",
+      },
+    ],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Josiah Blanding - Full Stack Developer",
+    description: "Check out my portfolio and projects",
+    images: ["/headshotExtended.jpg"],
+  },
 };
 
 export default function RootLayout({ children }) {

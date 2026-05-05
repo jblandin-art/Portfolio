@@ -6,20 +6,34 @@ export const metadata = {
     "Case study for a sprint-based team photo sharing app built with React, Node, Express, and MongoDB.",
 };
 
-const sprintHighlights = [
-  "Implemented SPA routing shell with a master-detail layout for user list, detail view, and photo view.",
-  "Built route-aware top bar context text that updates to Details of or Photos of the active user.",
-  "Connected UserList, UserDetail, and UserPhotos views to backend APIs using axios.",
-  "Migrated backend routes to MongoDB/Mongoose and returned UI-friendly response payloads.",
-  "Populated comment user references, then reshaped nested objects for frontend compatibility.",
-  "Maintained sprint workflow as Scrum Master while documenting team execution and decisions.",
-];
+const sprintHighlights = {
+  sprints1_2: [
+    "Implemented SPA routing shell with a master-detail layout for user list, detail view, and photo view.",
+    "Built route-aware top bar context text that updates to Details of or Photos of the active user.",
+    "Connected UserList, UserDetail, and UserPhotos views to backend APIs using axios.",
+    "Migrated backend routes to MongoDB/Mongoose and returned UI-friendly response payloads.",
+    "Populated comment user references, then reshaped nested objects for frontend compatibility.",
+  ],
+  sprint3: [
+    "Implemented login/logout session flow and server-side session persistence and validation.",
+    "Built route protection and access control to redirect unauthenticated users and block protected endpoints.",
+    "Expanded login/register screen with password validation and new user registration support.",
+    "Added photo commenting with immediate UI refresh and photo uploading with multipart form handling.",
+  ],
+  sprint4: [
+    "Extended MongoDB schema to store mention references within comments and validate mentions against existing users.",
+    "Exposed backend query endpoint for retrieving all photos that mention a specific user.",
+    "Built mention-aware comment entry UI with mention detection and validation.",
+  ],
+};
 
 const responsibilities = [
-  "Scrum Master for a five-person team.",
+  "Scrum Master for a five-person team across all four sprints.",
   "Led MongoDB/Express API implementation and integration details.",
-  "Completed UserList and UserDetail frontend work.",
-  "Primary documentation owner for sprint deliverables.",
+  "Completed UserList and UserDetail frontend work in Sprints 1–2.",
+  "Implemented server-side login/logout session flow and session persistence in Sprint 3.",
+  "Designed and implemented backend mentions system for Sprint 4: schema design, validation logic, and query endpoints.",
+  "Primary documentation owner for sprint deliverables and team execution.",
 ];
 
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
@@ -101,12 +115,34 @@ export default function PhotoShareCaseStudy() {
       </section>
 
       <section id="sprint-highlights" className="mb-12">
-        <h2 className="text-2xl font-bold font-poppins text-purple-400">Sprint 1 And Sprint 2 Highlights</h2>
-        <ul className="mt-4 space-y-3 text-gray-300 leading-8 list-disc pl-5">
-          {sprintHighlights.map((item) => (
-            <li key={item}>{item}</li>
-          ))}
-        </ul>
+        <h2 className="text-2xl font-bold font-poppins text-purple-400">Sprint Highlights</h2>
+        
+        <div className="mt-6">
+          <h3 className="text-lg font-semibold text-purple-300">Sprints 1–2: Foundation</h3>
+          <ul className="mt-3 space-y-2 text-gray-300 leading-8 list-disc pl-5">
+            {sprintHighlights.sprints1_2.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+        </div>
+
+        <div className="mt-6">
+          <h3 className="text-lg font-semibold text-purple-300">Sprint 3: Sessions, Security, and Input</h3>
+          <ul className="mt-3 space-y-2 text-gray-300 leading-8 list-disc pl-5">
+            {sprintHighlights.sprint3.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+        </div>
+
+        <div className="mt-6">
+          <h3 className="text-lg font-semibold text-purple-300">Sprint 4: @Mentions in Comments</h3>
+          <ul className="mt-3 space-y-2 text-gray-300 leading-8 list-disc pl-5">
+            {sprintHighlights.sprint4.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+        </div>
       </section>
 
       <section className="mb-12">
@@ -204,14 +240,12 @@ if (path.includes("/users/") || path.includes("/photos/")) {
       </section>
 
       <section className="mb-12">
-        <h2 className="text-2xl font-bold font-poppins text-purple-400">Learnings And Next Steps</h2>
+        <h2 className="text-2xl font-bold font-poppins text-purple-400">Project Evolution</h2>
         <p className="mt-3 leading-8 text-gray-300">
-          This project strengthened my understanding of API call patterns, request-response modeling,
-          and how backend schema decisions affect frontend developer experience.
+          PhotoShare evolved from a prototype photo gallery into a fully featured social platform. Sprints 1–2 established the core SPA architecture and API layer. Sprint 3 added the authentication and real-world features sessions, registration, commenting, and file uploads that transformed it from an open demo into a secure, user-aware application. Sprint 4 extended the feature set with @mentions, allowing users to tag each other in comments and browse their mention gallery.
         </p>
         <p className="mt-3 leading-8 text-gray-300">
-          Next sprint scope includes authentication, protected routes, comments posting, uploads,
-          and registration flows to transition from prototype behavior into a real user platform.
+          The project strengthened my understanding of full-stack architecture: how backend schema decisions shape frontend developer experience, how to balance feature scope with test/lint compliance, and how session and validation logic must work together to keep a platform secure and reliable.
         </p>
       </section>
 
