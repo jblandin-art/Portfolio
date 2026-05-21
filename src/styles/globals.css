@@ -130,3 +130,111 @@
     @apply font-sans;
   }
 }
+
+.stick {
+  @apply my-2 p-0;
+  @apply inline-block;
+  width: auto;
+  height: auto;
+}
+
+#game-board button{
+  @apply cursor-pointer;
+}
+
+.nim-loading-flash {
+  animation: nim-loading-flash 1.8s ease-in-out infinite;
+  will-change: opacity, filter;
+}
+
+/* Hide mobile-only buttons by default (desktop) */
+#ai-turn-button-mobile,
+#remove-stick-1-mobile,
+#remove-stick-2-mobile,
+#remove-stick-3-mobile,
+#remove-stick-4-mobile {
+  display: none;
+}
+
+@keyframes nim-loading-flash {
+  0%, 100% {
+    opacity: 0.5;
+    filter: brightness(0.9);
+  }
+  50% {
+    opacity: 1;
+    filter: brightness(1.1);
+  }
+}
+
+@media (max-width: 640px) {
+
+  /* Hide desktop remove buttons on small screens and show the mobile variants */
+  #ai-turn-button {
+    display: none !important;
+  }
+
+  #remove-stick-1,
+  #remove-stick-2,
+  #remove-stick-3,
+  #remove-stick-4 {
+    display: none !important;
+  }
+
+  #remove-stick-1-mobile,
+  #remove-stick-2-mobile,
+  #remove-stick-3-mobile,
+  #remove-stick-4-mobile {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.6rem;
+    margin-left: auto;
+  }
+
+  #game-board {
+    margin: auto 50;
+  }
+
+  #ai-turn-button,
+  #remove-stick-1,
+  #remove-stick-2,
+  #remove-stick-3,
+  #remove-stick-4,
+  #remove-stick-1-mobile,
+  #remove-stick-2-mobile,
+  #remove-stick-3-mobile,
+  #remove-stick-4-mobile {
+    height: 10vh;
+    padding: 0.75rem 0.35rem;
+    border-radius: 0;
+    writing-mode: vertical-rl;
+    align-items: center;
+    justify-content: center;
+    width: 10%;
+    text-orientation: upright;
+    z-index: 50;
+  }
+
+   #ai-turn-button-mobile {
+    height: 10%;
+    padding: 0.75rem 0.35rem;
+    border-radius: 0;
+    align-items: center;
+    justify-content: center;
+    width: 15vh;
+    z-index: 50;
+    margin: 0 auto;
+    display: block !important;
+    margin-bottom: 30px;
+   }
+
+   #rows-container {
+    width: 100%;
+   }
+   #game-board {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+   }
+}

@@ -41,7 +41,7 @@ export default function Home() {
             <section id="projects" className="mt-10 scroll-mt-20">
                 <div className="mb-6">
                     <h2 className="text-2xl font-bold font-poppins text-purple-400">Projects</h2>
-                    <p className="text-sm text-muted-foreground mt-1">Three curated builds that showcase experience in UX, data management, and deployment. 
+                    <p className="text-sm text-muted-foreground mt-1">Three carefully selected builds that showcase experience in UX, data management, and deployment. 
                     </p>
                 </div>
 
@@ -51,8 +51,8 @@ export default function Home() {
                             <span className="rounded-lg bg-purple-900/40 px-3 py-1 text-xs font-semibold text-purple-200">Electron + React</span>
                             <span className="text-xs text-muted-foreground">2026</span>
                         </div>
-                        <h3 className="text-xl font-semibold text-purple-50">IG Metrics - Desktop Analytics Tool</h3>
-                        <p className="mt-2 text-sm text-gray-300 leading-7">A desktop application that analyzes exported Instagram follower data and visualizes relationship metrics. Features import/analysis of datasets, identification of non-followers, interactive charts, and CSV export for large username lists.</p>
+                        <h3 className="text-xl font-semibold text-purple-50">IG Metrics - Desktop Analytics Application</h3>
+                        <p className="mt-2 text-sm text-gray-300 leading-7">This desktop application parses through exported Instagram follower data, highlighting important connection metrics. It identifies one way connections, features an interactive chart, and features CSV export for the analysis data.</p>
                         <div className="mt-auto pt-4 flex gap-2">
                             <Link href="/projects/ig-metrics" className="rounded-md bg-purple-500 px-3 py-1.5 text-sm font-medium text-white hover:bg-purple-400 transition">Case Study</Link>
                             <a target="_blank" href="https://github.com/jblandin-art/instagram-metrics-app/releases/tag/v1.0.0" className="rounded-md border border-purple-500/70 px-3 py-1.5 text-sm text-purple-200 hover:bg-purple-800/50 transition">Download</a>
@@ -64,8 +64,8 @@ export default function Home() {
                             <span className="rounded-lg bg-purple-900/40 px-3 py-1 text-xs font-semibold text-purple-200">Electron + React + Python</span>
                             <span className="text-xs text-muted-foreground">2026</span>
                         </div>
-                        <h3 className="text-xl font-semibold text-purple-50">NeuralEncoding - Neural Telemetry Dashboard</h3>
-                        <p className="mt-2 text-sm text-gray-300 leading-7">A desktop monitoring prototype that visualizes EEG-like telemetry in a full-screen Electron shell. Includes a live waveform view, system logs, and a Python backend stream (simulated data).</p>
+                        <h3 className="text-xl font-semibold text-purple-50">NeuralEncoding - Brain Telemetry Dashboard</h3>
+                        <p className="mt-2 text-sm text-gray-300 leading-7">This desktop application displays a stream of captured brain activity (simulated data) in a modern design. It features a visualization of the stream data using a custom made algorithm.</p>
                         <div className="mt-auto pt-4 flex gap-2">
                             <Link href="/projects/neural-encoding" className="rounded-md bg-purple-500 px-3 py-1.5 text-sm font-medium text-white hover:bg-purple-400 transition">Case Study</Link>
                             <a target="_blank" rel="noopener noreferrer" href="https://github.com/jblandin-art/NeuralEncoding" className="rounded-md border border-purple-500/70 px-3 py-1.5 text-sm text-purple-200 hover:bg-purple-800/50 transition">Code & Demo</a>
@@ -78,7 +78,7 @@ export default function Home() {
                             <span className="text-xs text-muted-foreground">2026</span>
                         </div>
                         <h3 className="text-xl font-semibold text-purple-50">PhotoShare - Social Media Platform</h3>
-                        <p className="mt-2 text-sm text-gray-300 leading-7">A sprint-based team build of a social media app with route-aware UX and MongoDB-backed APIs. Led as scrum master. Personally built login/logout functionality from scratch and backend structure for mentions.</p>
+                        <p className="mt-2 text-sm text-gray-300 leading-7">This social media application features a login/registration system, a full commenting system, route awareness, and @mention functionality. All of which was implemented by me and my team. We used an Agile development approach and I led as scrum master for all sprints.</p>
                         <div className="mt-auto pt-4 flex gap-2">
                             <Link href="/projects/photo-share" className="rounded-md bg-purple-500 px-3 py-1.5 text-sm font-medium text-white hover:bg-purple-400 transition">Case Study</Link>
                             <Link href="/projects/photo-share#sprint-highlights" className="rounded-md border border-purple-500/70 px-3 py-1.5 text-sm text-purple-200 hover:bg-purple-800/50 transition">Sprint Highlights</Link>
@@ -106,7 +106,7 @@ export default function Home() {
             <section id="contact" className="mt-10 mb-8">
                 <div className="mb-4">
                     <h2 className="text-2xl font-bold font-poppins text-purple-400">Contact</h2>
-                    <p className="mt-1 text-sm text-muted-foreground">I'm currently interested in  internships and am looking to contribute to impactful projects. Feel free to reach out at josiahblanding@gmail.com, my resume is also available for download below.</p>
+                    <p className="mt-1 text-sm text-muted-foreground">I'm currently interested in internships and am looking to contribute to impactful projects. Feel free to reach out at josiahblanding@gmail.com, my resume is also available for download below.</p>
                 </div>
 
                 <div className="flex flex-wrap items-center gap-3 text-sm">
