@@ -84,15 +84,18 @@ export default function SudokuBoardBase({ puzzle = null, solution = null, valida
             return (
               <div
                 key={cellKey}
-                className={`relative flex aspect-square w-full items-center justify-center bg-slate-900/65 ${correctnessClass} ${rightBorder} ${bottomBorder} ${isRevealed ? 'sudoku-reveal' : ''}`}
+                className={`relative grid aspect-square w-full place-items-center bg-slate-900/65 ${correctnessClass} ${rightBorder} ${bottomBorder} ${isRevealed ? 'sudoku-reveal' : ''}`}
               >
                 {isPrefilled || readOnly ? (
-                  <span className="relative z-10 text-sm sm:text-base font-semibold select-none">{val}</span>
+                  <span className="relative z-10 flex h-full w-full items-center justify-center text-sm sm:text-base font-semibold leading-none select-none">{val}</span>
                 ) : (
                   <div className="relative flex h-full w-full items-center justify-center overflow-hidden">
+                    <span className={`pointer-events-none absolute inset-0 z-10 flex items-center justify-center text-sm sm:text-base font-semibold leading-none select-none transition-opacity duration-700 ${isVisible ? "opacity-100" : "opacity-0"}`}>
+                      {val === 0 ? "" : String(val)}
+                    </span>
                     <input
                       aria-label={`r${r}c${c}`}
-                      className={`absolute inset-0 z-10 h-full w-full bg-transparent text-center text-sm sm:text-base outline-none caret-purple-300 transition-opacity duration-700 ${isVisible ? "opacity-100" : "opacity-0"}`}
+                      className="absolute inset-0 z-20 h-full w-full appearance-none border-0 bg-transparent p-0 text-center text-sm sm:text-base leading-none outline-none caret-purple-300 opacity-0"
                       value={val === 0 ? "" : String(val)}
                       onChange={(e) => handleCellChange(r, c, e.target.value)}
                     />

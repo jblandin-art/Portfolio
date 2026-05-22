@@ -45,20 +45,31 @@ export default function UserSudokuBoard({ emptyCells = 45, seed = 42 }) {
   }, [emptyCells, seed]);
 
   return (
-    <div className="mx-auto max-w-5xl px-6 py-6">
-      <div className="mb-6 flex items-center gap-4">
-        <div className="h-px flex-1 bg-gradient-to-r from-transparent via-purple-500/40 to-transparent" />
-        <p className={`text-lg font-semibold uppercase tracking-[0.45em] ${loading ? "text-yellow-300" : "text-purple-300"}`}>
-          {loading ? "LOADING PUZZLE" : "SUDOKU PUZZLE"}
-        </p>
-        <div className="h-px flex-1 bg-gradient-to-r from-transparent via-purple-500/40 to-transparent" />
-      </div>
-
+    <>
       {loading ? (
-        <p className="text-sm text-purple-300/70">Generating puzzle…</p>
+        <div className="mx-auto max-w-5xl px-6 py-6">
+          <div className="mb-6 flex items-center gap-4">
+            <div className="h-px flex-1 bg-gradient-to-r from-transparent via-yellow-500/40 nim-loading-flash to-transparent" />
+            <p className="text-xl font-semibold uppercase tracking-[0.45em] nim-loading-flash text-yellow-300">LOADING PUZZLE</p>
+            <div className="h-px flex-1 bg-gradient-to-r from-transparent via-yellow-500/40 nim-loading-flash to-transparent" />
+          </div>
+        </div>
       ) : (
-        <SudokuBoardBase puzzle={puzzle} validateGrid={validateGrid} />
+        <section className="mb-12">
+          <p className="text-sm font-semibold uppercase tracking-widest text-purple-300">User Sudoku</p>
+          <div className="mt-4">
+            <div className="mx-auto max-w-5xl px-6 py-6">
+              <div className="mb-6 flex items-center gap-4">
+                <div className="h-px flex-1 bg-gradient-to-r from-transparent via-purple-500/40 to-transparent" />
+                <p className="text-xl font-semibold uppercase tracking-[0.45em] text-purple-300">SUDOKU PUZZLE</p>
+                <div className="h-px flex-1 bg-gradient-to-r from-transparent via-purple-500/40 to-transparent" />
+              </div>
+
+              <SudokuBoardBase puzzle={puzzle} validateGrid={validateGrid} />
+            </div>
+          </div>
+        </section>
       )}
-    </div>
+    </>
   );
 }
