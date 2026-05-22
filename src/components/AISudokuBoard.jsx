@@ -3,18 +3,29 @@ import { useEffect, useRef, useState } from "react";
 import SudokuBoardBase from "./SudokuBoardBase";
 import { loadPyodideAndSudoku } from "./pyodideSudokuLoader";
 
-export default function AISudokuBoard({ emptyCells = 45, seed }) {
-  const [runtimeSeed] = useState(() => seed ?? Math.floor(Math.random() * 1000000));
+export default function AISudokuBoard({ emptyCells = 45, seed, onLoadingChange = null }) {
+  const [runtimeSeed, setRuntimeSeed] = useState(() => seed ?? Math.floor(Math.random() * 1000000));
   console.log("AI Sudoku seed:", runtimeSeed);
   const [puzzle, setPuzzle] = useState(null);
   const [solution, setSolution] = useState(null);
   const [validateGrid, setValidateGrid] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [isVisible, setIsVisible] = useState(false);
+  const [showCellValues, setShowCellValues] = useState(false);
   const [visibleCells, setVisibleCells] = useState([]);
   const [revealCells, setRevealCells] = useState([]);
   const [revealFinished, setRevealFinished] = useState(false);
   const timerRef = useRef(null);
   const timeoutRefs = useRef([]);
+  const cellVisibilityTimeoutRef = useRef(null);
+  const restartTimeoutRef = useRef(null);
+  const fadeTimeoutRef = useRef(null);
+
+  useEffect(() => {
+    if (onLoadingChange) {
+      onLoadingChange(loading);
+    }
+  }, [loading, onLoadingChange]);
 
   useEffect(() => {
     let cancelled = false;
@@ -41,6 +52,16 @@ export default function AISudokuBoard({ emptyCells = 45, seed }) {
       setVisibleCells([]);
       setRevealCells([]);
       setRevealFinished(false);
+      setShowCellValues(false);
+      setIsVisible(true);
+
+      if (cellVisibilityTimeoutRef.current) clearTimeout(cellVisibilityTimeoutRef.current);
+      cellVisibilityTimeoutRef.current = setTimeout(() => {
+        cellVisibilityTimeoutRef.current = null;
+        if (!cancelled) {
+          setShowCellValues(true);
+        }
+      }, 180);
 
       setValidateGrid(() => async (grid) => {
         const gridLiteral = JSON.stringify(grid).replace(/\\/g, "\\\\").replace(/'/g, "\\'");
@@ -63,6 +84,12 @@ export default function AISudokuBoard({ emptyCells = 45, seed }) {
       if (timerRef.current) clearInterval(timerRef.current);
       timeoutRefs.current.forEach((timeoutId) => clearTimeout(timeoutId));
       timeoutRefs.current = [];
+      if (cellVisibilityTimeoutRef.current) clearTimeout(cellVisibilityTimeoutRef.current);
+      cellVisibilityTimeoutRef.current = null;
+      if (restartTimeoutRef.current) clearTimeout(restartTimeoutRef.current);
+      restartTimeoutRef.current = null;
+      if (fadeTimeoutRef.current) clearTimeout(fadeTimeoutRef.current);
+      fadeTimeoutRef.current = null;
     };
   }, [emptyCells, runtimeSeed]);
 
@@ -118,30 +145,53 @@ export default function AISudokuBoard({ emptyCells = 45, seed }) {
     };
   }, [puzzle, solution]);
 
-  if (loading) {
-    return null;
-  }
+  useEffect(() => {
+    if (!revealFinished || loading) return;
+    if (restartTimeoutRef.current) return;
+
+    restartTimeoutRef.current = setTimeout(() => {
+      restartTimeoutRef.current = null;
+      setIsVisible(false);
+
+      fadeTimeoutRef.current = setTimeout(() => {
+        fadeTimeoutRef.current = null;
+        setLoading(true);
+        setShowCellValues(false);
+        setPuzzle(null);
+        setSolution(null);
+        setValidateGrid(null);
+        setVisibleCells([]);
+        setRevealCells([]);
+        setRevealFinished(false);
+        setRuntimeSeed(Math.floor(Math.random() * 1000000));
+      }, 300);
+    }, 3000);
+
+    return () => {
+      if (restartTimeoutRef.current) clearTimeout(restartTimeoutRef.current);
+      restartTimeoutRef.current = null;
+      if (fadeTimeoutRef.current) clearTimeout(fadeTimeoutRef.current);
+      fadeTimeoutRef.current = null;
+    };
+  }, [revealFinished, loading]);
 
   return (
     <section>
-      <p className="text-sm font-semibold uppercase tracking-widest text-purple-300">AI Sudoku</p>
       <div className="mt-4">
-        <div className="mx-auto max-w-5xl px-6 py-6">
-          <div className="mb-6 flex items-center gap-4">
-            <div className="h-px flex-1 bg-gradient-to-r from-transparent via-purple-500/40 to-transparent" />
-            <p className="text-xl font-semibold uppercase tracking-[0.45em] text-purple-300">SUDOKU PUZZLE</p>
-            <div className="h-px flex-1 bg-gradient-to-r from-transparent via-purple-500/40 to-transparent" />
+        <div className="mx-auto max-w-5xl px-6 py-6 min-h-[38rem] sm:min-h-[42rem] lg:min-h-[44rem]">
+          <div className={`relative transition-opacity duration-300 ease-out ${isVisible && !loading ? "opacity-100" : "opacity-0"}`}>
+            <SudokuBoardBase
+              key={runtimeSeed}
+              puzzle={puzzle}
+              solution={solution}
+              validateGrid={validateGrid}
+              revealCells={revealCells}
+              visibleCells={visibleCells}
+              validMessage="Valid Sudoku Board"
+              showValidationState={revealFinished}
+              forceHiddenValues={!showCellValues}
+            />
           </div>
-
-          <SudokuBoardBase
-            puzzle={puzzle}
-            solution={solution}
-            validateGrid={validateGrid}
-            revealCells={revealCells}
-            visibleCells={visibleCells}
-            validMessage="Valid Sudoku Board"
-            showValidationState={revealFinished}
-          />
         </div>
       </div>
     </section>

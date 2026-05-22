@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 
-export default function SudokuBoardBase({ puzzle = null, solution = null, validateGrid = null, onChange = null, readOnly = false, revealCells = [], visibleCells = null, validMessage = "Valid Sudoku board.", showValidationState = true }) {
+export default function SudokuBoardBase({ puzzle = null, solution = null, validateGrid = null, onChange = null, readOnly = false, revealCells = [], visibleCells = null, validMessage = "Valid Sudoku board.", showValidationState = true, forceHiddenValues = false }) {
   const emptyGrid = Array.from({ length: 9 }, () => Array(9).fill(0));
   const [grid, setGrid] = useState(emptyGrid);
   const [boardValid, setBoardValid] = useState(null);
@@ -84,16 +84,17 @@ export default function SudokuBoardBase({ puzzle = null, solution = null, valida
 
               const isRevealed = revealCells && revealCells.includes(cellKey);
               const isVisible = !Array.isArray(visibleCells) || visibleCells.includes(cellKey) || isPrefilled;
+              const shouldHideValue = forceHiddenValues && !readOnly;
               return (
                 <div
                   key={cellKey}
                   className={`relative grid aspect-square w-full place-items-center bg-slate-900/65 ${correctnessClass} ${rightBorder} ${bottomBorder} ${isRevealed ? 'sudoku-reveal' : ''}`}
                 >
                   {isPrefilled || readOnly ? (
-                    <span className="relative z-10 flex h-full w-full items-center justify-center text-sm sm:text-base font-semibold leading-none select-none">{val}</span>
+                    <span className={`relative z-10 flex h-full w-full items-center justify-center text-sm sm:text-base font-semibold leading-none select-none transition-opacity duration-300 ${shouldHideValue ? "opacity-0" : "opacity-100"}`}>{val}</span>
                   ) : (
                     <div className="relative flex h-full w-full items-center justify-center overflow-hidden">
-                      <span className={`pointer-events-none absolute inset-0 z-10 flex items-center justify-center text-sm sm:text-base font-semibold leading-none select-none transition-opacity duration-700 ${isVisible ? "opacity-100" : "opacity-0"}`}>
+                      <span className={`pointer-events-none absolute inset-0 z-10 flex items-center justify-center text-sm sm:text-base font-semibold leading-none select-none transition-opacity duration-700 ${isVisible && !shouldHideValue ? "opacity-100" : "opacity-0"}`}>
                         {val === 0 ? "" : String(val)}
                       </span>
                       <input
