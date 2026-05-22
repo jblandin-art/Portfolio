@@ -2,6 +2,46 @@
 import { useEffect, useState } from "react";
 import SudokuBoardBase from "./SudokuBoardBase";
 
+async function loadPyodideAndSudoku() {
+  if (!globalThis.pyodide) {
+    await new Promise((resolve, reject) => {
+      if (window.loadPyodide) {
+        resolve(window.loadPyodide);
+        return;
+      }
+
+      const script = document.createElement("script");
+      script.src = "https://cdn.jsdelivr.net/pyodide/v0.26.1/full/pyodide.js";
+      script.async = true;
+      script.onload = () => resolve(window.loadPyodide);
+      script.onerror = reject;
+      document.head.appendChild(script);
+    });
+
+    const loadPyodide = window.loadPyodide;
+    // @ts-ignore
+    globalThis.pyodide = await loadPyodide({ indexURL: "https://cdn.jsdelivr.net/pyodide/v0.26.1/full/" });
+
+    try {
+      await globalThis.pyodide.loadPackage(["numpy"]);
+    } catch (e) {
+      console.warn("pyodide.loadPackage numpy failed, attempting micropip fallback", e);
+      await globalThis.pyodide.runPythonAsync(`import micropip\nawait micropip.install('numpy')`);
+    }
+
+    const sudokuPath = `${process.env.NEXT_PUBLIC_BASE_PATH || ""}/sudoku.py`;
+    const resp = await fetch(sudokuPath);
+    const source = await resp.text();
+    if (!resp.ok) {
+      throw new Error(`Failed to fetch sudoku.py: ${resp.status} ${resp.statusText}`);
+    }
+
+    await globalThis.pyodide.runPythonAsync(`import json\n${source}`);
+  }
+
+  return globalThis.pyodide;
+}
+
 export default function UserSudokuBoard({ emptyCells = 45, seed = 42 }) {
   const [puzzle, setPuzzle] = useState(null);
   const [validateGrid, setValidateGrid] = useState(null);
@@ -10,38 +50,8 @@ export default function UserSudokuBoard({ emptyCells = 45, seed = 42 }) {
   useEffect(() => {
     let cancelled = false;
 
-    function loadPyodideScript() {
-      return new Promise((resolve, reject) => {
-        if (window.loadPyodide) {
-          resolve(window.loadPyodide);
-          return;
-        }
-
-        const script = document.createElement("script");
-        script.src = "https://cdn.jsdelivr.net/pyodide/v0.26.1/full/pyodide.js";
-        script.async = true;
-        script.onload = () => resolve(window.loadPyodide);
-        script.onerror = reject;
-        document.head.appendChild(script);
-      });
-    }
-
     async function init() {
-      const loadPyodide = await loadPyodideScript();
-      const pyodide = await loadPyodide();
-      if (cancelled) return;
-
-      try {
-        await pyodide.loadPackage(["numpy"]);
-      } catch (e) {
-        console.warn("pyodide.loadPackage numpy failed, attempting micropip fallback", e);
-        await pyodide.runPythonAsync(`import micropip\nawait micropip.install('numpy')`);
-      }
-
-      const sudokuPath = `${process.env.NEXT_PUBLIC_BASE_PATH || ""}/sudoku.py`;
-      const source = await fetch(sudokuPath).then((r) => r.text());
-      await pyodide.runPythonAsync(`import json\n${source}`);
-
+      const pyodide = await loadPyodideAndSudoku();
       if (cancelled) return;
 
       const puzzleJson = await pyodide.runPythonAsync(
@@ -55,7 +65,7 @@ export default function UserSudokuBoard({ emptyCells = 45, seed = 42 }) {
       setValidateGrid(() => async (grid) => {
         const gridLiteral = JSON.stringify(grid).replace(/\\/g, "\\\\").replace(/'/g, "\\'");
         const result = await pyodide.runPythonAsync(
-          `candidate_grid = json.loads('${gridLiteral}')\nis_valid_sudoku_grid(candidate_grid)`
+          `import json\ncandidate_grid = json.loads('${gridLiteral}')\nis_valid_sudoku_grid(candidate_grid)`
         );
         return Boolean(result);
       });

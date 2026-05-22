@@ -1,6 +1,6 @@
 "use client";
-import React from "react";
-import UserSudokuBoard from "./UserSudokuBoard";
+import { useEffect, useState } from "react";
+import SudokuBoardBase from "./SudokuBoardBase";
 
 async function loadPyodideAndSudoku() {
   if (!globalThis.pyodide) {
@@ -17,61 +17,82 @@ async function loadPyodideAndSudoku() {
     } catch (e) {
       // ignore; numpy optional in some builds
     }
-    const resp = await fetch("/sudoku.py");
+    const sudokuPath = `${process.env.NEXT_PUBLIC_BASE_PATH || ""}/sudoku.py`;
+    const resp = await fetch(sudokuPath);
     const code = await resp.text();
+    if (!resp.ok) {
+      throw new Error(`Failed to fetch sudoku.py: ${resp.status} ${resp.statusText}`);
+    }
     await globalThis.pyodide.runPythonAsync(code);
   }
   return globalThis.pyodide;
 }
 
-export async function fetchPuzzleAndSolution(emptyCells = 45, seed = 42) {
-  const pyodide = await loadPyodideAndSudoku();
-  const pyCode = `import json\n_p = generate_sudoku_puzzle(empty_cells=${emptyCells}, seed=${seed})\n_s = ImprovedSudokuResolver(_p)\n_s.find_solution()\njson.dumps(_p) + '||SEP||' + json.dumps(_s.grid)`;
-  const res = await pyodide.runPythonAsync(pyCode);
-  const parts = res.split("||SEP||");
-  const p = JSON.parse(parts[0]);
-  const s = JSON.parse(parts[1]);
-  return { puzzle: p, solution: s };
-}
+export default function AISudokuBoard({ emptyCells = 45, seed = 42 }) {
+  const [puzzle, setPuzzle] = useState(null);
+  const [solution, setSolution] = useState(null);
+  const [validateGrid, setValidateGrid] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-export function startAutoReveal({ puzzle, solution, onUpdate = () => {}, onReveal = () => {}, intervalMs = 1000, batchSize = 3 }) {
-  if (!puzzle || !solution) return () => {};
-  const empties = [];
-  puzzle.forEach((row, r) => row.forEach((v, c) => { if (!v) empties.push([r, c]); }));
-  let idx = 0;
-  const timeouts = [];
-  let currentGrid = puzzle.map((r) => r.slice());
+  useEffect(() => {
+    let cancelled = false;
 
-  const interval = setInterval(() => {
-    const batch = empties.slice(idx, idx + batchSize);
-    if (!batch || batch.length === 0) {
-      clearInterval(interval);
-      return;
+    async function init() {
+      const pyodide = await loadPyodideAndSudoku();
+      if (cancelled) return;
+
+      const puzzleJson = await pyodide.runPythonAsync(
+        `json.dumps(generate_sudoku_puzzle(empty_cells=${emptyCells}, seed=${seed}).tolist())`
+      );
+      if (cancelled) return;
+
+      const jsPuzzle = JSON.parse(puzzleJson);
+      setPuzzle(jsPuzzle);
+
+      const puzzleLiteral = puzzleJson.replace(/\\/g, "\\\\").replace(/'/g, "\\'");
+      const solutionJson = await pyodide.runPythonAsync(
+        `import json, numpy as np\npuzzle_grid = np.array(json.loads('${puzzleLiteral}'), dtype=int)\nsolver = ImprovedSudokuResolver(puzzle_grid)\nsolver.find_solution()\njson.dumps(solver.grid.tolist())`
+      );
+      if (cancelled) return;
+
+      setSolution(JSON.parse(solutionJson));
+
+      setValidateGrid(() => async (grid) => {
+        const gridLiteral = JSON.stringify(grid).replace(/\\/g, "\\\\").replace(/'/g, "\\'");
+        const result = await pyodide.runPythonAsync(
+          `import json\ncandidate_grid = json.loads('${gridLiteral}')\nis_valid_sudoku_grid(candidate_grid)`
+        );
+        return Boolean(result);
+      });
+
+      setLoading(false);
     }
 
-    batch.forEach(([r, c]) => {
-      currentGrid[r][c] = solution[r][c];
+    init().catch((err) => {
+      console.error(err);
+      setLoading(false);
     });
 
-    onUpdate(currentGrid.map((r) => r.slice()));
+    return () => {
+      cancelled = true;
+    };
+  }, [emptyCells, seed]);
 
-    const keys = batch.map(([r, c]) => `cell-${r}-${c}`);
-    onReveal(keys);
-    const t = setTimeout(() => onReveal([]), 650);
-    timeouts.push(t);
+  return (
+    <div className="mx-auto max-w-5xl px-6 py-6">
+      <div className="mb-6 flex items-center gap-4">
+        <div className="h-px flex-1 bg-gradient-to-r from-transparent via-purple-500/40 to-transparent" />
+        <p className={`text-lg font-semibold uppercase tracking-[0.45em] ${loading ? "text-yellow-300" : "text-purple-300"}`}>
+          {loading ? "LOADING PUZZLE" : "SUDOKU PUZZLE"}
+        </p>
+        <div className="h-px flex-1 bg-gradient-to-r from-transparent via-purple-500/40 to-transparent" />
+      </div>
 
-    idx += batchSize;
-    if (idx >= empties.length) {
-      clearInterval(interval);
-    }
-  }, intervalMs);
-
-  return () => {
-    clearInterval(interval);
-    timeouts.forEach((t) => clearTimeout(t));
-  };
-}
-
-export default function AISudokuBoard(props) {
-  return <UserSudokuBoard {...props} />;
+      {loading ? (
+        <p className="text-sm text-purple-300/70">Generating puzzle…</p>
+      ) : (
+        <SudokuBoardBase puzzle={puzzle} solution={solution} validateGrid={validateGrid} />
+      )}
+    </div>
+  );
 }
