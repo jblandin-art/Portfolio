@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 
-export default function SudokuBoardBase({ puzzle = null, solution = null, validateGrid = null, onChange = null, readOnly = false, revealCells = [], visibleCells = null }) {
+export default function SudokuBoardBase({ puzzle = null, solution = null, validateGrid = null, onChange = null, readOnly = false, revealCells = [], visibleCells = null, validMessage = "Valid Sudoku board.", showValidationState = true }) {
   const emptyGrid = Array.from({ length: 9 }, () => Array(9).fill(0));
   const [grid, setGrid] = useState(emptyGrid);
   const [boardValid, setBoardValid] = useState(null);
@@ -62,55 +62,67 @@ export default function SudokuBoardBase({ puzzle = null, solution = null, valida
     if (onChange) onChange(next);
   }
 
+  const displayBoardValid = showValidationState ? boardValid : null;
+
   return (
     <div className="mx-auto max-w-md sm:max-w-lg">
-      <div
-        className={`grid w-full grid-cols-9 gap-0 bg-transparent rounded-lg overflow-hidden shadow-[0_0_40px_rgba(168,85,247,0.12)] border ${boardValid === false ? "border-red-500/50" : boardValid ? "border-emerald-500/50" : "border-purple-700/40"}`}
-      >
-        {grid.map((row, r) =>
-          row.map((val, c) => {
-            const isPrefilled = puzzle && (puzzle[r]?.[c] || 0) > 0;
-            const cellKey = `cell-${r}-${c}`;
-            const rightBorder = (c + 1) % 3 === 0 && c !== 8 ? "border-r-2 border-purple-700/40" : "border-r border-purple-700/20";
-            const bottomBorder = (r + 1) % 3 === 0 && r !== 8 ? "border-b-2 border-purple-700/40" : "border-b border-purple-700/20";
-            const correctnessClass = boardValid === false
-              ? "text-red-200 bg-red-500/10"
-              : boardValid
-                ? "text-emerald-200 bg-emerald-500/10"
-                : "text-purple-200";
+      <div className="relative">
+        <div
+          className={`grid w-full grid-cols-9 gap-0 rounded-lg overflow-hidden bg-transparent border shadow-[0_0_40px_rgba(168,85,247,0.12)] ${displayBoardValid === false ? "border-red-500/50" : "border-purple-700/40"}`}
+        >
+          {grid.map((row, r) =>
+            row.map((val, c) => {
+              const isPrefilled = puzzle && (puzzle[r]?.[c] || 0) > 0;
+              const cellKey = `cell-${r}-${c}`;
+              const rightBorder = (c + 1) % 3 === 0 && c !== 8 ? "border-r-2 border-purple-700/40" : "border-r border-purple-700/20";
+              const bottomBorder = (r + 1) % 3 === 0 && r !== 8 ? "border-b-2 border-purple-700/40" : "border-b border-purple-700/20";
+              const correctnessClass = displayBoardValid === false
+                ? "text-red-200 bg-red-500/10"
+                : displayBoardValid
+                  ? "text-emerald-200 bg-emerald-500/10"
+                  : "text-purple-200";
 
-            const isRevealed = revealCells && revealCells.includes(cellKey);
-            const isVisible = !Array.isArray(visibleCells) || visibleCells.includes(cellKey) || isPrefilled;
-            return (
-              <div
-                key={cellKey}
-                className={`relative grid aspect-square w-full place-items-center bg-slate-900/65 ${correctnessClass} ${rightBorder} ${bottomBorder} ${isRevealed ? 'sudoku-reveal' : ''}`}
-              >
-                {isPrefilled || readOnly ? (
-                  <span className="relative z-10 flex h-full w-full items-center justify-center text-sm sm:text-base font-semibold leading-none select-none">{val}</span>
-                ) : (
-                  <div className="relative flex h-full w-full items-center justify-center overflow-hidden">
-                    <span className={`pointer-events-none absolute inset-0 z-10 flex items-center justify-center text-sm sm:text-base font-semibold leading-none select-none transition-opacity duration-700 ${isVisible ? "opacity-100" : "opacity-0"}`}>
-                      {val === 0 ? "" : String(val)}
-                    </span>
-                    <input
-                      aria-label={`r${r}c${c}`}
-                      className="absolute inset-0 z-20 h-full w-full appearance-none border-0 bg-transparent p-0 text-center text-sm sm:text-base leading-none outline-none caret-purple-300 opacity-0"
-                      value={val === 0 ? "" : String(val)}
-                      onChange={(e) => handleCellChange(r, c, e.target.value)}
-                    />
-                  </div>
-                )}
-              </div>
-            );
-          })
-        )}
+              const isRevealed = revealCells && revealCells.includes(cellKey);
+              const isVisible = !Array.isArray(visibleCells) || visibleCells.includes(cellKey) || isPrefilled;
+              return (
+                <div
+                  key={cellKey}
+                  className={`relative grid aspect-square w-full place-items-center bg-slate-900/65 ${correctnessClass} ${rightBorder} ${bottomBorder} ${isRevealed ? 'sudoku-reveal' : ''}`}
+                >
+                  {isPrefilled || readOnly ? (
+                    <span className="relative z-10 flex h-full w-full items-center justify-center text-sm sm:text-base font-semibold leading-none select-none">{val}</span>
+                  ) : (
+                    <div className="relative flex h-full w-full items-center justify-center overflow-hidden">
+                      <span className={`pointer-events-none absolute inset-0 z-10 flex items-center justify-center text-sm sm:text-base font-semibold leading-none select-none transition-opacity duration-700 ${isVisible ? "opacity-100" : "opacity-0"}`}>
+                        {val === 0 ? "" : String(val)}
+                      </span>
+                      <input
+                        aria-label={`r${r}c${c}`}
+                        className="absolute inset-0 z-20 h-full w-full appearance-none border-0 bg-transparent p-0 text-center text-sm sm:text-base leading-none outline-none caret-purple-300 opacity-0 focus:opacity-100 focus:text-transparent"
+                        value={val === 0 ? "" : String(val)}
+                        onChange={(e) => handleCellChange(r, c, e.target.value)}
+                      />
+                    </div>
+                  )}
+                </div>
+              );
+            })
+          )}
+        </div>
+
+        <div
+          aria-hidden="true"
+          className={`pointer-events-none absolute inset-0 rounded-lg border border-emerald-500/50 transition-opacity duration-500 ease-out ${displayBoardValid ? "opacity-100" : "opacity-0"}`}
+        />
       </div>
-      <p className="mt-3 text-xs text-purple-300/80">
-        {boardValid === null
+
+      <p
+        className={`mt-3 text-xs text-purple-300/80 transition-opacity duration-500 ease-out ${displayBoardValid === null ? "opacity-0" : "opacity-100"}`}
+      >
+        {displayBoardValid === null
           ? ""
-          : boardValid
-            ? "Valid Sudoku board. Any solved version that satisfies alldiff is accepted."
+          : displayBoardValid
+            ? validMessage
             : "There is a conflict in the board."}
       </p>
     </div>

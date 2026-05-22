@@ -3,13 +3,16 @@ import { useEffect, useRef, useState } from "react";
 import SudokuBoardBase from "./SudokuBoardBase";
 import { loadPyodideAndSudoku } from "./pyodideSudokuLoader";
 
-export default function AISudokuBoard({ emptyCells = 45, seed = 42 }) {
+export default function AISudokuBoard({ emptyCells = 45, seed }) {
+  const [runtimeSeed] = useState(() => seed ?? Math.floor(Math.random() * 1000000));
+  console.log("AI Sudoku seed:", runtimeSeed);
   const [puzzle, setPuzzle] = useState(null);
   const [solution, setSolution] = useState(null);
   const [validateGrid, setValidateGrid] = useState(null);
   const [loading, setLoading] = useState(true);
   const [visibleCells, setVisibleCells] = useState([]);
   const [revealCells, setRevealCells] = useState([]);
+  const [revealFinished, setRevealFinished] = useState(false);
   const timerRef = useRef(null);
   const timeoutRefs = useRef([]);
 
@@ -21,7 +24,7 @@ export default function AISudokuBoard({ emptyCells = 45, seed = 42 }) {
       if (cancelled) return;
 
       const puzzleJson = await pyodide.runPythonAsync(
-        `import json\njson.dumps(generate_sudoku_puzzle(empty_cells=${emptyCells}, seed=${seed}).tolist())`
+        `import json\njson.dumps(generate_sudoku_puzzle(empty_cells=${emptyCells}, seed=${runtimeSeed}).tolist())`
       );
       if (cancelled) return;
 
@@ -37,6 +40,7 @@ export default function AISudokuBoard({ emptyCells = 45, seed = 42 }) {
       setSolution(JSON.parse(solutionJson));
       setVisibleCells([]);
       setRevealCells([]);
+      setRevealFinished(false);
 
       setValidateGrid(() => async (grid) => {
         const gridLiteral = JSON.stringify(grid).replace(/\\/g, "\\\\").replace(/'/g, "\\'");
@@ -60,15 +64,22 @@ export default function AISudokuBoard({ emptyCells = 45, seed = 42 }) {
       timeoutRefs.current.forEach((timeoutId) => clearTimeout(timeoutId));
       timeoutRefs.current = [];
     };
-  }, [emptyCells, seed]);
+  }, [emptyCells, runtimeSeed]);
 
   useEffect(() => {
     if (!puzzle || !solution) return;
+
+    setRevealFinished(false);
 
     const emptyCellsList = [];
     puzzle.forEach((row, r) => row.forEach((value, c) => {
       if (!value) emptyCellsList.push([r, c]);
     }));
+
+    if (emptyCellsList.length === 0) {
+      setRevealFinished(true);
+      return;
+    }
 
     let index = 0;
     timerRef.current = setInterval(() => {
@@ -76,6 +87,7 @@ export default function AISudokuBoard({ emptyCells = 45, seed = 42 }) {
       if (batch.length === 0) {
         clearInterval(timerRef.current);
         timerRef.current = null;
+        setRevealFinished(true);
         return;
       }
 
@@ -83,7 +95,13 @@ export default function AISudokuBoard({ emptyCells = 45, seed = 42 }) {
       setVisibleCells((previous) => Array.from(new Set([...previous, ...batchKeys])));
       setRevealCells(batchKeys);
 
-      const timeoutId = setTimeout(() => setRevealCells([]), 700);
+      const isLastBatch = index + 3 >= emptyCellsList.length;
+      const timeoutId = setTimeout(() => {
+        setRevealCells([]);
+        if (isLastBatch) {
+          setRevealFinished(true);
+        }
+      }, 700);
       timeoutRefs.current.push(timeoutId);
 
       index += 3;
@@ -121,6 +139,8 @@ export default function AISudokuBoard({ emptyCells = 45, seed = 42 }) {
             validateGrid={validateGrid}
             revealCells={revealCells}
             visibleCells={visibleCells}
+            validMessage="Valid Sudoku Board"
+            showValidationState={revealFinished}
           />
         </div>
       </div>

@@ -3,10 +3,15 @@ import { useEffect, useState } from "react";
 import SudokuBoardBase from "./SudokuBoardBase";
 import { loadPyodideAndSudoku } from "./pyodideSudokuLoader";
 
-export default function UserSudokuBoard({ emptyCells = 45, seed = 42 }) {
+export default function UserSudokuBoard({ emptyCells = 45, seed }) {
+  const [runtimeSeed] = useState(() => seed ?? Math.floor(Math.random() * 1000000));
+  console.log("User Sudoku seed:", runtimeSeed);
   const [puzzle, setPuzzle] = useState(null);
+  const [solution, setSolution] = useState(null);
   const [validateGrid, setValidateGrid] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [showFillButton, setShowFillButton] = useState(false);
+  const [isFilled, setIsFilled] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
@@ -16,12 +21,20 @@ export default function UserSudokuBoard({ emptyCells = 45, seed = 42 }) {
       if (cancelled) return;
 
       const puzzleJson = await pyodide.runPythonAsync(
-        `import json\njson.dumps(generate_sudoku_puzzle(empty_cells=${emptyCells}, seed=${seed}).tolist())`
+        `import json\njson.dumps(generate_sudoku_puzzle(empty_cells=${emptyCells}, seed=${runtimeSeed}).tolist())`
       );
       if (cancelled) return;
 
       const jsPuzzle = JSON.parse(puzzleJson);
       setPuzzle(jsPuzzle);
+
+      const puzzleLiteral = puzzleJson.replace(/\\/g, "\\\\").replace(/'/g, "\\'");
+      const solutionJson = await pyodide.runPythonAsync(
+        `import json, numpy as np\npuzzle_grid = np.array(json.loads('${puzzleLiteral}'), dtype=int)\nsolver = ImprovedSudokuResolver(puzzle_grid)\nsolver.find_solution()\njson.dumps(solver.grid.tolist())`
+      );
+      if (cancelled) return;
+
+      setSolution(JSON.parse(solutionJson));
 
       setValidateGrid(() => async (grid) => {
         const gridLiteral = JSON.stringify(grid).replace(/\\/g, "\\\\").replace(/'/g, "\\'");
@@ -42,7 +55,18 @@ export default function UserSudokuBoard({ emptyCells = 45, seed = 42 }) {
     return () => {
       cancelled = true;
     };
-  }, [emptyCells, seed]);
+  }, [emptyCells, runtimeSeed]);
+
+  useEffect(() => {
+    function handleKeyDown(event) {
+      if (event.key === "*" || event.code === "NumpadMultiply") {
+        setShowFillButton(true);
+      }
+    }
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
 
   return (
     <>
@@ -65,7 +89,22 @@ export default function UserSudokuBoard({ emptyCells = 45, seed = 42 }) {
                 <div className="h-px flex-1 bg-gradient-to-r from-transparent via-purple-500/40 to-transparent" />
               </div>
 
-              <SudokuBoardBase puzzle={puzzle} validateGrid={validateGrid} />
+              <SudokuBoardBase
+                puzzle={puzzle}
+                solution={isFilled ? solution : null}
+                validateGrid={validateGrid}
+                validMessage="Great job! This is a valid sudoku board."
+              />
+
+              {showFillButton ? (
+                <button
+                  type="button"
+                  className="mt-4 inline-flex cursor-pointer items-center rounded-md border border-red-500/40 bg-red-500/10 px-4 py-2 text-sm font-semibold text-red-200 transition hover:bg-red-500/20"
+                  onClick={() => setIsFilled(true)}
+                >
+                  Fill User Sudoku
+                </button>
+              ) : null}
             </div>
           </div>
         </section>

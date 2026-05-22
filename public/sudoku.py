@@ -28,19 +28,18 @@ def generate_sudoku_puzzle(empty_cells=40, seed=None, use_improved_solver=True):
   Note: this guarantees the puzzle is solvable by the resolver, but it does not
   guarantee a unique solution.
   """
-  if seed is not None:
-    random.seed(seed)
+  rng = random.Random(seed)
 
   empty_grid = np.zeros((N, N), dtype=int)
   solver_cls = ImprovedSudokuResolver if use_improved_solver else SimpleSudokuResolver
-  solver = solver_cls(empty_grid)
+  solver = solver_cls(empty_grid, rng=rng)
 
   if not solver.find_solution():
     raise ValueError("Could not generate a complete sudoku solution.")
 
   puzzle = np.copy(solver.grid)
   cells = [(row, col) for row in range(N) for col in range(N)]
-  random.shuffle(cells)
+  rng.shuffle(cells)
 
   for row, col in cells[:max(0, min(empty_cells, N * N))]:
     puzzle[row][col] = 0
@@ -86,11 +85,12 @@ def is_valid_sudoku_grid(grid):
   return True
 
 class SudokuResolver(ABC):
-  def __init__(self, grid):
+  def __init__(self, grid, rng=None):
     """
     Initialize the resolver with a grid.
     """
     self.grid = np.copy(grid)
+    self.rng = rng or random.Random()
 
   @abstractmethod
   def try_num(self, row: int, col: int) -> bool:
@@ -151,6 +151,9 @@ class SudokuResolver(ABC):
     return result
 
 class BaseSudokuResolver(SudokuResolver):
+  def __init__(self, grid, rng=None):
+    super().__init__(grid, rng=rng)
+
   def is_safe_in_row(self, row: int, num: int) -> bool:
     """
     Checking if a number is not filled in a row yet
@@ -249,7 +252,9 @@ class SimpleSudokuResolver(BaseSudokuResolver):
         return self.try_num(row, col + 1)
 
     #If the value of that cell equals 0, try to set this cell to a value from 1 to 9 if it is a safe number (using is_safe_num function)
-    for i in range(1, 10):
+    nums = list(range(1, 10))
+    self.rng.shuffle(nums)
+    for i in nums:
       if row == 8 and col == 8 and self.is_safe_num(row, col, i):
         self.grid[row][col] = i
         return True
@@ -274,8 +279,8 @@ class SimpleSudokuResolver(BaseSudokuResolver):
     # End your code
 
 class ImprovedSudokuResolver(BaseSudokuResolver):
-  def __init__(self, grid):
-    super().__init__(grid)
+  def __init__(self, grid, rng=None):
+    super().__init__(grid, rng=rng)
 
     self.avai_rows = [set(list(range(1, N+1, 1))) for i in range(N)]
     self.avai_cols = [set(list(range(1, N+1, 1))) for i in range(N)]
@@ -315,7 +320,9 @@ class ImprovedSudokuResolver(BaseSudokuResolver):
     if self.grid[row][col] == 0:
       intersection = self.avai_rows[row].intersection(self.avai_cols[col]).intersection(self.avai_squares[self.square_from_position(row, col)])
       if intersection:
-        for num in intersection:
+        nums = list(intersection)
+        self.rng.shuffle(nums)
+        for num in nums:
           self.grid[row][col] = num
           self.avai_rows[row].remove(num)
           self.avai_cols[col].remove(num)
@@ -338,15 +345,15 @@ class ImprovedSudokuResolver(BaseSudokuResolver):
 
     # End your code
 
-puzzle = generate_sudoku_puzzle(empty_cells=45, seed=42)
-print(puzzle)
+#puzzle = generate_sudoku_puzzle(empty_cells=45, seed=42)
+#print(puzzle)
 
-solver2 = ImprovedSudokuResolver(puzzle)
+#solver2 = ImprovedSudokuResolver(puzzle)
 
-if solver2.find_solution() and solver2.check_grid():
-  print("Found a solution:")
-  solver2.print_grid()
-else:
-  print("No solution or invalid solution found!")
+#if solver2.find_solution() and solver2.check_grid():
+  #print("Found a solution:")
+  #solver2.print_grid()
+#else:
+  #print("No solution or invalid solution found!")
 
 # Example generator usage:
