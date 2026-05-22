@@ -1,32 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import SudokuBoardBase from "./SudokuBoardBase";
-
-async function loadPyodideAndSudoku() {
-  if (!globalThis.pyodide) {
-    await new Promise((res) => {
-      const s = document.createElement("script");
-      s.src = "https://cdn.jsdelivr.net/pyodide/v0.26.1/full/pyodide.js";
-      s.onload = res;
-      document.head.appendChild(s);
-    });
-    // @ts-ignore
-    globalThis.pyodide = await globalThis.loadPyodide({ indexURL: "https://cdn.jsdelivr.net/pyodide/v0.26.1/full/" });
-    try {
-      await globalThis.pyodide.loadPackage(["numpy"]);
-    } catch (e) {
-      // ignore; numpy optional in some builds
-    }
-    const sudokuPath = `${process.env.NEXT_PUBLIC_BASE_PATH || ""}/sudoku.py`;
-    const resp = await fetch(sudokuPath);
-    const code = await resp.text();
-    if (!resp.ok) {
-      throw new Error(`Failed to fetch sudoku.py: ${resp.status} ${resp.statusText}`);
-    }
-    await globalThis.pyodide.runPythonAsync(`import json\n${code}`);
-  }
-  return globalThis.pyodide;
-}
+import { loadPyodideAndSudoku } from "./pyodideSudokuLoader";
 
 export default function AISudokuBoard({ emptyCells = 45, seed = 42 }) {
   const [puzzle, setPuzzle] = useState(null);

@@ -65,7 +65,7 @@ export default function SudokuBoardBase({ puzzle = null, solution = null, valida
   return (
     <div className="mx-auto max-w-md sm:max-w-lg">
       <div
-        className={`grid grid-cols-9 gap-0 bg-transparent rounded-lg overflow-hidden shadow-[0_0_40px_rgba(168,85,247,0.12)] border ${boardValid === false ? "border-red-500/50" : boardValid ? "border-emerald-500/50" : "border-purple-700/40"}`}
+        className={`grid w-full grid-cols-9 gap-0 bg-transparent rounded-lg overflow-hidden shadow-[0_0_40px_rgba(168,85,247,0.12)] border ${boardValid === false ? "border-red-500/50" : boardValid ? "border-emerald-500/50" : "border-purple-700/40"}`}
       >
         {grid.map((row, r) =>
           row.map((val, c) => {
@@ -84,7 +84,7 @@ export default function SudokuBoardBase({ puzzle = null, solution = null, valida
             return (
               <div
                 key={cellKey}
-                className={`relative flex items-center justify-center w-8 h-8 sm:w-12 sm:h-12 bg-slate-900/65 ${correctnessClass} ${rightBorder} ${bottomBorder} ${isRevealed ? 'sudoku-reveal' : ''}`}
+                className={`relative flex aspect-square w-full items-center justify-center bg-slate-900/65 ${correctnessClass} ${rightBorder} ${bottomBorder} ${isRevealed ? 'sudoku-reveal' : ''}`}
               >
                 {isPrefilled || readOnly ? (
                   <span className="relative z-10 text-sm sm:text-base font-semibold select-none">{val}</span>
