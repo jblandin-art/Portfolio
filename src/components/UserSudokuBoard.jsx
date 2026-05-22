@@ -55,7 +55,7 @@ export default function UserSudokuBoard({ emptyCells = 45, seed = 42 }) {
       if (cancelled) return;
 
       const puzzleJson = await pyodide.runPythonAsync(
-        `json.dumps(generate_sudoku_puzzle(empty_cells=${emptyCells}, seed=${seed}).tolist())`
+        `import json\njson.dumps(generate_sudoku_puzzle(empty_cells=${emptyCells}, seed=${seed}).tolist())`
       );
       if (cancelled) return;
 

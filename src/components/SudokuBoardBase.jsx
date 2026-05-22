@@ -80,19 +80,19 @@ export default function SudokuBoardBase({ puzzle = null, solution = null, valida
                 : "text-purple-200";
 
             const isRevealed = revealCells && revealCells.includes(cellKey);
-            const shouldHide = Array.isArray(visibleCells) && !visibleCells.includes(cellKey) && !isPrefilled;
+            const isVisible = !Array.isArray(visibleCells) || visibleCells.includes(cellKey) || isPrefilled;
             return (
               <div
                 key={cellKey}
-                className={`flex items-center justify-center w-8 h-8 sm:w-12 sm:h-12 bg-slate-900/65 transition-opacity duration-700 ${correctnessClass} ${rightBorder} ${bottomBorder} ${isRevealed ? 'sudoku-reveal' : ''} ${shouldHide ? 'opacity-0' : 'opacity-100'}`}
+                className={`relative flex items-center justify-center w-8 h-8 sm:w-12 sm:h-12 bg-slate-900/65 ${correctnessClass} ${rightBorder} ${bottomBorder} ${isRevealed ? 'sudoku-reveal' : ''}`}
               >
                 {isPrefilled || readOnly ? (
-                  <span className="text-sm sm:text-base font-semibold select-none">{val}</span>
+                  <span className="relative z-10 text-sm sm:text-base font-semibold select-none">{val}</span>
                 ) : (
-                  <div className="relative flex h-full w-full items-center justify-center text-sm sm:text-base text-purple-200">
+                  <div className="relative flex h-full w-full items-center justify-center overflow-hidden">
                     <input
                       aria-label={`r${r}c${c}`}
-                      className="absolute inset-0 h-full w-full bg-transparent text-center outline-none caret-purple-300 opacity-0"
+                      className={`absolute inset-0 z-10 h-full w-full bg-transparent text-center text-sm sm:text-base outline-none caret-purple-300 transition-opacity duration-700 ${isVisible ? "opacity-100" : "opacity-0"}`}
                       value={val === 0 ? "" : String(val)}
                       onChange={(e) => handleCellChange(r, c, e.target.value)}
                     />
