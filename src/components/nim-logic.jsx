@@ -265,6 +265,7 @@ export function NimLogic({ setReady }) {
                         const number = moveData.number;
 
                         const rows = [row1, row2, row3, row4];
+                        const rowSections = [rowSection1, rowSection2, rowSection3, rowSection4];
                         //console.log(pileSelection)
                         //console.log(rows[pileSelection].children.length);
                         for (let i = 0; i < number; i++) {
@@ -288,6 +289,7 @@ export function NimLogic({ setReady }) {
                         if (rows[pileSelection].children.length === 0) {
                             removeStickButtons[pileSelection].hidden = true;
                             rows[pileSelection].hidden = true;
+                            rowSections[pileSelection].hidden = true;
                             if (removeStickButtonsMobile[pileSelection]) removeStickButtonsMobile[pileSelection].hidden = true;
                         }
 

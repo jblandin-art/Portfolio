@@ -26,10 +26,10 @@ export default function NimPage() {
       <header className="mb-10">
         <p className="text-sm font-semibold uppercase tracking-widest text-purple-300">Case Study</p>
         <h1 className="mt-2 max-w-3xl text-3xl font-bold font-poppins leading-tight text-purple-400 sm:text-4xl lg:text-5xl">
-          Nim - Adversarial Search Implementation
+          Nim - Adversarial Search Build
         </h1>
         <p className="mt-4 max-w-3xl text-lg leading-8 text-gray-300">
-          Nim is a simple turn-based game. Players take turns removing as many items as they'd like from one pile at a time. The player who takes the last pile wins. This project was fun to implement as I was very hands on with it's development. The AI opponent utilizes an Adversarial Minimax search algorithm to find the optimal move, in order to win you must utilize the optimal strategy of Nim.
+          Nim is a simple turn-based game. Players take turns removing as many items as they'd like from one pile at a time. The player who takes the last pile loses. This project was fun to implement as I was very hands on with it's development. The AI opponent utilizes an Adversarial Minimax search algorithm to find the optimal move, in order to win you must utilize the optimal strategy of Nim.
         </p>
 
         <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
@@ -43,7 +43,7 @@ export default function NimPage() {
           </div>
           <div className="rounded-xl border border-purple-700/50 bg-slate-900/70 p-4">
             <p className="text-xs uppercase tracking-wide text-purple-300">Timeline</p>
-            <p className="mt-1 text-sm">6 Hours</p>
+            <p className="mt-1 text-sm">6 Hours + 8 Hours(UI)</p>
           </div>
           <div className="rounded-xl border border-purple-700/50 bg-slate-900/70 p-4">
             <p className="text-xs uppercase tracking-wide text-purple-300">Stack</p>
@@ -52,6 +52,24 @@ export default function NimPage() {
         </div>
       </header>
       <NimBoard />
+      <section id="instructions" className="mt-12">
+        <h2 className="text-lg font-semibold text-purple-200/95 mb-3 tracking-wider uppercase">How to Play</h2>
+        <div className="h-0.5 w-20 mb-4 bg-gradient-to-r from-purple-500 via-purple-400 to-transparent rounded" />
+        <ol className="list-decimal pl-6 space-y-3">
+          <li className="text-base text-gray-200">Either the player or the AI can make the first move.</li>
+          <li className="text-base text-gray-200">To trigger an AI move, click the red "AI Move" button.</li>
+          <li className="text-base text-gray-200">On your turn, remove as many items as you'd like from <span className="font-semibold">one pile at a time.</span></li>
+          <li className="text-base text-gray-200">Whomever picks the last item <span className="font-extrabold text-red-500">loses.</span></li>
+        </ol>
+      </section>
+      <section id="hints" className="mt-12">
+        <h2 className="text-lg font-semibold text-purple-200/95 mb-3 tracking-wider uppercase">Hints</h2>
+        <div className="h-0.5 w-20 mb-4 bg-gradient-to-r from-purple-500 via-purple-400 to-transparent rounded" />
+        <ol className="list-decimal pl-6 space-y-3">
+          <li className="text-base text-gray-200">If the AI is winning, pay attention to the state it leaves the board in. Particularly try to identify patterns of 1s, 2s, and/or 4s between piles. If you notice such patters, try to emulate them yourself to gain an advantage.</li>
+          <li className="text-base text-gray-200">Read about the optimal strategy for Nim here: <a href="https://www.archimedes-lab.org/How_to_Solve/Win_at_Nim.html" target="_blank" rel="noopener noreferrer" className="text-purple-300 hover:underline">Archimedes Lab</a></li>
+        </ol>
+      </section>
     </main>
 
   )
