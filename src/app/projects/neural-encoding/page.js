@@ -46,9 +46,7 @@ export default function NeuralEncodingCaseStudy() {
           NeuralEncoding - Desktop Neural Telemetry Dashboard
         </h1>
         <p className="mt-4 max-w-3xl text-lg leading-8 text-gray-300">
-          NeuralEncoding is an operator-style desktop monitoring prototype for EEG-like telemetry.
-          It combines an Electron shell, React interface layers, and a Python FastAPI stream source
-          to deliver a full-screen, high-density telemetry experience.
+          This desktop application displays a stream of captured brain activity (simulated data) in a modern design. It features a visualization of the stream data using a custom made algorithm.
         </p>
 
         <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">

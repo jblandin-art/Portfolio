@@ -56,9 +56,7 @@ export default function PhotoShareCaseStudy() {
           PhotoShare - Sprint Based Social Media Platform
         </h1>
         <p className="mt-4 max-w-3xl text-lg leading-8 text-gray-300">
-          PhotoShare is a team-built web app focused on helping everyday users share photos and
-          comments with friends. My work centered on sprint delivery across API integration,
-          MongoDB-backed data flow, and route-aware frontend behavior.
+          This social media application features a login/registration system, a full commenting system, route awareness, and @mention functionality. All of which was implemented by me and my team. We used an Agile development approach and I led as scrum master for all sprints.
         </p>
 
         <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">

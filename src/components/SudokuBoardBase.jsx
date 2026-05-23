@@ -1,13 +1,13 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
-export default function SudokuBoardBase({ puzzle = null, solution = null, validateGrid = null, onChange = null, readOnly = false, revealCells = [], visibleCells = null, validMessage = "Valid Sudoku board.", showValidationState = true, forceHiddenValues = false, showMobileTapHint = true, showMobileKeypad = true }) {
+export default function SudokuBoardBase({ puzzle = null, solution = null, validateGrid = null, onChange = null, readOnly = false, allCellsReadOnly = false, revealCells = [], visibleCells = null, validMessage = "Valid Sudoku board.", showValidationState = true, forceHiddenValues = false, showMobileTapHint = true, showMobileKeypad = true, onLoadComplete = null, initialGrid = null, statusOverride = null }) {
   const emptyGrid = Array.from({ length: 9 }, () => Array(9).fill(0));
-  const keypadValues = [1, 2, 3, 4, 5, 6, 7, 8, 9];
   const [grid, setGrid] = useState(emptyGrid);
   const [boardValid, setBoardValid] = useState(null);
   const [isMobileInputMode, setIsMobileInputMode] = useState(false);
   const [activeCell, setActiveCell] = useState(null);
+  const inputRefs = useRef(Array.from({ length: 9 }, () => Array(9).fill(null)));
 
   useEffect(() => {
     if (!puzzle) return;
@@ -20,8 +20,24 @@ export default function SudokuBoardBase({ puzzle = null, solution = null, valida
         return parsedPuzzleValue > 0 ? parsedPuzzleValue : parsedSolutionValue;
       })
     );
-    setGrid(normalized);
-  }, [puzzle, solution]);
+    const restored = Array.isArray(initialGrid) && initialGrid.length === 9
+      ? Array.from({ length: 9 }, (_, r) =>
+          Array.from({ length: 9 }, (_, c) => {
+            const puzzleValue = puzzle[r]?.[c];
+            const solutionValue = solution?.[r]?.[c];
+            const parsedPuzzleValue = typeof puzzleValue === "number" ? puzzleValue : parseInt(puzzleValue) || 0;
+            const parsedSolutionValue = typeof solutionValue === "number" ? solutionValue : parseInt(solutionValue) || 0;
+            const initialValue = initialGrid[r]?.[c];
+            const parsedInitialValue = typeof initialValue === "number" ? initialValue : parseInt(initialValue) || 0;
+            if (parsedPuzzleValue > 0) return parsedPuzzleValue;
+            if (parsedInitialValue > 0) return parsedInitialValue;
+            return parsedSolutionValue > 0 ? parsedSolutionValue : 0;
+          })
+        )
+      : normalized;
+
+    setGrid(restored);
+  }, [puzzle, solution, initialGrid]);
 
   useEffect(() => {
     let cancelled = false;
@@ -91,8 +107,60 @@ export default function SudokuBoardBase({ puzzle = null, solution = null, valida
     if (onChange) onChange(next);
   }
 
+  function focusCell(r, c) {
+    const input = inputRefs.current[r]?.[c];
+    if (input) {
+      input.focus({ preventScroll: true });
+    }
+  }
+
+  function moveCell(r, c, rowDelta, colDelta) {
+    const nextRow = Math.max(0, Math.min(8, r + rowDelta));
+    const nextCol = Math.max(0, Math.min(8, c + colDelta));
+    setActiveCell({ r: nextRow, c: nextCol });
+    focusCell(nextRow, nextCol);
+  }
+
+  function handleCellKeyDown(event, r, c, isPrefilled) {
+    if (event.key === "ArrowUp") {
+      event.preventDefault();
+      moveCell(r, c, -1, 0);
+      return;
+    }
+
+    if (event.key === "ArrowDown") {
+      event.preventDefault();
+      moveCell(r, c, 1, 0);
+      return;
+    }
+
+    if (event.key === "ArrowLeft") {
+      event.preventDefault();
+      moveCell(r, c, 0, -1);
+      return;
+    }
+
+    if (event.key === "ArrowRight") {
+      event.preventDefault();
+      moveCell(r, c, 0, 1);
+      return;
+    }
+
+    if ((event.key === "Backspace" || event.key === "Delete") && !isPrefilled) {
+      event.preventDefault();
+      applyCellValue(r, c, 0);
+    }
+  }
+
   const displayBoardValid = showValidationState ? boardValid : null;
-  const enableMobileKeypad = isMobileInputMode && showMobileKeypad;
+  const displayStatusText = statusOverride ?? (displayBoardValid === null ? "" : displayBoardValid ? validMessage : "There is a conflict in the board.");
+  const displayStatusClass = statusOverride
+    ? "text-emerald-400"
+    : displayBoardValid === false
+      ? "text-red-300"
+      : displayBoardValid
+        ? "text-purple-300"
+        : "text-purple-300/80";
 
   return (
     <div className="mx-auto max-w-md sm:max-w-lg">
@@ -115,40 +183,40 @@ export default function SudokuBoardBase({ puzzle = null, solution = null, valida
               const isRevealed = revealCells && revealCells.includes(cellKey);
               const isVisible = !Array.isArray(visibleCells) || visibleCells.includes(cellKey) || isPrefilled;
               const shouldHideValue = forceHiddenValues && !readOnly;
-              const isActiveMobileCell = enableMobileKeypad && activeCell?.r === r && activeCell?.c === c;
+              const isLockedCell = isPrefilled || readOnly || allCellsReadOnly;
+              const isActiveMobileCell = activeCell?.r === r && activeCell?.c === c;
               return (
                 <div
                   key={cellKey}
                   className={`relative grid aspect-square w-full place-items-center bg-black/95 transition-colors duration-500 ease-out ${correctnessClass} ${rightBorder} ${bottomBorder} ${isActiveMobileCell ? "ring-2 ring-purple-300/90 ring-inset" : ""} ${isRevealed ? 'sudoku-reveal' : ''}`}
                 >
-                  {isPrefilled || readOnly ? (
-                    <span className={`relative z-10 flex h-full w-full items-center justify-center text-[1.125rem] sm:text-[1.3rem] font-bold leading-none select-none transition-opacity duration-300 ${shouldHideValue ? "opacity-0" : "opacity-100"}`}>{val}</span>
-                  ) : (
-                    <div className="relative flex h-full w-full items-center justify-center overflow-hidden">
-                      <span className={`pointer-events-none absolute inset-0 z-10 flex items-center justify-center text-[1.125rem] sm:text-[1.3rem] font-bold leading-none select-none transition-opacity duration-700 ${isVisible && !shouldHideValue ? "opacity-100" : "opacity-0"}`}>
-                        {val === 0 ? "" : String(val)}
-                      </span>
-                      {enableMobileKeypad ? (
-                        <button
-                          type="button"
-                          aria-label={`Select row ${r + 1} column ${c + 1}`}
-                          className="absolute inset-0 z-20 h-full w-full bg-transparent p-0 outline-none"
-                          onClick={() => setActiveCell({ r, c })}
-                        />
-                      ) : !isMobileInputMode ? (
-                        <input
-                          type="text"
-                          inputMode="numeric"
-                          pattern="[0-9]*"
-                          maxLength={1}
-                          aria-label={`r${r}c${c}`}
-                          className="absolute inset-0 z-20 h-full w-full appearance-none border-0 bg-transparent p-0 text-center text-[1.125rem] sm:text-[1.3rem] leading-none outline-none caret-purple-100 opacity-0 focus:opacity-100 focus:text-transparent"
-                          value={val === 0 ? "" : String(val)}
-                          onChange={(e) => handleCellChange(r, c, e.target.value)}
-                        />
-                      ) : null}
-                    </div>
-                  )}
+                  <div className="relative flex h-full w-full items-center justify-center overflow-hidden">
+                    <span className={`pointer-events-none absolute inset-0 z-10 flex items-center justify-center text-[1.125rem] sm:text-[1.3rem] font-bold leading-none select-none transition-opacity duration-700 ${isVisible && !shouldHideValue ? "opacity-100" : "opacity-0"}`}>
+                      {val === 0 ? "" : String(val)}
+                    </span>
+                    {isLockedCell ? null : (
+                      <input
+                        ref={(node) => {
+                          inputRefs.current[r][c] = node;
+                        }}
+                        type="text"
+                        inputMode="numeric"
+                        pattern="[0-9]*"
+                        maxLength={1}
+                        autoComplete="off"
+                        autoCapitalize="characters"
+                        readOnly={false}
+                        tabIndex={0}
+                        aria-label={`r${r}c${c}`}
+                        className={`absolute inset-0 z-20 h-full w-full appearance-none border-0 bg-transparent p-0 text-center text-[1.125rem] sm:text-[1.3rem] leading-none outline-none caret-white opacity-0 ${isMobileInputMode ? "cursor-pointer" : "focus:opacity-100 focus:text-transparent"}`}
+                        value={val === 0 ? "" : String(val)}
+                        onClick={isMobileInputMode ? () => setActiveCell({ r, c }) : undefined}
+                        onFocus={() => setActiveCell({ r, c })}
+                        onKeyDown={(event) => handleCellKeyDown(event, r, c, isPrefilled)}
+                        onChange={(e) => handleCellChange(r, c, e.target.value)}
+                      />
+                    )}
+                  </div>
                 </div>
               );
             })
@@ -162,16 +230,12 @@ export default function SudokuBoardBase({ puzzle = null, solution = null, valida
       </div>
 
       <p
-        className={`mt-3 text-xs text-purple-300/80 transition-opacity duration-500 ease-out ${displayBoardValid === null ? "opacity-0" : "opacity-100"}`}
+        className={`mt-3 text-xs transition-opacity duration-500 ease-out ${displayStatusText ? "opacity-100" : "opacity-0"} ${displayStatusClass}`}
       >
-        {displayBoardValid === null
-          ? ""
-          : displayBoardValid
-            ? validMessage
-            : "There is a conflict in the board."}
+        {displayStatusText}
       </p>
 
-      {enableMobileKeypad && !readOnly ? (
+      {showMobileKeypad && isMobileInputMode && !readOnly ? (
         <section className="mt-4 rounded-lg border border-purple-700/60 bg-black/75 p-3">
           {activeCell || showMobileTapHint ? (
             <p className="mb-2 text-center text-xs uppercase tracking-widest text-purple-200">
@@ -179,7 +243,7 @@ export default function SudokuBoardBase({ puzzle = null, solution = null, valida
             </p>
           ) : null}
           <div className="grid grid-cols-5 gap-2">
-            {keypadValues.map((n) => (
+            {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((n) => (
               <button
                 key={`key-${n}`}
                 type="button"
@@ -187,6 +251,7 @@ export default function SudokuBoardBase({ puzzle = null, solution = null, valida
                 onClick={() => {
                   if (!activeCell) return;
                   applyCellValue(activeCell.r, activeCell.c, n);
+                  focusCell(activeCell.r, activeCell.c);
                 }}
                 disabled={!activeCell}
               >
@@ -199,6 +264,7 @@ export default function SudokuBoardBase({ puzzle = null, solution = null, valida
               onClick={() => {
                 if (!activeCell) return;
                 applyCellValue(activeCell.r, activeCell.c, 0);
+                focusCell(activeCell.r, activeCell.c);
               }}
               disabled={!activeCell}
             >

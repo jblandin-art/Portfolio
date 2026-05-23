@@ -5,7 +5,6 @@ import { loadPyodideAndSudoku } from "./pyodideSudokuLoader";
 
 export default function AISudokuBoard({ emptyCells = 45, seed, onLoadingChange = null }) {
   const [runtimeSeed, setRuntimeSeed] = useState(() => seed ?? Math.floor(Math.random() * 1000000));
-  console.log("AI Sudoku seed:", runtimeSeed);
   const [puzzle, setPuzzle] = useState(null);
   const [solution, setSolution] = useState(null);
   const [validateGrid, setValidateGrid] = useState(null);
@@ -178,13 +177,14 @@ export default function AISudokuBoard({ emptyCells = 45, seed, onLoadingChange =
   return (
     <section>
       <div className="mt-4">
-        <div className="mx-auto max-w-5xl py-6 min-h-[38rem] sm:min-h-[42rem] lg:min-h-[44rem]">
+        <div className="mx-auto max-w-5xl py-6 min-h-[36rem] sm:min-h-[36rem] lg:min-h-[38rem]">
           <div className={`relative transition-opacity duration-300 ease-out ${isVisible && !loading ? "opacity-100" : "opacity-0"}`}>
             <SudokuBoardBase
               key={runtimeSeed}
               puzzle={puzzle}
               solution={solution}
               validateGrid={validateGrid}
+              allCellsReadOnly={true}
               revealCells={revealCells}
               visibleCells={visibleCells}
               validMessage="Valid Sudoku Board"

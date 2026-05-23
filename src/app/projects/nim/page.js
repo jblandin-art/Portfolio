@@ -59,7 +59,7 @@ export default function NimPage() {
           <li className="text-base text-gray-200">Either the player or the AI can make the first move.</li>
           <li className="text-base text-gray-200">To trigger an AI move, click the red "AI Move" button.</li>
           <li className="text-base text-gray-200">On your turn, remove as many items as you'd like from <span className="font-semibold">one pile at a time.</span></li>
-          <li className="text-base text-gray-200">Whomever picks the last item <span className="font-extrabold text-red-500">loses.</span></li>
+          <li className="text-base text-gray-200">Whomever picks the last item loses.</li>
         </ol>
       </section>
       <section id="hints" className="mt-12">

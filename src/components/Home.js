@@ -1,7 +1,14 @@
+"use client";
+// ... existing imports
+import { useState } from "react";
 import Link from "next/link";
 import Footer from "@/components/footer.jsx";
 
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
+
 export default function Home() {
+    const [showMore, setShowMore] = useState(false);
+    
     return (
         <>
         <main id="home" className="mx-auto max-w-5xl px-6 py-8 sm:py-10 text-gray-200">
@@ -34,8 +41,8 @@ export default function Home() {
                 Welcome to my domain. I'm Josiah, someone who spends the majority of their time coding and the rest being a secret agent. In my glory days I was a digital creator and now I aspire to be a part of the creation process through software development.
             </p>
             <div className="mt-6 flex items-center gap-3">
-                <a target="_blank" rel="noopener noreferrer" href="https://www.linkedin.com/in/josiah-blanding" className="rounded-md bg-purple-500 px-4 py-2 text-sm font-medium text-white hover:bg-purple-400 transition">LinkedIn</a>
-                <a target="_blank" rel="noopener noreferrer" href="https://github.com/jblandin-art" className="rounded-md border border-purple-500/50 px-4 py-2 text-sm text-purple-200 hover:bg-purple-800/40 transition">GitHub</a>
+                <a target="_blank" rel="noopener noreferrer" href="https://www.linkedin.com/in/josiah-blanding" className="rounded-md border border-purple-700/60 bg-zinc-900/60 px-4 py-2 text-sm font-medium text-zinc-100 transition hover:bg-zinc-800">LinkedIn</a>
+                <a target="_blank" rel="noopener noreferrer" href="https://github.com/jblandin-art" className="rounded-md border border-purple-700/60 bg-zinc-900/60 px-4 py-2 text-sm font-medium text-zinc-100 transition hover:bg-zinc-800">GitHub</a>
             </div>
 
             <section id="projects" className="mt-10 scroll-mt-20">
@@ -46,47 +53,61 @@ export default function Home() {
                 </div>
 
                 <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                    <article className="group flex h-full flex-col rounded-2xl border border-purple-700/60 bg-gradient-to-br from-slate-900/80 to-purple-950/70 p-5 transition hover:-translate-y-1 hover:shadow-[0_15px_60px_-20px_rgba(80,0,200,0.6)]">
-                        <div className="mb-4 flex items-center justify-between">
-                            <span className="rounded-lg bg-purple-900/40 px-3 py-1 text-xs font-semibold text-purple-200">Electron + React</span>
-                            <span className="text-xs text-muted-foreground">2026</span>
+                    <article className="group flex h-full flex-col rounded-2xl bg-gradient-to-br from-zinc-900/95 to-zinc-950/95 ring-1 ring-inset ring-purple-900/35 p-5 transform-gpu transition-all duration-700 ease-in-out hover:scale-[1.03] will-change-transform backface-hidden">
+                        <div className="-mx-5 -mt-5 mb-4 overflow-hidden rounded-t-2xl bg-zinc-950/80">
+                            <img src={`${basePath}/sudoku.png`} alt="Sudoku game preview" className="h-44 w-full object-cover" />
                         </div>
-                        <h3 className="text-xl font-semibold text-purple-50">IG Metrics - Desktop Analytics Application</h3>
-                        <p className="mt-2 text-sm text-gray-300 leading-7">This desktop application parses through exported Instagram follower data, highlighting important connection metrics. It identifies one way connections, features an interactive chart, and features CSV export for the analysis data.</p>
-                        <div className="mt-auto pt-4 flex gap-2">
-                            <Link href="/projects/ig-metrics" className="rounded-md bg-purple-500 px-3 py-1.5 text-sm font-medium text-white hover:bg-purple-400 transition">Case Study</Link>
-                            <a target="_blank" href="https://github.com/jblandin-art/instagram-metrics-app/releases/tag/v1.0.0" className="rounded-md border border-purple-500/70 px-3 py-1.5 text-sm text-purple-200 hover:bg-purple-800/50 transition">Download</a>
+                        <h3 className="text-xl leading-tight font-poppins mt-2 tracking-normal text-purple-400">Sudoku</h3>
+                        <p className="mt-1 text-base leading-6 text-zinc-300">AI Solving Algorithm + Interactive Game</p>
+                        <div className="mt-2 mb-3 -translate-x-[3px] flex flex-wrap gap-2">
+                            <span className="rounded-lg border border-purple-900/35 bg-zinc-900/60 px-3 py-1 text-xs font-semibold text-zinc-200">Python</span>
+                            <span className="rounded-lg border border-purple-900/35 bg-zinc-900/60 px-3 py-1 text-xs font-semibold text-zinc-200">Pyodide</span>
+                            <span className="rounded-lg border border-purple-900/35 bg-zinc-900/60 px-3 py-1 text-xs font-semibold text-zinc-200">React</span>
+                            <span className="rounded-lg border border-purple-900/35 bg-zinc-900/60 px-3 py-1 text-xs font-semibold text-zinc-200">Next.js</span>
+                        </div>
+                        <div className="mt-auto pt-5 grid grid-cols-1 gap-2">
+                            <Link href="/projects/sudoku#play" className="inline-flex w-full items-center justify-center rounded-md border border-purple-900/45 bg-zinc-900/60 px-3 py-1.5 text-sm text-zinc-200 hover:bg-zinc-800/90 transition">Play Game</Link>
+                        </div>
+                    </article>
+                    
+                    <article className="group flex h-full flex-col rounded-2xl bg-gradient-to-br from-zinc-900/95 to-zinc-950/95 ring-1 ring-inset ring-purple-900/35 p-5 transform-gpu transition-all duration-700 ease-in-out hover:scale-[1.03] will-change-transform backface-hidden">
+                        <div className="-mx-5 -mt-5 mb-4 overflow-hidden rounded-t-2xl bg-zinc-950/80">
+                            <video className="h-44 w-full object-cover" autoPlay muted loop playsInline preload="metadata">
+                                <source src={`${basePath}/NeuralEncodingDashboardSample.mp4`} type="video/mp4" />
+                            </video>
+                        </div>
+                        <h3 className="text-xl leading-tight font-poppins mt-2 tracking-normal text-purple-400">NeuralEncoding</h3>
+                        <p className="mt-1 text-base leading-6 text-zinc-300">Brain Telemetry Dashboard</p>
+                        <div className="mt-2 mb-3 -translate-x-[3px] flex flex-wrap gap-2">
+                            <span className="rounded-lg border border-purple-900/35 bg-zinc-900/60 px-3 py-1 text-xs font-semibold text-zinc-200">Electron</span>
+                            <span className="rounded-lg border border-purple-900/35 bg-zinc-900/60 px-3 py-1 text-xs font-semibold text-zinc-200">React</span>
+                            <span className="rounded-lg border border-purple-900/35 bg-zinc-900/60 px-3 py-1 text-xs font-semibold text-zinc-200">Python</span>
+                        </div>
+                        <div className="mt-auto pt-5 grid grid-cols-2 gap-2">
+                            <Link href="/projects/neural-encoding" className="inline-flex w-full items-center justify-center rounded-md border border-purple-900/45 bg-zinc-900/60 px-3 py-1.5 text-sm font-medium text-zinc-200 transition hover:bg-zinc-800">Case Study</Link>
+                            <a target="_blank" rel="noopener noreferrer" href="https://github.com/jblandin-art/NeuralEncoding" className="inline-flex w-full items-center justify-center rounded-md border border-purple-900/45 bg-zinc-900/60 px-3 py-1.5 text-sm text-zinc-200 hover:bg-zinc-800/90 transition">Code & Demo</a>
                         </div>
                     </article>
 
-                    <article className="group flex h-full flex-col rounded-2xl border border-purple-700/60 bg-gradient-to-br from-slate-900/80 to-purple-950/70 p-5 transition hover:-translate-y-1 hover:shadow-[0_15px_60px_-20px_rgba(80,0,200,0.6)]">
-                        <div className="mb-4 flex items-center justify-between">
-                            <span className="rounded-lg bg-purple-900/40 px-3 py-1 text-xs font-semibold text-purple-200">Electron + React + Python</span>
-                            <span className="text-xs text-muted-foreground">2026</span>
+                    <article className="group flex h-full flex-col rounded-2xl bg-gradient-to-br from-zinc-900/95 to-zinc-950/95 ring-1 ring-inset ring-purple-900/35 p-5 transform-gpu transition-all duration-700 ease-in-out hover:scale-[1.03] will-change-transform backface-hidden">
+                        <div className="-mx-5 -mt-5 mb-4 overflow-hidden rounded-t-2xl bg-zinc-950/80">
+                            <img src={`${basePath}/photo-app-comments.png`} alt="PhotoShare details preview" className="h-44 w-full object-cover" />
                         </div>
-                        <h3 className="text-xl font-semibold text-purple-50">NeuralEncoding - Brain Telemetry Dashboard</h3>
-                        <p className="mt-2 text-sm text-gray-300 leading-7">This desktop application displays a stream of captured brain activity (simulated data) in a modern design. It features a visualization of the stream data using a custom made algorithm.</p>
-                        <div className="mt-auto pt-4 flex gap-2">
-                            <Link href="/projects/neural-encoding" className="rounded-md bg-purple-500 px-3 py-1.5 text-sm font-medium text-white hover:bg-purple-400 transition">Case Study</Link>
-                            <a target="_blank" rel="noopener noreferrer" href="https://github.com/jblandin-art/NeuralEncoding" className="rounded-md border border-purple-500/70 px-3 py-1.5 text-sm text-purple-200 hover:bg-purple-800/50 transition">Code & Demo</a>
+                        <h3 className="text-xl leading-tight font-poppins mt-2 tracking-normal text-purple-400">PhotoShare</h3>
+                        <p className="mt-1 text-base leading-6 text-zinc-300">Social Media Platform</p>
+                        <div className="mt-2 mb-3 -translate-x-[3px] flex flex-wrap gap-2">
+                            <span className="rounded-lg border border-purple-900/35 bg-zinc-900/60 px-3 py-1 text-xs font-semibold text-zinc-200">React</span>
+                            <span className="rounded-lg border border-purple-900/35 bg-zinc-900/60 px-3 py-1 text-xs font-semibold text-zinc-200">Node</span>
+                            <span className="rounded-lg border border-purple-900/35 bg-zinc-900/60 px-3 py-1 text-xs font-semibold text-zinc-200">MongoDB</span>
                         </div>
-                    </article>
-
-                    <article className="group flex h-full flex-col rounded-2xl border border-purple-700/60 bg-gradient-to-br from-slate-900/80 to-purple-950/70 p-5 transition hover:-translate-y-1 hover:shadow-[0_15px_60px_-20px_rgba(80,0,200,0.6)]">
-                        <div className="mb-4 flex items-center justify-between">
-                            <span className="rounded-lg bg-purple-900/40 px-3 py-1 text-xs font-semibold text-purple-200">React + Node + MongoDB</span>
-                            <span className="text-xs text-muted-foreground">2026</span>
-                        </div>
-                        <h3 className="text-xl font-semibold text-purple-50">PhotoShare - Social Media Platform</h3>
-                        <p className="mt-2 text-sm text-gray-300 leading-7">This social media application features a login/registration system, a full commenting system, route awareness, and @mention functionality. All of which was implemented by me and my team. We used an Agile development approach and I led as scrum master for all sprints.</p>
-                        <div className="mt-auto pt-4 flex gap-2">
-                            <Link href="/projects/photo-share" className="rounded-md bg-purple-500 px-3 py-1.5 text-sm font-medium text-white hover:bg-purple-400 transition">Case Study</Link>
-                            <Link href="/projects/photo-share#sprint-highlights" className="rounded-md border border-purple-500/70 px-3 py-1.5 text-sm text-purple-200 hover:bg-purple-800/50 transition">Sprint Highlights</Link>
+                        <div className="mt-auto pt-5 grid grid-cols-2 gap-2">
+                            <Link href="/projects/photo-share" className="inline-flex w-full items-center justify-center rounded-md border border-purple-900/45 bg-zinc-900/60 px-3 py-1.5 text-sm font-medium text-zinc-200 transition hover:bg-zinc-800">Case Study</Link>
+                            <Link href="/projects/photo-share#sprint-highlights" className="inline-flex w-full items-center justify-center rounded-md border border-purple-900/45 bg-zinc-900/60 px-3 py-1.5 text-sm text-zinc-200 hover:bg-zinc-800/90 transition">Sprint Highlights</Link>
                         </div>
                     </article>
 
                     {/*
-                    <article className="group rounded-2xl border border-purple-700/60 bg-gradient-to-br from-slate-900/80 to-purple-950/70 p-5 transition hover:-translate-y-1 hover:shadow-[0_15px_60px_-20px_rgba(80,0,200,0.6)]">
+                    <article className="group rounded-2xl border border-purple-700/60 bg-gradient-to-br from-slate-900/80 to-purple-950/70 p-5 transition hover:-translate-y-1 hover:shadow-[0_15px_60px_-20px_rgba(80,0,200,0.3)]">
                         <div className="mb-4 flex items-center justify-between">
                             <span className="rounded-lg bg-purple-900/40 px-3 py-1 text-xs font-semibold text-purple-200">PostgreSQL + Bash</span>
                             <span className="text-xs text-muted-foreground">2026</span>
@@ -101,6 +122,80 @@ export default function Home() {
                     */}
 
                 </div>
+
+                {showMore && (
+                    <div className="mt-4 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                    <article className="group flex h-full flex-col rounded-2xl bg-gradient-to-br from-zinc-900/95 to-zinc-950/95 ring-1 ring-inset ring-purple-900/35 p-5 transform-gpu transition-all duration-700 ease-in-out hover:scale-[1.03] will-change-transform backface-hidden">
+                        <div className="-mx-5 -mt-5 mb-4 overflow-hidden rounded-t-2xl bg-zinc-950/80">
+                            <img src={`${basePath}/ig-metrics-onboarding.png`} alt="IG Metrics onboarding preview" className="h-44 w-full object-cover" />
+                        </div>
+                        <h3 className="text-xl leading-tight font-poppins mt-2 tracking-normal text-purple-400">IG Metrics</h3>
+                        <p className="mt-1 text-base leading-6 text-zinc-300">Desktop Analytics Application</p>
+                        <div className="mt-2 mb-3 -translate-x-[3px] flex flex-wrap gap-2">
+                            <span className="rounded-lg border border-purple-900/35 bg-zinc-900/60 px-3 py-1 text-xs font-semibold text-zinc-200">Electron</span>
+                            <span className="rounded-lg border border-purple-900/35 bg-zinc-900/60 px-3 py-1 text-xs font-semibold text-zinc-200">React</span>
+                        </div>
+                        <div className="mt-auto pt-5 grid grid-cols-2 gap-2">
+                            <Link href="/projects/ig-metrics" className="inline-flex w-full items-center justify-center rounded-md border border-purple-900/45 bg-zinc-900/60 px-3 py-1.5 text-sm font-medium text-zinc-200 transition hover:bg-zinc-800">Case Study</Link>
+                            <a target="_blank" href="https://github.com/jblandin-art/instagram-metrics-app/releases/tag/v1.0.0" className="inline-flex w-full items-center justify-center rounded-md border border-purple-900/45 bg-zinc-900/60 px-3 py-1.5 text-sm text-zinc-200 hover:bg-zinc-800/90 transition">Download</a>
+                        </div>
+                    </article>
+
+                    <article className="group flex h-full flex-col rounded-2xl bg-gradient-to-br from-zinc-900/95 to-zinc-950/95 ring-1 ring-inset ring-purple-900/35 p-5 transform-gpu transition-all duration-700 ease-in-out hover:scale-[1.03] will-change-transform backface-hidden">
+                        <div className="-mx-5 -mt-5 mb-4 overflow-hidden rounded-t-2xl bg-zinc-950/80">
+                            <img src={`${basePath}/nim.png`} alt="Nim game preview" className="h-44 w-full object-cover" />
+                        </div>
+                        <h3 className="text-xl leading-tight font-poppins mt-2 tracking-normal text-purple-400">Nim</h3>
+                        <p className="mt-1 text-base leading-6 text-zinc-300">AI Opponent Algorithm + Interactive Game</p>
+                        <div className="mt-2 mb-3 -translate-x-[3px] flex flex-wrap gap-2">
+                            <span className="rounded-lg border border-purple-900/35 bg-zinc-900/60 px-3 py-1 text-xs font-semibold text-zinc-200">Python</span>
+                            <span className="rounded-lg border border-purple-900/35 bg-zinc-900/60 px-3 py-1 text-xs font-semibold text-zinc-200">React</span>
+                            <span className="rounded-lg border border-purple-900/35 bg-zinc-900/60 px-3 py-1 text-xs font-semibold text-zinc-200">Next.js</span>
+                        </div>
+                        <div className="mt-auto pt-5 grid grid-cols-1 gap-2">
+                            <Link href="/projects/nim#play" className="inline-flex w-full items-center justify-center rounded-md border border-purple-900/45 bg-zinc-900/60 px-3 py-1.5 text-sm text-zinc-200 hover:bg-zinc-800/90 transition">Play Game</Link>
+                        </div>
+                    </article>
+
+                    <article className="group flex h-full flex-col rounded-2xl bg-gradient-to-br from-zinc-900/95 to-zinc-950/95 ring-1 ring-inset ring-purple-900/35 p-5 transform-gpu transition-all duration-700 ease-in-out hover:scale-[1.03] will-change-transform backface-hidden">
+                        <div className="-mx-5 -mt-5 mb-4 overflow-hidden rounded-t-2xl bg-zinc-950/80">
+                            {/* Placeholder for WeBWorKMAX preview */}
+                            <img src={`${basePath}/webwork.png`} alt="WeBWorKMAX extension preview" className="h-44 w-full object-cover" />
+                        </div>
+                        <h3 className="text-xl leading-tight font-poppins mt-2 tracking-normal text-purple-400">WeBWorKMAX</h3>
+                        <p className="mt-1 text-base leading-6 text-zinc-300">Extension for WeBWorK Grading</p>
+                        <div className="mt-2 mb-3 -translate-x-[3px] flex flex-wrap gap-2">
+                            <span className="rounded-lg border border-purple-900/35 bg-zinc-900/60 px-3 py-1 text-xs font-semibold text-zinc-200">JavaScript</span>
+                            <span className="rounded-lg border border-purple-900/35 bg-zinc-900/60 px-3 py-1 text-xs font-semibold text-zinc-200">Chrome Extension</span>
+                        </div>
+                        <div className="mt-auto pt-5 grid grid-cols-1 gap-2">
+                            <a target="_blank" rel="noopener noreferrer" href="https://github.com/jblandin-art/WeBWorKMAX" className="inline-flex w-full items-center justify-center rounded-md border border-purple-900/45 bg-zinc-900/60 px-3 py-1.5 text-sm text-zinc-200 hover:bg-zinc-800/90 transition">View on GitHub</a>
+                        </div>
+                    </article>
+                </div>
+                )}
+                <div className="mt-4 flex justify-center">
+                    <button
+                        onClick={() => setShowMore(!showMore)}
+                        className="inline-flex items-center gap-2 text-sm font-medium text-zinc-300 transition hover:text-zinc-400 cursor-pointer"
+                    >
+                        {showMore ? "View Less" : "View More"}
+                        <svg
+                            width="16"
+                            height="16"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            className={`text-purple-400 transition-transform duration-300 group-hover:text-purple-300 ${showMore ? "rotate-180" : ""}`}
+                        >
+                            <path d="M6 11l6 6 6-6" />
+                            <path d="M12 5v12" />
+                        </svg>
+                    </button>
+                </div>
             </section>
 
             <section id="contact" className="mt-10 mb-8">
@@ -110,8 +205,8 @@ export default function Home() {
                 </div>
 
                 <div className="flex flex-wrap items-center gap-3 text-sm">
-                    <a href="mailto:josiahblanding@gmail.com" className="rounded-md bg-purple-500 px-4 py-2 text-sm font-medium text-white transition hover:bg-purple-400">Email Me</a>
-                    <a target="_blank" rel="noopener noreferrer" href="/jblandin/Resume.pdf" className="rounded-md border border-purple-500/50 px-4 py-2 text-sm text-purple-200 transition hover:bg-purple-800/40">Download Resume</a>
+                    <a href="mailto:josiahblanding@gmail.com" className="rounded-md border border-purple-700/60 bg-zinc-900/60 px-4 py-2 text-sm font-medium text-zinc-100 transition hover:bg-zinc-800">Email Me</a>
+                    <a target="_blank" rel="noopener noreferrer" href="/jblandin/Resume.pdf" className="rounded-md border border-purple-700/60 bg-zinc-900/60 px-4 py-2 text-sm font-medium text-zinc-100 transition hover:bg-zinc-800">Download Resume</a>
                 </div>
             </section>
         </main>

@@ -190,6 +190,9 @@
     justify-content: center;
     font-size: 0.6rem;
     margin-left: auto;
+    width: 8%;
+    height: 7vh;
+    padding-right: 1rem;
   }
 
   #game-board {
@@ -205,13 +208,22 @@
   #remove-stick-2-mobile,
   #remove-stick-3-mobile,
   #remove-stick-4-mobile {
-    height: 10vh;
     padding: 0.75rem 0.35rem;
-    border-radius: 0;
     writing-mode: vertical-rl;
     align-items: center;
     justify-content: center;
-    width: 10%;
+    text-orientation: upright;
+    z-index: 50;
+  }
+  
+  #remove-stick-1-mobile,
+  #remove-stick-2-mobile,
+  #remove-stick-3-mobile,
+  #remove-stick-4-mobile {
+    padding: 0.75rem 0.35rem;
+    writing-mode: vertical-rl;
+    align-items: center;
+    justify-content: center;
     text-orientation: upright;
     z-index: 50;
   }
@@ -219,7 +231,6 @@
    #ai-turn-button-mobile {
     height: 10%;
     padding: 0.75rem 0.35rem;
-    border-radius: 0;
     align-items: center;
     justify-content: center;
     width: 15vh;

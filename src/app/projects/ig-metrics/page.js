@@ -44,8 +44,7 @@ export default function IGMetricsCaseStudy() {
           IG Metrics - Desktop Analytics Tool
         </h1>
         <p className="mt-4 max-w-3xl text-lg leading-8 text-gray-300">
-          IG Metrics is a cross-platform desktop app that helps users analyze Instagram export files,
-          identify accounts that do not follow back, and take action with sortable lists and exportable data.
+          This desktop application parses through exported Instagram follower data, highlighting important connection metrics. It identifies one way connections, features an interactive chart, and features CSV export for the analysis data.
         </p>
 
         <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
