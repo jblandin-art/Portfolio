@@ -2,6 +2,7 @@
 // ... existing imports
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import Footer from "@/components/footer.jsx";
 
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
@@ -53,9 +54,15 @@ export default function Home() {
                 </div>
 
                 <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                    <article className="group flex h-full flex-col rounded-2xl bg-gradient-to-br from-zinc-900/95 to-zinc-950/95 ring-1 ring-inset ring-purple-900/35 p-5 transform-gpu transition-all duration-700 ease-in-out hover:scale-[1.03] will-change-transform backface-hidden">
-                        <div className="-mx-5 -mt-5 mb-4 overflow-hidden rounded-t-2xl bg-zinc-950/80">
-                            <img src={`${basePath}/sudoku.png`} alt="Sudoku game preview" className="h-44 w-full object-cover" />
+                    <article className="group flex h-full flex-col rounded-2xl bg-gradient-to-br from-zinc-900/95 to-zinc-950/95 ring-1 ring-inset ring-purple-900/35 p-5 transition-colors duration-300 ease-in-out">
+                        <div className="-mx-5 -mt-5 mb-4 overflow-hidden rounded-t-2xl bg-zinc-950/80 relative h-44">
+                            <img
+                                src={`${basePath}/sudoku-640w.png`}
+                                srcSet={`${basePath}/sudoku-320w.png 320w, ${basePath}/sudoku-480w.png 480w, ${basePath}/sudoku-640w.png 640w, ${basePath}/sudoku-960w.png 960w, ${basePath}/sudoku-1280w.png 1280w, ${basePath}/sudoku-1920w.png 1920w`}
+                                sizes="(min-width:1024px) 33vw, (min-width:768px) 50vw, 100vw"
+                                alt="Sudoku game preview"
+                                className="absolute inset-0 w-full h-full object-cover"
+                            />
                         </div>
                         <h3 className="text-xl leading-tight font-poppins mt-2 tracking-normal text-purple-400">Sudoku</h3>
                         <p className="mt-1 text-base leading-6 text-zinc-300">AI Solving Algorithm + Interactive Game</p>
@@ -70,7 +77,7 @@ export default function Home() {
                         </div>
                     </article>
                     
-                    <article className="group flex h-full flex-col rounded-2xl bg-gradient-to-br from-zinc-900/95 to-zinc-950/95 ring-1 ring-inset ring-purple-900/35 p-5 transform-gpu transition-all duration-700 ease-in-out hover:scale-[1.03] will-change-transform backface-hidden">
+                    <article className="group flex h-full flex-col rounded-2xl bg-gradient-to-br from-zinc-900/95 to-zinc-950/95 ring-1 ring-inset ring-purple-900/35 p-5 transition-colors duration-300 ease-in-out">
                         <div className="-mx-5 -mt-5 mb-4 overflow-hidden rounded-t-2xl bg-zinc-950/80">
                             <video className="h-44 w-full object-cover" autoPlay muted loop playsInline preload="metadata">
                                 <source src={`${basePath}/NeuralEncodingDashboardSample.mp4`} type="video/mp4" />
@@ -89,9 +96,15 @@ export default function Home() {
                         </div>
                     </article>
 
-                    <article className="group flex h-full flex-col rounded-2xl bg-gradient-to-br from-zinc-900/95 to-zinc-950/95 ring-1 ring-inset ring-purple-900/35 p-5 transform-gpu transition-all duration-700 ease-in-out hover:scale-[1.03] will-change-transform backface-hidden">
-                        <div className="-mx-5 -mt-5 mb-4 overflow-hidden rounded-t-2xl bg-zinc-950/80">
-                            <img src={`${basePath}/photo-app-comments.png`} alt="PhotoShare details preview" className="h-44 w-full object-cover" />
+                    <article className="group flex h-full flex-col rounded-2xl bg-gradient-to-br from-zinc-900/95 to-zinc-950/95 ring-1 ring-inset ring-purple-900/35 p-5 transition-colors duration-300 ease-in-out">
+                        <div className="-mx-5 -mt-5 mb-4 overflow-hidden rounded-t-2xl bg-zinc-950/80 relative h-44">
+                            <img
+                                src={`${basePath}/photo-app-comments-640w.png`}
+                                srcSet={`${basePath}/photo-app-comments-320w.png 320w, ${basePath}/photo-app-comments-480w.png 480w, ${basePath}/photo-app-comments-640w.png 640w, ${basePath}/photo-app-comments-960w.png 960w, ${basePath}/photo-app-comments-1280w.png 1280w, ${basePath}/photo-app-comments-1920w.png 1920w`}
+                                sizes="(min-width:1024px) 33vw, (min-width:768px) 50vw, 100vw"
+                                alt="PhotoShare details preview"
+                                className="absolute inset-0 w-full h-full object-cover"
+                            />
                         </div>
                         <h3 className="text-xl leading-tight font-poppins mt-2 tracking-normal text-purple-400">PhotoShare</h3>
                         <p className="mt-1 text-base leading-6 text-zinc-300">Social Media Platform</p>
@@ -125,9 +138,15 @@ export default function Home() {
 
                 {showMore && (
                     <div className="mt-4 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                    <article className="group flex h-full flex-col rounded-2xl bg-gradient-to-br from-zinc-900/95 to-zinc-950/95 ring-1 ring-inset ring-purple-900/35 p-5 transform-gpu transition-all duration-700 ease-in-out hover:scale-[1.03] will-change-transform backface-hidden">
-                        <div className="-mx-5 -mt-5 mb-4 overflow-hidden rounded-t-2xl bg-zinc-950/80">
-                            <img src={`${basePath}/ig-metrics-onboarding.png`} alt="IG Metrics onboarding preview" className="h-44 w-full object-cover" />
+                    <article className="group flex h-full flex-col rounded-2xl bg-gradient-to-br from-zinc-900/95 to-zinc-950/95 ring-1 ring-inset ring-purple-900/35 p-5 transition-colors duration-300 ease-in-out">
+                        <div className="-mx-5 -mt-5 mb-4 overflow-hidden rounded-t-2xl bg-zinc-950/80 relative h-44">
+                            <img
+                                src={`${basePath}/ig-metrics-onboarding-640w.png`}
+                                srcSet={`${basePath}/ig-metrics-onboarding-320w.png 320w, ${basePath}/ig-metrics-onboarding-480w.png 480w, ${basePath}/ig-metrics-onboarding-640w.png 640w, ${basePath}/ig-metrics-onboarding-960w.png 960w, ${basePath}/ig-metrics-onboarding-1280w.png 1280w, ${basePath}/ig-metrics-onboarding-1920w.png 1920w`}
+                                sizes="(min-width:1024px) 33vw, (min-width:768px) 50vw, 100vw"
+                                alt="IG Metrics onboarding preview"
+                                className="absolute inset-0 w-full h-full object-cover"
+                            />
                         </div>
                         <h3 className="text-xl leading-tight font-poppins mt-2 tracking-normal text-purple-400">IG Metrics</h3>
                         <p className="mt-1 text-base leading-6 text-zinc-300">Desktop Analytics Application</p>
@@ -141,9 +160,15 @@ export default function Home() {
                         </div>
                     </article>
 
-                    <article className="group flex h-full flex-col rounded-2xl bg-gradient-to-br from-zinc-900/95 to-zinc-950/95 ring-1 ring-inset ring-purple-900/35 p-5 transform-gpu transition-all duration-700 ease-in-out hover:scale-[1.03] will-change-transform backface-hidden">
-                        <div className="-mx-5 -mt-5 mb-4 overflow-hidden rounded-t-2xl bg-zinc-950/80">
-                            <img src={`${basePath}/nim.png`} alt="Nim game preview" className="h-44 w-full object-cover" />
+                    <article className="group flex h-full flex-col rounded-2xl bg-gradient-to-br from-zinc-900/95 to-zinc-950/95 ring-1 ring-inset ring-purple-900/35 p-5 transition-colors duration-300 ease-in-out">
+                        <div className="-mx-5 -mt-5 mb-4 overflow-hidden rounded-t-2xl bg-zinc-950/80 relative h-44">
+                            <img
+                                src={`${basePath}/nim-640w.png`}
+                                srcSet={`${basePath}/nim-320w.png 320w, ${basePath}/nim-480w.png 480w, ${basePath}/nim-640w.png 640w, ${basePath}/nim-960w.png 960w, ${basePath}/nim-1280w.png 1280w, ${basePath}/nim-1920w.png 1920w`}
+                                sizes="(min-width:1024px) 33vw, (min-width:768px) 50vw, 100vw"
+                                alt="Nim game preview"
+                                className="absolute inset-0 w-full h-full object-cover"
+                            />
                         </div>
                         <h3 className="text-xl leading-tight font-poppins mt-2 tracking-normal text-purple-400">Nim</h3>
                         <p className="mt-1 text-base leading-6 text-zinc-300">AI Opponent Algorithm + Interactive Game</p>
@@ -157,10 +182,16 @@ export default function Home() {
                         </div>
                     </article>
 
-                    <article className="group flex h-full flex-col rounded-2xl bg-gradient-to-br from-zinc-900/95 to-zinc-950/95 ring-1 ring-inset ring-purple-900/35 p-5 transform-gpu transition-all duration-700 ease-in-out hover:scale-[1.03] will-change-transform backface-hidden">
-                        <div className="-mx-5 -mt-5 mb-4 overflow-hidden rounded-t-2xl bg-zinc-950/80">
+                    <article className="group flex h-full flex-col rounded-2xl bg-gradient-to-br from-zinc-900/95 to-zinc-950/95 ring-1 ring-inset ring-purple-900/35 p-5 transition-colors duration-300 ease-in-out">
+                        <div className="-mx-5 -mt-5 mb-4 overflow-hidden rounded-t-2xl bg-zinc-950/80 relative h-44">
                             {/* Placeholder for WeBWorKMAX preview */}
-                            <img src={`${basePath}/webwork.png`} alt="WeBWorKMAX extension preview" className="h-44 w-full object-cover" />
+                            <img
+                                src={`${basePath}/webwork-640w.png`}
+                                srcSet={`${basePath}/webwork-320w.png 320w, ${basePath}/webwork-480w.png 480w, ${basePath}/webwork-640w.png 640w, ${basePath}/webwork-960w.png 960w, ${basePath}/webwork-1280w.png 1280w, ${basePath}/webwork-1920w.png 1920w`}
+                                sizes="(min-width:1024px) 33vw, (min-width:768px) 50vw, 100vw"
+                                alt="WeBWorKMAX extension preview"
+                                className="absolute inset-0 w-full h-full object-cover"
+                            />
                         </div>
                         <h3 className="text-xl leading-tight font-poppins mt-2 tracking-normal text-purple-400">WeBWorKMAX</h3>
                         <p className="mt-1 text-base leading-6 text-zinc-300">Extension for WeBWorK Grading</p>
