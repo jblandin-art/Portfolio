@@ -178,7 +178,7 @@ export default function AISudokuBoard({ emptyCells = 45, seed, onLoadingChange =
   return (
     <section>
       <div className="mt-4">
-        <div className="mx-auto max-w-5xl px-6 py-6 min-h-[38rem] sm:min-h-[42rem] lg:min-h-[44rem]">
+        <div className="mx-auto max-w-5xl py-6 min-h-[38rem] sm:min-h-[42rem] lg:min-h-[44rem]">
           <div className={`relative transition-opacity duration-300 ease-out ${isVisible && !loading ? "opacity-100" : "opacity-0"}`}>
             <SudokuBoardBase
               key={runtimeSeed}
@@ -190,6 +190,8 @@ export default function AISudokuBoard({ emptyCells = 45, seed, onLoadingChange =
               validMessage="Valid Sudoku Board"
               showValidationState={revealFinished}
               forceHiddenValues={!showCellValues}
+              showMobileTapHint={false}
+              showMobileKeypad={false}
             />
           </div>
         </div>

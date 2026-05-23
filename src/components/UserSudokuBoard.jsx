@@ -71,7 +71,7 @@ export default function UserSudokuBoard({ emptyCells = 45, seed }) {
   return (
     <>
       {loading ? (
-        <div className="mx-auto max-w-5xl px-6 py-6">
+        <div className="mx-auto max-w-5xl py-6">
           <div className="mb-6 flex items-center gap-4">
             <div className="h-px flex-1 bg-gradient-to-r from-transparent via-yellow-500/40 nim-loading-flash to-transparent" />
             <p className="text-xl font-semibold uppercase tracking-[0.45em] nim-loading-flash text-yellow-300">LOADING PUZZLE</p>
@@ -81,11 +81,11 @@ export default function UserSudokuBoard({ emptyCells = 45, seed }) {
       ) : (
         <>
         <section className="mb-12">
-          <div className="mt-4">
-            <div className="mx-auto max-w-5xl px-6 py-6">
-              <div className="mb-6 flex items-center gap-4">
+          <div className="">
+            <div className="mx-auto max-w-5xl py-6">
+              <div className="mb-10 flex items-center gap-4">
                 <div className="h-px flex-1 bg-gradient-to-r from-transparent via-purple-500/40 to-transparent" />
-                <p className="text-xl font-semibold uppercase tracking-[0.45em] text-purple-300">USER SUDOKU</p>
+                <p className="text-xl font-semibold uppercase tracking-[0.45em] text-purple-300">PLAY SUDOKU</p>
                 <div className="h-px flex-1 bg-gradient-to-r from-transparent via-purple-500/40 to-transparent" />
               </div>
 
@@ -108,11 +108,23 @@ export default function UserSudokuBoard({ emptyCells = 45, seed }) {
             </div>
           </div>
         </section>
+        <section id="instructions" className="my-12">
+                    <h2 className="text-lg font-semibold text-purple-200/95 mb-3 tracking-wider uppercase">How to Play</h2>
+                    <div className="h-0.5 w-20 mb-4 bg-gradient-to-r from-purple-500 via-purple-400 to-transparent rounded" />
+                    <ol className="list-decimal pl-6 space-y-3">
+                        <li className="text-base text-gray-200">Fill each 3x3 box, row, and column with the numbers 1 through 9 exactly once.</li>
+                        <li className="text-base text-gray-200">Click into a cell to type a number, or use the provided controls on mobile.</li>
+                    </ol>
+                </section>
         <div className="mb-6 flex items-center gap-4">
                 <div className="h-px flex-1 bg-gradient-to-r from-transparent via-purple-500/40 to-transparent" />
                 <p className="text-xl font-semibold uppercase tracking-[0.45em] text-purple-300">AI SUDOKU</p>
                 <div className="h-px flex-1 bg-gradient-to-r from-transparent via-purple-500/40 to-transparent" />
         </div>
+        <p className="mt-4 text-sm text-center text-purple-300 font-medium max-w-md mx-auto leading-snug">
+          Watch my AI algorithm solve randomly generated sudoku puzzles in real time.
+        </p>
+        
         </>
       )}
     </>

@@ -13,7 +13,7 @@ export const metadata = {
 
 export default function NimPage() {
   return (
-    <main className="mx-auto max-w-5xl px-6 py-8 sm:py-10 text-gray-200">
+    <main className="mx-auto max-w-5xl py-8 sm:py-10 text-gray-200">
       <div className="mb-8">
         <Link
           href="/"

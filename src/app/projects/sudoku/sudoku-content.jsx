@@ -8,7 +8,7 @@ export default function SudokuContent() {
   const [aiLoading, setAiLoading] = useState(true);
 
   return (
-    <main className="mx-auto max-w-5xl px-6 py-10 text-gray-200">
+    <main className="mx-auto max-w-5xl py-10 text-gray-200">
       <UserSudokuBoard emptyCells={45} />
 {/*
       <div className={`mb-6 transition-opacity duration-300 ease-out ${aiLoading ? "opacity-0" : "opacity-100"}`}>
