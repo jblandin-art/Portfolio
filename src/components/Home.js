@@ -14,13 +14,12 @@ export default function Home() {
         <>
         <main id="home" className="mx-auto max-w-5xl px-6 py-8 sm:py-10 text-gray-200">
             <header className="mb-4 space-y-2">
-            <h1 className="text-3xl font-bold font-poppins mt-2 tracking-wide text-purple-400">Josiah Blanding</h1>
-            <p className="text-lg text-muted-foreground font-playfair italic">
+            <h1 className="text-3xl font-bold font-poppins mt-2 tracking-wide text-purple-400 mb-1">Josiah Blanding</h1>
+            <p className="text-lg text-muted-foreground font-playfair italic mb-0">
                 <span className="inline-flex items-center gap-2">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-muted-foreground">
-                        <path d="M3 4h18v12H3z" />
-                        <path d="M8 20h8" />
-                        <path d="M12 16v4" />
+                        <path d="M21 10c0 6-9 13-9 13S3 16 3 10a9 9 0 1118 0z" />
+                        <circle cx="12" cy="10" r="2.5" fill="currentColor" />
                     </svg>
                     Charlotte, NC
                 </span>
@@ -28,10 +27,9 @@ export default function Home() {
             <p className="text-lg text-muted-foreground font-playfair italic">
                 <span className="inline-flex items-center gap-2">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-muted-foreground">
-                        <rect x="2" y="4" width="20" height="14" rx="2" ry="2" />
-                        <path d="M7 8h10" />
-                        <path d="M7 12h10" />
-                        <path d="M7 16h10" />
+                        <path d="M3 4h18v12H3z" />
+                        <path d="M8 20h8" />
+                        <path d="M12 16v4" />
                     </svg>
                     Software Developer
                 </span>
@@ -228,7 +226,72 @@ export default function Home() {
                     </button>
                 </div>
             </section>
-
+            <section id="experience" className="mt-10 scroll-mt-20">
+            <h2 className="text-2xl font-bold font-poppins text-purple-400 mb-4">Experience</h2>
+            <article className="rounded-2xl bg-gradient-to-br from-zinc-900/80 to-zinc-950/70 p-5 ring-1 ring-inset ring-purple-900/35">
+                
+                <h3 className="text-xl font-semibold font-poppins text-zinc-300 mb-1">Client Support Technician</h3>
+                <p className="text-lg text-muted-foreground font-playfair italic">
+                    <span className="inline-flex items-center gap-2">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-muted-foreground">
+                            <path d="M3 4h18v12H3z" />
+                            <path d="M8 20h8" />
+                            <path d="M12 16v4" />
+                        </svg>
+                        Charlotte, NC
+                    </span>
+                </p>
+                <p className="text-lg text-muted-foreground font-playfair italic">
+                    <span className="inline-flex items-center gap-2">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-muted-foreground">
+                            <path d="M21 10c0 6-9 13-9 13S3 16 3 10a9 9 0 1118 0z" />
+                            <circle cx="12" cy="10" r="2.5" fill="currentColor" />
+                        </svg>
+                        University of North Carolina at Charlotte
+                    </span>
+                </p>
+            <ul className="list-disc list-inside">
+                <li className="font-sans text-gray-300 tracking-wide leading-8 max-w-2xl mt-2 text-lg">
+                    Provided technical support to University staff, troubleshooting hardware and software issues. 
+                </li>
+                <li className="font-sans text-gray-300 tracking-wide leading-8 max-w-2xl mt-2 text-lg">
+                    Assisted in managing hardware for the University. Handled surplus inventory and hardware exchange. 
+                </li>
+            </ul>
+            </article>
+            <article className="rounded-2xl bg-gradient-to-br from-zinc-900/80 to-zinc-950/70 p-5 ring-1 ring-inset ring-purple-900/35 mt-6">
+                
+                <h3 className="text-xl font-semibold font-poppins text-zinc-300 mb-1">Teaching Assistant</h3>
+                <p className="text-lg text-muted-foreground font-playfair italic">
+                    <span className="inline-flex items-center gap-2">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-muted-foreground">
+                            <path d="M21 10c0 6-9 13-9 13S3 16 3 10a9 9 0 1118 0z" />
+                            <circle cx="12" cy="10" r="2.5" fill="currentColor" />
+                        </svg>
+                        Charlotte, NC
+                    </span>
+                </p>
+                <p className="text-lg text-muted-foreground font-playfair italic">
+                    <span className="inline-flex items-center gap-2">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-muted-foreground">
+                            <rect x="2" y="4" width="20" height="14" rx="2" ry="2" />
+                            <path d="M7 8h10" />
+                            <path d="M7 12h10" />
+                            <path d="M7 16h10" />
+                        </svg>
+                        University of North Carolina at Charlotte
+                    </span>
+                </p>
+            <ul className="list-disc list-inside">
+                <li className="font-sans text-gray-300 tracking-wide leading-8 max-w-2xl mt-2 text-lg">
+                    Introduced a continuous autosave feature to WebWorK’s grading system, preventing in-progress data loss when grading assignments.
+                </li>
+                <li className="font-sans text-gray-300 tracking-wide leading-8 max-w-2xl mt-2 text-lg">
+                    Created study guide materials for Discrete Mathematics. Clarified concepts in functions and logic to support exam prep.  
+                </li>
+            </ul>
+            </article>
+            </section>
             <section id="contact" className="mt-10 mb-8">
                 <div className="mb-4">
                     <h2 className="text-2xl font-bold font-poppins text-purple-400">Contact</h2>

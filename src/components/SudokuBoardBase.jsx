@@ -8,6 +8,7 @@ export default function SudokuBoardBase({ puzzle = null, solution = null, valida
   const [isMobileInputMode, setIsMobileInputMode] = useState(false);
   const [activeCell, setActiveCell] = useState(null);
   const inputRefs = useRef(Array.from({ length: 9 }, () => Array(9).fill(null)));
+  const [conflicts, setConflicts] = useState(new Set());
 
   useEffect(() => {
     if (!puzzle) return;
@@ -71,6 +72,51 @@ export default function SudokuBoardBase({ puzzle = null, solution = null, valida
       cancelled = true;
     };
   }, [grid, validateGrid]);
+
+  // Compute per-cell conflicts (duplicate values in same row/col/box)
+  useEffect(() => {
+    const newConflicts = new Set();
+
+    for (let r = 0; r < 9; r++) {
+      for (let c = 0; c < 9; c++) {
+        const val = grid[r]?.[c] || 0;
+        if (!val) continue;
+
+        // Row duplicates
+        for (let cc = 0; cc < 9; cc++) {
+          if (cc === c) continue;
+          if ((grid[r]?.[cc] || 0) === val) {
+            newConflicts.add(`cell-${r}-${c}`);
+            newConflicts.add(`cell-${r}-${cc}`);
+          }
+        }
+
+        // Column duplicates
+        for (let rr = 0; rr < 9; rr++) {
+          if (rr === r) continue;
+          if ((grid[rr]?.[c] || 0) === val) {
+            newConflicts.add(`cell-${r}-${c}`);
+            newConflicts.add(`cell-${rr}-${c}`);
+          }
+        }
+
+        // Box duplicates
+        const br = Math.floor(r / 3) * 3;
+        const bc = Math.floor(c / 3) * 3;
+        for (let rr = br; rr < br + 3; rr++) {
+          for (let cc = bc; cc < bc + 3; cc++) {
+            if (rr === r && cc === c) continue;
+            if ((grid[rr]?.[cc] || 0) === val) {
+              newConflicts.add(`cell-${r}-${c}`);
+              newConflicts.add(`cell-${rr}-${cc}`);
+            }
+          }
+        }
+      }
+    }
+
+    setConflicts(newConflicts);
+  }, [grid]);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -185,13 +231,21 @@ export default function SudokuBoardBase({ puzzle = null, solution = null, valida
               const shouldHideValue = forceHiddenValues && !readOnly;
               const isLockedCell = isPrefilled || readOnly || allCellsReadOnly;
               const isActiveMobileCell = activeCell?.r === r && activeCell?.c === c;
+              const activeBoxRow = activeCell ? Math.floor(activeCell.r / 3) : -1;
+              const activeBoxCol = activeCell ? Math.floor(activeCell.c / 3) : -1;
+              const isInSameBox = activeCell && Math.floor(r / 3) === activeBoxRow && Math.floor(c / 3) === activeBoxCol;
+              const isInSameRow = activeCell && activeCell.r === r && activeCell.c !== c;
+              const isInSameCol = activeCell && activeCell.c === c && activeCell.r !== r;
+
+              const conflictClass = conflicts.has(cellKey) ? "text-red-100 bg-red-500/25 ring-1 ring-red-400/60" : "";
+
               return (
                 <div
                   key={cellKey}
-                  className={`relative grid aspect-square w-full place-items-center bg-black/95 transition-colors duration-500 ease-out ${correctnessClass} ${rightBorder} ${bottomBorder} ${isActiveMobileCell ? "ring-2 ring-purple-300/90 ring-inset" : ""} ${isRevealed ? 'sudoku-reveal' : ''}`}
+                  className={`relative grid aspect-square w-full place-items-center bg-black/95 transition-colors duration-500 ease-out ${conflictClass} ${correctnessClass} ${rightBorder} ${bottomBorder} ${isInSameBox && !isActiveMobileCell ? "ring-1 ring-purple-300/50 ring-inset" : ""} ${(isInSameRow || isInSameCol) && !isInSameBox && !isActiveMobileCell ? "ring-1 ring-purple-300/35 ring-inset" : ""} ${isActiveMobileCell ? "ring-2 ring-purple-300/90 ring-inset" : ""} ${isRevealed ? 'sudoku-reveal' : ''}`}
                 >
                   <div className="relative flex h-full w-full items-center justify-center overflow-hidden">
-                    <span className={`pointer-events-none absolute inset-0 z-10 flex items-center justify-center text-[1.125rem] sm:text-[1.3rem] font-bold leading-none select-none transition-opacity duration-700 ${isVisible && !shouldHideValue ? "opacity-100" : "opacity-0"}`}>
+                    <span className={`pointer-events-none absolute inset-0 z-10 flex items-center justify-center text-[1.75rem] sm:text-[2.25rem] font-bold leading-none select-none transition-opacity duration-700 ${isVisible && !shouldHideValue ? "opacity-100" : "opacity-0"}`}>
                       {val === 0 ? "" : String(val)}
                     </span>
                     {isLockedCell ? null : (
@@ -208,7 +262,7 @@ export default function SudokuBoardBase({ puzzle = null, solution = null, valida
                         readOnly={false}
                         tabIndex={0}
                         aria-label={`r${r}c${c}`}
-                        className={`absolute inset-0 z-20 h-full w-full appearance-none border-0 bg-transparent p-0 text-center text-[1.125rem] sm:text-[1.3rem] leading-none outline-none caret-white opacity-0 ${isMobileInputMode ? "cursor-pointer" : "focus:opacity-100 focus:text-transparent"}`}
+                        className={`absolute inset-0 z-20 h-full w-full appearance-none border-0 bg-transparent p-0 text-center text-[1.75rem] sm:text-[2.25rem] leading-none outline-none caret-white opacity-0 ${isMobileInputMode ? "cursor-pointer" : "focus:opacity-100 focus:text-transparent"}`}
                         value={val === 0 ? "" : String(val)}
                         onClick={isMobileInputMode ? () => setActiveCell({ r, c }) : undefined}
                         onFocus={() => setActiveCell({ r, c })}
