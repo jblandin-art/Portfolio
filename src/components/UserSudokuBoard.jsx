@@ -38,7 +38,7 @@ function readSavedGame() {
   }
 }
 
-export default function UserSudokuBoard({ emptyCells = 45, seed, onLoadComplete, onLoadingChange = null }) {
+export default function UserSudokuBoard({ emptyCells = 45, seed, onLoadComplete, onLoadingChange = null, onLoadingStatusChange = null }) {
   const savedGame = readSavedGame();
   const [runtimeSeed, setRuntimeSeed] = useState(() => savedGame?.seed ?? seed ?? Math.floor(Math.random() * 1000000));
   const [puzzle, setPuzzle] = useState(null);
@@ -48,6 +48,7 @@ export default function UserSudokuBoard({ emptyCells = 45, seed, onLoadComplete,
   const [isFilled, setIsFilled] = useState(false);
   const [initialLoading, setInitialLoading] = useState(true);
   const [boardLoading, setBoardLoading] = useState(true);
+  const [loadError, setLoadError] = useState(null);
   const [boardKey, setBoardKey] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
   const [pendingAction, setPendingAction] = useState(null);
@@ -90,9 +91,11 @@ export default function UserSudokuBoard({ emptyCells = 45, seed, onLoadComplete,
 
     async function init() {
       setBoardLoading(true);
-      const pyodide = await loadPyodideAndSudoku();
+      onLoadingStatusChange && onLoadingStatusChange("Loading Sudoku runtime…");
+      const pyodide = await loadPyodideAndSudoku({ onStatusChange: onLoadingStatusChange });
       if (cancelled) return;
 
+      onLoadingStatusChange && onLoadingStatusChange("Generating puzzle…");
       const puzzleJson = await pyodide.runPythonAsync(
         `import json\njson.dumps(generate_sudoku_puzzle(empty_cells=${emptyCells}, seed=${runtimeSeed}).tolist())`
       );
@@ -102,6 +105,7 @@ export default function UserSudokuBoard({ emptyCells = 45, seed, onLoadComplete,
       setPuzzle(jsPuzzle);
 
       const puzzleLiteral = puzzleJson.replace(/\\/g, "\\\\").replace(/'/g, "\\'");
+      onLoadingStatusChange && onLoadingStatusChange("Solving puzzle…");
       const solutionJson = await pyodide.runPythonAsync(
         `import json, numpy as np\npuzzle_grid = np.array(json.loads('${puzzleLiteral}'), dtype=int)\nsolver = ImprovedSudokuResolver(puzzle_grid)\nsolver.find_solution()\njson.dumps(solver.grid.tolist())`
       );
@@ -116,6 +120,7 @@ export default function UserSudokuBoard({ emptyCells = 45, seed, onLoadComplete,
         );
         return Boolean(result);
       });
+      onLoadingStatusChange && onLoadingStatusChange("Ready.");
       setIsVisible(true);
       setBoardLoading(false);
       setInitialLoading(false);
@@ -124,6 +129,8 @@ export default function UserSudokuBoard({ emptyCells = 45, seed, onLoadComplete,
 
     init().catch((err) => {
       console.error(err);
+      onLoadingStatusChange && onLoadingStatusChange("Failed to load Sudoku runtime.");
+      setLoadError(err instanceof Error ? err.message : "Failed to load the user Sudoku board.");
       setBoardLoading(false);
       setInitialLoading(false);
       onLoadComplete && onLoadComplete(false);
@@ -157,6 +164,7 @@ export default function UserSudokuBoard({ emptyCells = 45, seed, onLoadComplete,
     setIsVisible(false);
     setBoardLoading(true);
     setIsFilled(false);
+    setLoadError(null);
     const nextSeed = Math.floor(Math.random() * 1000000);
     const emptyGrid = createEmptyGrid();
     setStartingGrid(emptyGrid);
@@ -183,6 +191,22 @@ export default function UserSudokuBoard({ emptyCells = 45, seed, onLoadComplete,
     }
 
     setPendingAction(action);
+  }
+
+  function handleRetry() {
+    setLoadError(null);
+    setIsVisible(false);
+    setInitialLoading(true);
+    setBoardLoading(true);
+    setIsFilled(false);
+    setValidateGrid(null);
+    setPuzzle(null);
+    setSolution(null);
+    setStartingGrid(createEmptyGrid());
+    setSavedGrid(createEmptyGrid());
+    setBoardKey((k) => k + 1);
+    setRuntimeSeed(Math.floor(Math.random() * 1000000));
+    onLoadComplete && onLoadComplete(false);
   }
 
   function handleBoardChange(nextGrid) {
@@ -217,6 +241,19 @@ export default function UserSudokuBoard({ emptyCells = 45, seed, onLoadComplete,
     <>
       <section className="mb-0">
         <div className="mx-auto w-full max-w-lg py-6">
+          {loadError ? (
+            <div className="mb-4 rounded-2xl border border-red-500/30 bg-red-950/30 p-4 text-sm text-red-100">
+              <p className="font-semibold">User Sudoku could not load.</p>
+              <p className="mt-1 text-red-200/90">{loadError}</p>
+              <button
+                type="button"
+                className="mt-3 rounded-md border border-red-400/40 bg-red-500/10 px-4 py-2 font-semibold text-red-100 transition hover:bg-red-500/20"
+                onClick={handleRetry}
+              >
+                Retry
+              </button>
+            </div>
+          ) : null}
           <div className="relative">
             <div className="aspect-square w-full rounded-lg border border-purple-700/40 bg-black/80 shadow-[0_0_40px_rgba(168,85,247,0.1)] opacity-0" aria-hidden="true" />
             <div className={`absolute inset-0 transition-opacity duration-300 ease-out ${isVisible && !boardLoading ? "opacity-100" : "opacity-0"}`}>
@@ -251,7 +288,7 @@ export default function UserSudokuBoard({ emptyCells = 45, seed, onLoadComplete,
 
           <button
             type="button"
-            className="z-50 inline-flex items-center justify-center rounded-md border border-purple-600/40 bg-purple-700/10 px-4 py-2 text-sm font-semibold text-purple-200 transition hover:bg-purple-700/20"
+            className="z-50 inline-flex items-center justify-center rounded-md border border-purple-600/40 bg-zinc-900/60 px-4 py-2 text-sm font-semibold text-purple-200 transition hover:bg-zinc-800 cursor-pointer"
             onClick={() => requestAction("clear")}
           >
             Clear Board
@@ -259,7 +296,7 @@ export default function UserSudokuBoard({ emptyCells = 45, seed, onLoadComplete,
 
           <button
             type="button"
-            className="z-50 inline-flex items-center justify-center rounded-md border border-purple-600/40 bg-purple-700/10 px-4 py-2 text-sm font-semibold text-purple-200 transition hover:bg-purple-700/20"
+            className="z-50 inline-flex items-center justify-center rounded-md border border-purple-600/40 bg-zinc-900/60 px-4 py-2 text-sm font-semibold text-purple-200 transition hover:bg-zinc-800 cursor-pointer"
             onClick={() => requestAction("new")}
           >
             New Game

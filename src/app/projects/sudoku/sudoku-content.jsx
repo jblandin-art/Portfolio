@@ -1,12 +1,22 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import UserSudokuBoard from "../../../components/UserSudokuBoard";
 import AISudokuBoard from "../../../components/AISudokuBoard";
 
-export default function SudokuContent({onLoadComplete}) {
+export default function SudokuContent({ onLoadComplete, onLoadingStatusChange = null }) {
   const [aiLoading, setAiLoading] = useState(true);
   const [userLoading, setUserLoading] = useState(true);
+  const [userLoadingStatus, setUserLoadingStatus] = useState("Loading Sudoku runtime…");
+  const [aiLoadingStatus, setAiLoadingStatus] = useState("Loading AI Sudoku runtime…");
+
+  useEffect(() => {
+    if (!onLoadingStatusChange) {
+      return;
+    }
+
+    onLoadingStatusChange(userLoading ? userLoadingStatus : "");
+  }, [onLoadingStatusChange, userLoading, userLoadingStatus]);
 
   return (
     <main className="mx-auto max-w-5xl py-10 text-gray-200">
@@ -20,7 +30,12 @@ export default function SudokuContent({onLoadComplete}) {
         </div>
       </div>
 
-      <UserSudokuBoard emptyCells={45} onLoadComplete={onLoadComplete} onLoadingChange={setUserLoading} />
+      <UserSudokuBoard
+        emptyCells={45}
+        onLoadComplete={onLoadComplete}
+        onLoadingChange={setUserLoading}
+        onLoadingStatusChange={setUserLoadingStatus}
+      />
 {/*
       <div className={`mb-6 transition-opacity duration-300 ease-out ${aiLoading ? "opacity-0" : "opacity-100"}`}>
         <p className="text-sm font-semibold uppercase tracking-widest text-purple-300">AI Sudoku</p>
@@ -43,7 +58,10 @@ export default function SudokuContent({onLoadComplete}) {
         </p>
       </div>
 
-      <AISudokuBoard onLoadingChange={setAiLoading} />
+      <AISudokuBoard
+        onLoadingChange={setAiLoading}
+        onLoadingStatusChange={setAiLoadingStatus}
+      />
     </main>
   );
 }

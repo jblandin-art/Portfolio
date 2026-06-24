@@ -16,6 +16,7 @@ export const metadata = {
 export default function SudokuPage() {
     const [loaded, setLoaded] = useState(false);
     const [mounted, setMounted] = useState(false);
+    const [loadingStatus, setLoadingStatus] = useState("Preparing the in-browser Sudoku runtime…");
     useEffect(() => {
     setMounted(true);
 }, []);
@@ -27,7 +28,7 @@ export default function SudokuPage() {
                 <div className="mb-8">
                     <Link
                         href="/"
-                        className="inline-flex items-center rounded-md border border-purple-500/70 bg-purple-900/40 px-4 py-2 text-sm text-purple-100 transition hover:border-purple-400 hover:bg-purple-800/60"
+                        className="inline-flex items-center rounded-md border border-purple-500/70 bg-zinc-900/60 px-4 py-2 text-sm text-purple-100 transition hover:border-purple-400 hover:bg-zinc-800"
                     >
                         Back to Portfolio
                     </Link>
@@ -43,19 +44,19 @@ export default function SudokuPage() {
                     </p>
 
                     <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-                        <div className="rounded-xl border border-purple-700/50 bg-slate-900/70 p-4">
+                        <div className="rounded-xl border border-purple-700/50 bg-zinc-900/60 p-4">
                             <p className="text-xs uppercase tracking-wide text-purple-300">Role</p>
                             <p className="mt-1 text-sm">Solo Developer</p>
                         </div>
-                        <div className="rounded-xl border border-purple-700/50 bg-slate-900/70 p-4">
+                        <div className="rounded-xl border border-purple-700/50 bg-zinc-900/60 p-4">
                             <p className="text-xs uppercase tracking-wide text-purple-300">Team</p>
                             <p className="mt-1 text-sm">1 developer</p>
                         </div>
-                        <div className="rounded-xl border border-purple-700/50 bg-slate-900/70 p-4">
+                        <div className="rounded-xl border border-purple-700/50 bg-zinc-900/60 p-4">
                             <p className="text-xs uppercase tracking-wide text-purple-300">Timeline</p>
                             <p className="mt-1 text-sm">7 Hours + 18 Hours (UI)</p>
                         </div>
-                        <div className="rounded-xl border border-purple-700/50 bg-slate-900/70 p-4">
+                        <div className="rounded-xl border border-purple-700/50 bg-zinc-900/60 p-4">
                             <p className="text-xs uppercase tracking-wide text-purple-300">Stack</p>
                             <p className="mt-1 text-sm">Python, Pyodide, React, Next.js</p>
                         </div>
@@ -69,10 +70,13 @@ export default function SudokuPage() {
                             <p className="text-xl font-semibold uppercase tracking-[0.45em] nim-loading-flash text-yellow-300">LOADING PUZZLE</p>
                             <div className="h-px flex-1 bg-gradient-to-r from-transparent via-yellow-500/40 nim-loading-flash to-transparent" />
                         </div>
+                        <p className="mx-auto max-w-2xl text-center text-sm leading-6 text-yellow-100/80">
+                            {loadingStatus}
+                        </p>
                     </div>
                 )}
 
-                {mounted && <SudokuContent onLoadComplete={setLoaded} />}             
+                {mounted && <SudokuContent onLoadComplete={setLoaded} onLoadingStatusChange={setLoadingStatus} />}             
             </main>
         </>
     );

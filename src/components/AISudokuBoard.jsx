@@ -3,12 +3,13 @@ import { useEffect, useRef, useState } from "react";
 import SudokuBoardBase from "./SudokuBoardBase";
 import { loadPyodideAndSudoku } from "./pyodideSudokuLoader";
 
-export default function AISudokuBoard({ emptyCells = 45, seed, onLoadingChange = null }) {
+export default function AISudokuBoard({ emptyCells = 45, seed, onLoadingChange = null, onLoadingStatusChange = null }) {
   const [runtimeSeed, setRuntimeSeed] = useState(() => seed ?? Math.floor(Math.random() * 1000000));
   const [puzzle, setPuzzle] = useState(null);
   const [solution, setSolution] = useState(null);
   const [validateGrid, setValidateGrid] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [isVisible, setIsVisible] = useState(false);
   const [showCellValues, setShowCellValues] = useState(false);
   const [visibleCells, setVisibleCells] = useState([]);
@@ -30,9 +31,11 @@ export default function AISudokuBoard({ emptyCells = 45, seed, onLoadingChange =
     let cancelled = false;
 
     async function init() {
-      const pyodide = await loadPyodideAndSudoku();
+      onLoadingStatusChange && onLoadingStatusChange("Loading AI Sudoku runtime…");
+      const pyodide = await loadPyodideAndSudoku({ onStatusChange: onLoadingStatusChange });
       if (cancelled) return;
 
+      onLoadingStatusChange && onLoadingStatusChange("Generating AI puzzle…");
       const puzzleJson = await pyodide.runPythonAsync(
         `import json\njson.dumps(generate_sudoku_puzzle(empty_cells=${emptyCells}, seed=${runtimeSeed}).tolist())`
       );
@@ -42,6 +45,7 @@ export default function AISudokuBoard({ emptyCells = 45, seed, onLoadingChange =
       setPuzzle(jsPuzzle);
 
       const puzzleLiteral = puzzleJson.replace(/\\/g, "\\\\").replace(/'/g, "\\'");
+      onLoadingStatusChange && onLoadingStatusChange("Solving AI puzzle…");
       const solutionJson = await pyodide.runPythonAsync(
         `import json, numpy as np\npuzzle_grid = np.array(json.loads('${puzzleLiteral}'), dtype=int)\nsolver = ImprovedSudokuResolver(puzzle_grid)\nsolver.find_solution()\njson.dumps(solver.grid.tolist())`
       );
@@ -69,12 +73,15 @@ export default function AISudokuBoard({ emptyCells = 45, seed, onLoadingChange =
         );
         return Boolean(result);
       });
+      onLoadingStatusChange && onLoadingStatusChange("Ready.");
 
       setLoading(false);
     }
 
     init().catch((err) => {
       console.error(err);
+      onLoadingStatusChange && onLoadingStatusChange("Failed to load AI Sudoku runtime.");
+      setError(err instanceof Error ? err.message : "Failed to load the AI Sudoku puzzle.");
       setLoading(false);
     });
 
@@ -178,6 +185,24 @@ export default function AISudokuBoard({ emptyCells = 45, seed, onLoadingChange =
     <section>
       <div className="mt-4">
         <div className="mx-auto max-w-5xl py-6 min-h-[36rem] sm:min-h-[36rem] lg:min-h-[38rem]">
+          {error ? (
+            <div className="mx-auto max-w-xl rounded-2xl border border-red-500/30 bg-red-950/30 p-4 text-sm text-red-100">
+              <p className="font-semibold">AI Sudoku could not load.</p>
+              <p className="mt-1 text-red-200/90">{error}</p>
+              <button
+                type="button"
+                className="mt-3 rounded-md border border-red-400/40 bg-red-500/10 px-4 py-2 font-semibold text-red-100 transition hover:bg-red-500/20"
+                onClick={() => {
+                  setError(null);
+                  setLoading(true);
+                  setIsVisible(false);
+                  setRuntimeSeed(Math.floor(Math.random() * 1000000));
+                }}
+              >
+                Retry
+              </button>
+            </div>
+          ) : null}
           <div className={`relative transition-opacity duration-300 ease-out ${isVisible && !loading ? "opacity-100" : "opacity-0"}`}>
             <SudokuBoardBase
               key={runtimeSeed}

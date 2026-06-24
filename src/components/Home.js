@@ -234,9 +234,8 @@ export default function Home() {
                 <p className="text-lg text-muted-foreground font-playfair italic">
                     <span className="inline-flex items-center gap-2">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-muted-foreground">
-                            <path d="M3 4h18v12H3z" />
-                            <path d="M8 20h8" />
-                            <path d="M12 16v4" />
+                            <path d="M21 10c0 6-9 13-9 13S3 16 3 10a9 9 0 1118 0z" />
+                            <circle cx="12" cy="10" r="2.5" fill="currentColor" />
                         </svg>
                         Charlotte, NC
                     </span>
@@ -244,18 +243,21 @@ export default function Home() {
                 <p className="text-lg text-muted-foreground font-playfair italic">
                     <span className="inline-flex items-center gap-2">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-muted-foreground">
-                            <path d="M21 10c0 6-9 13-9 13S3 16 3 10a9 9 0 1118 0z" />
-                            <circle cx="12" cy="10" r="2.5" fill="currentColor" />
+                            <rect x="2" y="4" width="20" height="14" rx="2" ry="2" />
+                            <path d="M7 8h10" />
+                            <path d="M7 12h10" />
+                            <path d="M7 16h10" />
                         </svg>
-                        University of North Carolina at Charlotte
+                        <span className="hidden sm:inline">University of North Carolina at Charlotte</span>
+                        <span className="sm:hidden">UNC Charlotte</span>
                     </span>
                 </p>
             <ul className="list-disc list-inside">
                 <li className="font-sans text-gray-300 tracking-wide leading-8 max-w-2xl mt-2 text-lg">
-                    Provided technical support to University staff, troubleshooting hardware and software issues. 
+                    Managed the full system lifecycle for campus technology, handling OS imaging and preparation to ensure stability through 70+ devices using Microsoft Configuration Mangager and Active Directory.
                 </li>
                 <li className="font-sans text-gray-300 tracking-wide leading-8 max-w-2xl mt-2 text-lg">
-                    Assisted in managing hardware for the University. Handled surplus inventory and hardware exchange. 
+                    Debugged software deployment and network authentication issues using Bash commands and enterprise tools.
                 </li>
             </ul>
             </article>
@@ -279,15 +281,16 @@ export default function Home() {
                             <path d="M7 12h10" />
                             <path d="M7 16h10" />
                         </svg>
-                        University of North Carolina at Charlotte
+                        <span className="hidden sm:inline">University of North Carolina at Charlotte</span>
+                        <span className="sm:hidden">UNC Charlotte</span>
                     </span>
                 </p>
             <ul className="list-disc list-inside">
                 <li className="font-sans text-gray-300 tracking-wide leading-8 max-w-2xl mt-2 text-lg">
-                    Introduced a continuous autosave feature to WebWorK’s grading system, preventing in-progress data loss when grading assignments.
+                    Developed a continuous autosave extension for WebWorK’s grading system using JavaScript, preventing in-progress data loss when grading assignments. 
                 </li>
                 <li className="font-sans text-gray-300 tracking-wide leading-8 max-w-2xl mt-2 text-lg">
-                    Created study guide materials for Discrete Mathematics. Clarified concepts in functions and logic to support exam prep.  
+                    Supervised the learning of 75 students in critical computer science concepts such as algorithm design, recursion, and binary notation. Graded tests, assignments, and hosted office hours for tutoring.
                 </li>
             </ul>
             </article>

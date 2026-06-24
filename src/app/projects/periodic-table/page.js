@@ -27,7 +27,7 @@ export default function PeriodicTableCaseStudy() {
       <div className="mb-8">
         <Link
           href="/"
-          className="inline-flex items-center rounded-md border border-purple-500/70 bg-purple-900/40 px-4 py-2 text-sm text-purple-100 transition hover:border-purple-400 hover:bg-purple-800/60"
+          className="inline-flex items-center rounded-md border border-purple-500/70 bg-zinc-900/70 px-4 py-2 text-sm text-purple-100 transition hover:border-purple-400 hover:bg-zinc-800"
         >
           Back to Portfolio
         </Link>
@@ -45,19 +45,19 @@ export default function PeriodicTableCaseStudy() {
         </p>
 
         <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-          <div className="rounded-xl border border-purple-700/50 bg-slate-900/70 p-4">
+          <div className="rounded-xl border border-purple-700/50 bg-zinc-900/60 p-4">
             <p className="text-xs uppercase tracking-wide text-purple-300">Role</p>
             <p className="mt-1 text-sm">Solo Developer</p>
           </div>
-          <div className="rounded-xl border border-purple-700/50 bg-slate-900/70 p-4">
+          <div className="rounded-xl border border-purple-700/50 bg-zinc-900/60 p-4">
             <p className="text-xs uppercase tracking-wide text-purple-300">Timeline</p>
             <p className="mt-1 text-sm">Course milestone project</p>
           </div>
-          <div className="rounded-xl border border-purple-700/50 bg-slate-900/70 p-4">
+          <div className="rounded-xl border border-purple-700/50 bg-zinc-900/60 p-4">
             <p className="text-xs uppercase tracking-wide text-purple-300">Tools</p>
             <p className="mt-1 text-sm">PostgreSQL + Bash</p>
           </div>
-          <div className="rounded-xl border border-purple-700/50 bg-slate-900/70 p-4">
+          <div className="rounded-xl border border-purple-700/50 bg-zinc-900/60 p-4">
             <p className="text-xs uppercase tracking-wide text-purple-300">Focus</p>
             <p className="mt-1 text-sm">Normalization + Query UX</p>
           </div>

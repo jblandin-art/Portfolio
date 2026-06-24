@@ -44,7 +44,7 @@ export default function PhotoShareCaseStudy() {
       <div className="mb-8">
         <Link
           href="/"
-          className="inline-flex items-center rounded-md border border-purple-500/70 bg-purple-900/40 px-4 py-2 text-sm text-purple-100 transition hover:border-purple-400 hover:bg-purple-800/60"
+          className="inline-flex items-center rounded-md border border-purple-500/70 bg-zinc-900/70 px-4 py-2 text-sm text-purple-100 transition hover:border-purple-400 hover:bg-zinc-800"
         >
           Back to Portfolio
         </Link>
@@ -60,19 +60,19 @@ export default function PhotoShareCaseStudy() {
         </p>
 
         <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-          <div className="rounded-xl border border-purple-700/50 bg-slate-900/70 p-4">
+          <div className="rounded-xl border border-purple-700/50 bg-zinc-900/60 p-4">
             <p className="text-xs uppercase tracking-wide text-purple-300">Role</p>
             <p className="mt-1 text-sm">Scrum Master + Full-Stack Contributor</p>
           </div>
-          <div className="rounded-xl border border-purple-700/50 bg-slate-900/70 p-4">
+          <div className="rounded-xl border border-purple-700/50 bg-zinc-900/60 p-4">
             <p className="text-xs uppercase tracking-wide text-purple-300">Team</p>
             <p className="mt-1 text-sm">5 developers</p>
           </div>
-          <div className="rounded-xl border border-purple-700/50 bg-slate-900/70 p-4">
+          <div className="rounded-xl border border-purple-700/50 bg-zinc-900/60 p-4">
             <p className="text-xs uppercase tracking-wide text-purple-300">Timeline</p>
             <p className="mt-1 text-sm">~1 month (10+ hours personal implementation)</p>
           </div>
-          <div className="rounded-xl border border-purple-700/50 bg-slate-900/70 p-4">
+          <div className="rounded-xl border border-purple-700/50 bg-zinc-900/60 p-4">
             <p className="text-xs uppercase tracking-wide text-purple-300">Stack</p>
             <p className="mt-1 text-sm">React, MUI, Node, Express, MongoDB</p>
           </div>
@@ -114,9 +114,8 @@ export default function PhotoShareCaseStudy() {
 
       <section id="sprint-highlights" className="mb-12">
         <h2 className="text-2xl font-bold font-poppins text-purple-400">Sprint Highlights</h2>
-        
         <div className="mt-6">
-          <h3 className="text-lg font-semibold text-purple-300">Sprints 1–2: Foundation</h3>
+          <h3 className="text-lg font-semibold text-purple-300">Sprints 1/2: Foundation</h3>
           <ul className="mt-3 space-y-2 text-gray-300 leading-8 list-disc pl-5">
             {sprintHighlights.sprints1_2.map((item) => (
               <li key={item}>{item}</li>
@@ -155,9 +154,9 @@ export default function PhotoShareCaseStudy() {
       <section className="mb-12">
         <h2 className="text-2xl font-bold font-poppins text-purple-400">Implementation Highlights</h2>
         <div className="mt-4 grid gap-4 md:grid-cols-2">
-          <article className="min-w-0 rounded-xl border border-purple-700/50 bg-slate-900/70 p-4">
+          <article className="min-w-0 rounded-xl border border-purple-700/50 bg-zinc-900/60 p-4">
             <h3 className="text-purple-300">SPA Routing Shell</h3>
-            <pre className="mt-3 max-w-full overflow-x-auto rounded-lg bg-slate-950/80 p-3 text-[11px] text-gray-300 sm:text-xs">
+            <pre className="mt-3 max-w-full overflow-x-auto rounded-lg bg-zinc-950/80 p-3 text-[11px] text-gray-300 sm:text-xs">
 {`<HashRouter>
   <Grid container spacing={8}>
     <Grid item sm={3}><UserList /></Grid>
@@ -172,9 +171,9 @@ export default function PhotoShareCaseStudy() {
             </pre>
           </article>
 
-          <article className="min-w-0 rounded-xl border border-purple-700/50 bg-slate-900/70 p-4">
+          <article className="min-w-0 rounded-xl border border-purple-700/50 bg-zinc-900/60 p-4">
             <h3 className="text-purple-300">Route-Aware Top Bar Context</h3>
-            <pre className="mt-3 max-w-full overflow-x-auto rounded-lg bg-slate-950/80 p-3 text-[11px] text-gray-300 sm:text-xs">
+            <pre className="mt-3 max-w-full overflow-x-auto rounded-lg bg-zinc-950/80 p-3 text-[11px] text-gray-300 sm:text-xs">
 {`const path = this.props.location.pathname;
 if (path.includes("/users/") || path.includes("/photos/")) {
   const userId = path.split("/").pop();
@@ -186,9 +185,9 @@ if (path.includes("/users/") || path.includes("/photos/")) {
             </pre>
           </article>
 
-          <article className="min-w-0 rounded-xl border border-purple-700/50 bg-slate-900/70 p-4">
+          <article className="min-w-0 rounded-xl border border-purple-700/50 bg-zinc-900/60 p-4">
             <h3 className="text-purple-300">Mongo Route Projection</h3>
-            <pre className="mt-3 max-w-full overflow-x-auto rounded-lg bg-slate-950/80 p-3 text-[11px] text-gray-300 sm:text-xs">
+            <pre className="mt-3 max-w-full overflow-x-auto rounded-lg bg-zinc-950/80 p-3 text-[11px] text-gray-300 sm:text-xs">
 {`app.get("/user/list", function (request, response) {
   User.find({}, "_id first_name last_name", function (err, users) {
     if (err) return response.status(500).send(JSON.stringify(err));
@@ -198,9 +197,9 @@ if (path.includes("/users/") || path.includes("/photos/")) {
             </pre>
           </article>
 
-          <article className="min-w-0 rounded-xl border border-purple-700/50 bg-slate-900/70 p-4">
+          <article className="min-w-0 rounded-xl border border-purple-700/50 bg-zinc-900/60 p-4">
             <h3 className="text-purple-300">Populate + Response Reshape</h3>
-            <pre className="mt-3 max-w-full overflow-x-auto rounded-lg bg-slate-950/80 p-3 text-[11px] text-gray-300 sm:text-xs">
+            <pre className="mt-3 max-w-full overflow-x-auto rounded-lg bg-zinc-950/80 p-3 text-[11px] text-gray-300 sm:text-xs">
 {`Photo.find({ user_id: id }, "_id file_name date_time user_id comments")
   .populate("comments.user_id", "_id first_name last_name")
   .exec(function (err, photos) {
@@ -221,15 +220,15 @@ if (path.includes("/users/") || path.includes("/photos/")) {
       <section className="mb-12">
         <h2 className="text-2xl font-bold font-poppins text-purple-400">Challenges And Solutions</h2>
         <div className="mt-4 space-y-4">
-          <div className="rounded-xl border border-purple-700/50 bg-slate-900/70 p-4">
+          <div className="rounded-xl border border-purple-700/50 bg-zinc-900/60 p-4">
             <p className="text-purple-300">Challenge: Mongoose model shape mismatched the frontend data contract.</p>
             <p className="mt-1 text-sm text-gray-300">Solution: Populated nested comment users and reshaped payload objects from user_id to user.</p>
           </div>
-          <div className="rounded-xl border border-purple-700/50 bg-slate-900/70 p-4">
+          <div className="rounded-xl border border-purple-700/50 bg-zinc-900/60 p-4">
             <p className="text-purple-300">Challenge: Route context and selected user state drifted during navigation.</p>
             <p className="mt-1 text-sm text-gray-300">Solution: Synced state with route/hash updates and refreshed context text on route changes.</p>
           </div>
-          <div className="rounded-xl border border-purple-700/50 bg-slate-900/70 p-4">
+          <div className="rounded-xl border border-purple-700/50 bg-zinc-900/60 p-4">
             <p className="text-purple-300">Challenge: Team consistency across sprint workflows.</p>
             <p className="mt-1 text-sm text-gray-300">Solution: Scrum-driven checkpoints and clear run/rebuild/lint documentation for shared execution.
             </p>
@@ -250,13 +249,13 @@ if (path.includes("/users/") || path.includes("/photos/")) {
       <section className="mb-10 flex flex-wrap gap-3">
         <a
           href="#sprint-highlights"
-          className="rounded-md bg-purple-500 px-4 py-2 text-sm font-semibold text-white hover:bg-purple-400 transition"
+          className="rounded-md border border-purple-700/60 bg-zinc-900/60 px-4 py-2 text-sm font-medium text-zinc-100 transition hover:bg-zinc-800"
         >
           View Sprint Highlights
         </a>
         <a
           href="mailto:josiahblanding@gmail.com"
-          className="rounded-md border border-purple-500/70 px-4 py-2 text-sm text-purple-200 hover:bg-purple-800/40 transition"
+          className="rounded-md border border-purple-700/60 bg-zinc-900/60 px-4 py-2 text-sm font-medium text-zinc-100 transition hover:bg-zinc-800"
         >
           Contact Me
         </a>

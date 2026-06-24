@@ -50,33 +50,39 @@ export function NimLogic({ setReady }) {
                 return;
             }
             const nimPath = `${process.env.NEXT_PUBLIC_BASE_PATH || ""}/nim.py`;
-            const source = await fetch(nimPath).then((response) => response.text());
+            const response = await fetch(nimPath);
+            if (!response.ok) {
+                throw new Error(`Failed to fetch nim.py: ${response.status} ${response.statusText}`);
+            }
+
+            const source = await response.text();
             await pyodide.runPythonAsync(`import json\n${source}`);
         }
-        init().then(() => {
-            if (cancelled) {
-                return;
-            }
-            pyodide.runPython(`nimAB = NimWorldABMinimax([1, 3, 5, 7])`);
-            const row1 = document.querySelector("#row1 div");
-            const row2 = document.querySelector("#row2 div");
-            const row3 = document.querySelector("#row3 div");
-            const row4 = document.querySelector("#row4 div");
-            const rowSection1 = document.getElementById("row1");
-            const rowSection2 = document.getElementById("row2");
-            const rowSection3 = document.getElementById("row3");
-            const rowSection4 = document.getElementById("row4");
-            const removeStick1Button = document.getElementById("remove-stick-1");
-            const removeStick2Button = document.getElementById("remove-stick-2");
-            const removeStick3Button = document.getElementById("remove-stick-3");
-            const removeStick4Button = document.getElementById("remove-stick-4");
-            const removeStick1ButtonMobile = document.getElementById("remove-stick-1-mobile");
-            const removeStick2ButtonMobile = document.getElementById("remove-stick-2-mobile");
-            const removeStick3ButtonMobile = document.getElementById("remove-stick-3-mobile");
-            const removeStick4ButtonMobile = document.getElementById("remove-stick-4-mobile");
-            const aiTurnButton = document.getElementById("ai-turn-button");
-            const aiTurnButtonMobile = document.getElementById("ai-turn-button-mobile");
-            const gameBoard = document.getElementById("game-board");
+        init()
+            .then(() => {
+                if (cancelled) {
+                    return;
+                }
+                pyodide.runPython(`nimAB = NimWorldABMinimax([1, 3, 5, 7])`);
+                const row1 = document.querySelector("#row1 div");
+                const row2 = document.querySelector("#row2 div");
+                const row3 = document.querySelector("#row3 div");
+                const row4 = document.querySelector("#row4 div");
+                const rowSection1 = document.getElementById("row1");
+                const rowSection2 = document.getElementById("row2");
+                const rowSection3 = document.getElementById("row3");
+                const rowSection4 = document.getElementById("row4");
+                const removeStick1Button = document.getElementById("remove-stick-1");
+                const removeStick2Button = document.getElementById("remove-stick-2");
+                const removeStick3Button = document.getElementById("remove-stick-3");
+                const removeStick4Button = document.getElementById("remove-stick-4");
+                const removeStick1ButtonMobile = document.getElementById("remove-stick-1-mobile");
+                const removeStick2ButtonMobile = document.getElementById("remove-stick-2-mobile");
+                const removeStick3ButtonMobile = document.getElementById("remove-stick-3-mobile");
+                const removeStick4ButtonMobile = document.getElementById("remove-stick-4-mobile");
+                const aiTurnButton = document.getElementById("ai-turn-button");
+                const aiTurnButtonMobile = document.getElementById("ai-turn-button-mobile");
+                const gameBoard = document.getElementById("game-board");
 
             let firstTurn = true;
 
@@ -213,7 +219,7 @@ export function NimLogic({ setReady }) {
                 userTurnRef.current = false;
                 notifyGameOver();
             };
-            if (userTurnRef.current){
+                if (userTurnRef.current){
                 removeStick1Button.disabled = false;
                 removeStick2Button.disabled = false;
                 removeStick3Button.disabled = false;
@@ -232,7 +238,7 @@ export function NimLogic({ setReady }) {
                 if (removeStick3ButtonMobile) removeStick3ButtonMobile.addEventListener("click", removeStickButton3Listener);
                 if (removeStick4ButtonMobile) removeStick4ButtonMobile.addEventListener("click", removeStickButton4Listener);
                 
-            }
+                }
                 const aiTurnButtonListener = async () => {
                     // Only allow AI turn if user has made a move
                     if (!userTurnRef.current || firstTurn) {
@@ -327,11 +333,27 @@ export function NimLogic({ setReady }) {
                         }
                     }
                 };
-            aiTurnButton.addEventListener("click", aiTurnButtonListener);
-            if (aiTurnButtonMobile) aiTurnButtonMobile.addEventListener("click", aiTurnButtonListener);
-        }).catch((error) => {
-            console.error(error);
-        });
+                aiTurnButton.addEventListener("click", aiTurnButtonListener);
+                if (aiTurnButtonMobile) aiTurnButtonMobile.addEventListener("click", aiTurnButtonListener);
+            })
+            .catch((error) => {
+                console.error(error);
+                if (!cancelled) {
+                    if (status) {
+                        status.textContent = "FAILED TO LOAD. RELOAD TO TRY AGAIN.";
+                        status.classList.remove("text-yellow-300", "text-green-300", "text-blue-300");
+                        status.classList.add("text-red-300");
+                    }
+                    statusBreaks.forEach((breakElement) => {
+                        if (!breakElement) {
+                            return;
+                        }
+                        breakElement.classList.remove("via-yellow-500/50", "via-green-500/50", "via-blue-500/50");
+                        breakElement.classList.add("via-red-500/50");
+                    });
+                    setReady(false);
+                }
+            });
 
         return () => {
             cancelled = true;

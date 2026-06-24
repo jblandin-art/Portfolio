@@ -32,7 +32,7 @@ export default function IGMetricsCaseStudy() {
       <div className="mb-8">
         <Link
           href="/"
-          className="inline-flex items-center rounded-md border border-purple-500/70 bg-purple-900/40 px-4 py-2 text-sm text-purple-100 transition hover:border-purple-400 hover:bg-purple-800/60"
+          className="inline-flex items-center rounded-md border border-purple-500/70 bg-zinc-900/70 px-4 py-2 text-sm text-purple-100 transition hover:border-purple-400 hover:bg-zinc-800"
         >
           Back to Portfolio
         </Link>
@@ -48,19 +48,19 @@ export default function IGMetricsCaseStudy() {
         </p>
 
         <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-          <div className="rounded-xl border border-purple-700/50 bg-slate-900/70 p-4">
+          <div className="rounded-xl border border-purple-700/50 bg-zinc-900/60 p-4">
             <p className="text-xs uppercase tracking-wide text-purple-300">Role</p>
             <p className="mt-1 text-sm">Solo Developer</p>
           </div>
-          <div className="rounded-xl border border-purple-700/50 bg-slate-900/70 p-4">
+          <div className="rounded-xl border border-purple-700/50 bg-zinc-900/60 p-4">
             <p className="text-xs uppercase tracking-wide text-purple-300">Timeline</p>
             <p className="mt-1 text-sm">A few weeks (10-30 hours)</p>
           </div>
-          <div className="rounded-xl border border-purple-700/50 bg-slate-900/70 p-4">
+          <div className="rounded-xl border border-purple-700/50 bg-zinc-900/60 p-4">
             <p className="text-xs uppercase tracking-wide text-purple-300">Budget</p>
             <p className="mt-1 text-sm">$0</p>
           </div>
-          <div className="rounded-xl border border-purple-700/50 bg-slate-900/70 p-4">
+          <div className="rounded-xl border border-purple-700/50 bg-zinc-900/60 p-4">
             <p className="text-xs uppercase tracking-wide text-purple-300">Platform</p>
             <p className="mt-1 text-sm">Desktop (Electron)</p>
           </div>
@@ -81,18 +81,6 @@ export default function IGMetricsCaseStudy() {
       </section>
 
       <section className="mb-12">
-        <h2 className="text-2xl font-bold font-poppins text-purple-400">Screenshots</h2>
-        <p className="mt-2 text-sm text-muted-foreground">
-          Onboarding, KPI overview, and chart visualization from the production desktop app.
-        </p>
-        <div className="mt-4 grid gap-4 md:grid-cols-3">
-          <img src={`${basePath}/ig-metrics-onboarding.png`} alt="IG Metrics onboarding screen" className="h-auto w-full rounded-xl border border-purple-700/50" />
-          <img src={`${basePath}/ig-metrics-number-data.png`} alt="IG Metrics numeric metrics overview" className="h-auto w-full rounded-xl border border-purple-700/50" />
-          <img src={`${basePath}/ig-metrics-chart-data.png`} alt="IG Metrics chart data view" className="h-auto w-full rounded-xl border border-purple-700/50" />
-        </div>
-      </section>
-
-      <section className="mb-12">
         <h2 className="text-2xl font-bold font-poppins text-purple-400">Approach And UX Decisions</h2>
         <ul className="mt-4 space-y-3 text-gray-300 leading-8 list-disc pl-5">
           <li>Minimal onboarding that asks users to import follower/following JSON files.</li>
@@ -100,6 +88,23 @@ export default function IGMetricsCaseStudy() {
           <li>Top-level toggle switches metrics panels into a chart-driven view for faster scanning.</li>
           <li>Orange accenting in the app UI to improve contrast and highlight actionable controls.</li>
         </ul>
+      </section>
+
+      <section className="mb-4">
+        <div className="mt-4 grid gap-4 md:grid-cols-3">
+          <img src={`${basePath}/ig-metrics-onboarding.png`} alt="IG Metrics onboarding screen" className="h-auto w-full rounded-xl border border-purple-700/50" />
+          <img src={`${basePath}/ig-metrics-number-data.png`} alt="IG Metrics numeric metrics overview" className="h-auto w-full rounded-xl border border-purple-700/50" />
+          <img src={`${basePath}/ig-metrics-chart-data.png`} alt="IG Metrics chart data view" className="h-auto w-full rounded-xl border border-purple-700/50" />
+        </div>
+      </section>
+      <section className="mb-12 flex justify-center mt-0">
+        <div className="mt-4 flex flex-wrap gap-2">
+          {tech.map((item) => (
+            <span key={item} className="rounded-full border border-purple-600/60 bg-zinc-900/60 px-3 py-1 text-xs text-purple-100">
+              {item}
+            </span>
+          ))}
+        </div>
       </section>
 
       <section className="mb-12">
@@ -114,9 +119,9 @@ export default function IGMetricsCaseStudy() {
       <section className="mb-12">
         <h2 className="text-2xl font-bold font-poppins text-purple-400">Implementation Highlights</h2>
         <div className="mt-4 grid gap-4 md:grid-cols-2">
-          <article className="min-w-0 rounded-xl border border-purple-700/50 bg-slate-900/70 p-4">
-            <h3 className="font-semibold text-purple-200">Import Parsing For Multiple JSON Schemas</h3>
-            <pre className="mt-3 max-w-full overflow-x-auto rounded-lg bg-slate-950/80 p-3 text-[11px] text-gray-300 sm:text-xs">
+          <article className="min-w-0 rounded-xl border border-purple-700/50 bg-zinc-900/60 p-4">
+            <h3 className="font-semibold text-purple-400">Import Parsing For Multiple JSON Schemas</h3>
+            <pre className="mt-3 max-w-full overflow-x-auto rounded-lg bg-zinc-950/80 p-3 text-[11px] text-gray-300 sm:text-xs">
 {`if (Array.isArray(json)) {
   json.forEach(obj => tempFollowers.push(obj.string_list_data[0].value));
 } else if (json.relationships_following) {
@@ -125,9 +130,9 @@ export default function IGMetricsCaseStudy() {
             </pre>
           </article>
 
-          <article className="min-w-0 rounded-xl border border-purple-700/50 bg-slate-900/70 p-4">
-            <h3 className="font-semibold text-purple-200">Set-Based Diff For Better Performance</h3>
-            <pre className="mt-3 max-w-full overflow-x-auto rounded-lg bg-slate-950/80 p-3 text-[11px] text-gray-300 sm:text-xs">
+          <article className="min-w-0 rounded-xl border border-purple-700/50 bg-zinc-900/60 p-4">
+            <h3 className="font-semibold text-purple-400">Set-Based Diff For Better Performance</h3>
+            <pre className="mt-3 max-w-full overflow-x-auto rounded-lg bg-zinc-950/80 p-3 text-[11px] text-gray-300 sm:text-xs">
 {`const notFollowingBack = following.filter(
   user => !new Set(followers).has(user)
 );
@@ -138,9 +143,9 @@ const followersNotFollowedBack = followers.filter(
             </pre>
           </article>
 
-          <article className="min-w-0 rounded-xl border border-purple-700/50 bg-slate-900/70 p-4">
-            <h3 className="font-semibold text-purple-200">Secure CSV Export Through IPC</h3>
-            <pre className="mt-3 max-w-full overflow-x-auto rounded-lg bg-slate-950/80 p-3 text-[11px] text-gray-300 sm:text-xs">
+          <article className="min-w-0 rounded-xl border border-purple-700/50 bg-zinc-900/60 p-4">
+            <h3 className="font-semibold text-purple-400">Secure CSV Export Through IPC</h3>
+            <pre className="mt-3 max-w-full overflow-x-auto rounded-lg bg-zinc-950/80 p-3 text-[11px] text-gray-300 sm:text-xs">
 {`// renderer
 await window.electronAPI.saveCSV(csvContent);
 
@@ -151,8 +156,8 @@ ipcMain.handle("save-csv", async (_, csvContent) => {
             </pre>
           </article>
 
-          <article className="min-w-0 rounded-xl border border-purple-700/50 bg-slate-900/70 p-4">
-            <h3 className="font-semibold text-purple-200">Desktop Packaging And Updates</h3>
+          <article className="min-w-0 rounded-xl border border-purple-700/50 bg-zinc-900/60 p-4">
+            <h3 className="font-semibold text-purple-400">Desktop Packaging And Updates</h3>
             <p className="mt-3 text-sm leading-7 text-gray-300">
               Built with electron-builder and NSIS installer pipeline, then distributed via GitHub Releases
               with electron-updater lifecycle hooks for update checks.
@@ -164,33 +169,22 @@ ipcMain.handle("save-csv", async (_, csvContent) => {
       <section className="mb-12">
         <h2 className="text-2xl font-bold font-poppins text-purple-400">Challenges And Solutions</h2>
         <div className="mt-4 space-y-4">
-          <div className="rounded-xl border border-purple-700/50 bg-slate-900/70 p-4">
-            <p className="font-semibold text-purple-200">Challenge: Different Instagram export schemas</p>
+          <div className="rounded-xl border border-purple-700/50 bg-zinc-900/60 p-4">
+            <p className="text-purple-400">Challenge: Different Instagram export schemas</p>
             <p className="mt-1 text-sm text-gray-300">Solution: A single import handler branches by JSON shape and routes data into the correct processing pipeline.</p>
           </div>
-          <div className="rounded-xl border border-purple-700/50 bg-slate-900/70 p-4">
-            <p className="font-semibold text-purple-200">Challenge: Dataset comparisons at scale</p>
+          <div className="rounded-xl border border-purple-700/50 bg-zinc-900/60 p-4">
+            <p className="text-purple-400">Challenge: Dataset comparisons at scale</p>
             <p className="mt-1 text-sm text-gray-300">Solution: Converted arrays to sets before filtering to keep comparisons near linear time.</p>
           </div>
-          <div className="rounded-xl border border-purple-700/50 bg-slate-900/70 p-4">
-            <p className="font-semibold text-purple-200">Challenge: Desktop-native actions without exposing Node in renderer</p>
+          <div className="rounded-xl border border-purple-700/50 bg-zinc-900/60 p-4">
+            <p className="text-purple-400">Challenge: Desktop-native actions without exposing Node in renderer</p>
             <p className="mt-1 text-sm text-gray-300">Solution: Tight contextBridge API surface for explicit and minimal IPC communication.</p>
           </div>
-          <div className="rounded-xl border border-purple-700/50 bg-slate-900/70 p-4">
-            <p className="font-semibold text-purple-200">Challenge: Packaging metadata bugs</p>
-            <p className="mt-1 text-sm text-gray-300">Solution: resolved release pipeline and build permissions by running VS Code with elevated privileges during packaging tasks.</p>
+          <div className="rounded-xl border border-purple-700/50 bg-zinc-900/60 p-4">
+            <p className="text-purple-400">Challenge: Packaging metadata bugs</p>
+            <p className="mt-1 text-sm text-gray-300">Solution: Resolved release pipeline and build permissions by running VS Code with elevated privileges during packaging tasks.</p>
           </div>
-        </div>
-      </section>
-
-      <section className="mb-12">
-        <h2 className="text-2xl font-bold font-poppins text-purple-400">Tech Stack</h2>
-        <div className="mt-4 flex flex-wrap gap-2">
-          {tech.map((item) => (
-            <span key={item} className="rounded-full border border-purple-600/60 bg-purple-900/30 px-3 py-1 text-xs text-purple-100">
-              {item}
-            </span>
-          ))}
         </div>
       </section>
 
@@ -216,13 +210,13 @@ ipcMain.handle("save-csv", async (_, csvContent) => {
           href="https://github.com/jblandin-art/instagram-metrics-app/releases/tag/v1.0.0"
           target="_blank"
           rel="noopener noreferrer"
-          className="rounded-md bg-purple-500 px-4 py-2 text-sm font-semibold text-white hover:bg-purple-400 transition"
+          className="rounded-md border border-purple-700/60 bg-zinc-900/60 px-4 py-2 text-sm font-medium text-zinc-100 transition hover:bg-zinc-800"
         >
           Download App
         </a>
         <a
           href="mailto:josiahblanding@gmail.com"
-          className="rounded-md border border-purple-500/70 px-4 py-2 text-sm text-purple-200 hover:bg-purple-800/40 transition"
+          className="rounded-md border border-purple-700/60 bg-zinc-900/60 px-4 py-2 text-sm font-medium text-zinc-100 transition hover:bg-zinc-800"
         >
           Contact Me
         </a>
