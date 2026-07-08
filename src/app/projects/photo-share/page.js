@@ -1,4 +1,5 @@
 import Link from "next/link";
+import PhotoShareCarousel from "@/components/PhotoShareCarousel";
 
 export const metadata = {
   title: "PhotoShare Case Study | Josiah Blanding",
@@ -37,6 +38,20 @@ const responsibilities = [
 ];
 
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
+const screenshotImages = [
+  {
+    src: `${basePath}/photo-app-details.png`,
+    alt: "Photo app details view",
+  },
+  {
+    src: `${basePath}/photo-app-photos.png`,
+    alt: "Photo app photos view",
+  },
+  {
+    src: `${basePath}/photo-app-mentions.png`,
+    alt: "Photo app comments view",
+  },
+];
 
 export default function PhotoShareCaseStudy() {
   return (
@@ -93,23 +108,7 @@ export default function PhotoShareCaseStudy() {
         <p className="mt-2 text-sm text-muted-foreground">
           User details, photo board, and comment thread views from the app.
         </p>
-        <div className="mt-4 grid gap-4 md:grid-cols-3">
-          <img
-            src={`${basePath}/photo-app-details.png`}
-            alt="Photo app details view"
-            className="h-auto w-full rounded-xl border border-purple-700/50"
-          />
-          <img
-            src={`${basePath}/photo-app-photos.png`}
-            alt="Photo app photos view"
-            className="h-auto w-full rounded-xl border border-purple-700/50"
-          />
-          <img
-            src={`${basePath}/photo-app-comments.png`}
-            alt="Photo app comments view"
-            className="h-auto w-full rounded-xl border border-purple-700/50"
-          />
-        </div>
+        <PhotoShareCarousel images={screenshotImages} />
       </section>
 
       <section id="sprint-highlights" className="mb-12">
@@ -157,7 +156,7 @@ export default function PhotoShareCaseStudy() {
           <article className="min-w-0 rounded-xl border border-purple-700/50 bg-zinc-900/60 p-4">
             <h3 className="text-purple-300">SPA Routing Shell</h3>
             <pre className="mt-3 max-w-full overflow-x-auto rounded-lg bg-zinc-950/80 p-3 text-[11px] text-gray-300 sm:text-xs">
-{`<HashRouter>
+              {`<HashRouter>
   <Grid container spacing={8}>
     <Grid item sm={3}><UserList /></Grid>
     <Grid item sm={9}>
@@ -174,7 +173,7 @@ export default function PhotoShareCaseStudy() {
           <article className="min-w-0 rounded-xl border border-purple-700/50 bg-zinc-900/60 p-4">
             <h3 className="text-purple-300">Route-Aware Top Bar Context</h3>
             <pre className="mt-3 max-w-full overflow-x-auto rounded-lg bg-zinc-950/80 p-3 text-[11px] text-gray-300 sm:text-xs">
-{`const path = this.props.location.pathname;
+              {`const path = this.props.location.pathname;
 if (path.includes("/users/") || path.includes("/photos/")) {
   const userId = path.split("/").pop();
   axios.get("/user/" + userId).then((response) => {
@@ -188,7 +187,7 @@ if (path.includes("/users/") || path.includes("/photos/")) {
           <article className="min-w-0 rounded-xl border border-purple-700/50 bg-zinc-900/60 p-4">
             <h3 className="text-purple-300">Mongo Route Projection</h3>
             <pre className="mt-3 max-w-full overflow-x-auto rounded-lg bg-zinc-950/80 p-3 text-[11px] text-gray-300 sm:text-xs">
-{`app.get("/user/list", function (request, response) {
+              {`app.get("/user/list", function (request, response) {
   User.find({}, "_id first_name last_name", function (err, users) {
     if (err) return response.status(500).send(JSON.stringify(err));
     response.status(200).send(users);
@@ -200,7 +199,7 @@ if (path.includes("/users/") || path.includes("/photos/")) {
           <article className="min-w-0 rounded-xl border border-purple-700/50 bg-zinc-900/60 p-4">
             <h3 className="text-purple-300">Populate + Response Reshape</h3>
             <pre className="mt-3 max-w-full overflow-x-auto rounded-lg bg-zinc-950/80 p-3 text-[11px] text-gray-300 sm:text-xs">
-{`Photo.find({ user_id: id }, "_id file_name date_time user_id comments")
+              {`Photo.find({ user_id: id }, "_id file_name date_time user_id comments")
   .populate("comments.user_id", "_id first_name last_name")
   .exec(function (err, photos) {
     const plainPhotos = JSON.parse(JSON.stringify(photos));

@@ -254,7 +254,7 @@ export default function UserSudokuBoard({ emptyCells = 45, seed, onLoadComplete,
               </button>
             </div>
           ) : null}
-          <div className="relative">
+          <div className="relative pb-38 sm:pb-0">
             <div className="aspect-square w-full rounded-lg border border-purple-700/40 bg-black/80 shadow-[0_0_40px_rgba(168,85,247,0.1)] opacity-0" aria-hidden="true" />
             <div className={`absolute inset-0 transition-opacity duration-300 ease-out ${isVisible && !boardLoading ? "opacity-100" : "opacity-0"}`}>
               {boardLoading ? null : (
@@ -267,7 +267,6 @@ export default function UserSudokuBoard({ emptyCells = 45, seed, onLoadComplete,
                   onChange={handleBoardChange}
                   statusOverride={saveNoticeVisible ? "Progress Saved" : null}
                   validMessage="Great job! This is a valid sudoku board."
-                  showMobileKeypad={false}
                 />
               )}
             </div>
@@ -275,7 +274,7 @@ export default function UserSudokuBoard({ emptyCells = 45, seed, onLoadComplete,
         </div>
       </section>
       {!initialLoading ? (
-        <div className="mt-10 flex flex-col items-stretch gap-3 md:flex-row md:items-center md:justify-center">
+        <div className="mt-0 flex flex-col items-stretch gap-3 md:mt-4 md:flex-row md:items-center md:justify-center">
           {showFillButton ? (
             <button
               type="button"

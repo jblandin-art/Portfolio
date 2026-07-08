@@ -254,18 +254,38 @@ export default function SudokuBoardBase({ puzzle = null, solution = null, valida
                           inputRefs.current[r][c] = node;
                         }}
                         type="text"
-                        inputMode="numeric"
+                        inputMode={isMobileInputMode ? "none" : "numeric"}
                         pattern="[0-9]*"
                         maxLength={1}
                         autoComplete="off"
                         autoCapitalize="characters"
-                        readOnly={false}
+                        readOnly={readOnly || isMobileInputMode}
                         tabIndex={0}
                         aria-label={`r${r}c${c}`}
                         className={`absolute inset-0 z-20 h-full w-full appearance-none border-0 bg-transparent p-0 text-center text-[1.75rem] sm:text-[2.25rem] leading-none outline-none caret-white opacity-0 ${isMobileInputMode ? "cursor-pointer" : "focus:opacity-100 focus:text-transparent"}`}
                         value={val === 0 ? "" : String(val)}
-                        onClick={isMobileInputMode ? () => setActiveCell({ r, c }) : undefined}
-                        onFocus={() => setActiveCell({ r, c })}
+                        onClick={isMobileInputMode ? (e) => {
+                          e.preventDefault();
+                          setActiveCell({ r, c });
+                        } : undefined}
+                        onTouchStart={isMobileInputMode ? (e) => {
+                          e.preventDefault();
+                          setActiveCell({ r, c });
+                          inputRefs.current[r]?.[c]?.focus({ preventScroll: true });
+                        } : undefined}
+                        onTouchMove={isMobileInputMode ? (e) => {
+                          e.preventDefault();
+                        } : undefined}
+                        onTouchCancel={isMobileInputMode ? (e) => {
+                          e.preventDefault();
+                          setActiveCell(null);
+                        } : undefined}
+                        onTouchEnd={isMobileInputMode ? (e) => {
+                          e.preventDefault();
+                        } : undefined}
+                        onFocus={() => {
+                          setActiveCell({ r, c });
+                        }}
                         onKeyDown={(event) => handleCellKeyDown(event, r, c, isPrefilled)}
                         onChange={(e) => handleCellChange(r, c, e.target.value)}
                       />
@@ -275,6 +295,14 @@ export default function SudokuBoardBase({ puzzle = null, solution = null, valida
               );
             })
           )}
+          {//Put AI <p> element here.
+          }
+          {allCellsReadOnly ? <p
+            className={`absolute -top-4 right-2 text-xs lg:mt-1 lg:top-auto lg:-bottom-5 lg:-left-0 transition-opacity duration-500 ease-out ${displayStatusText ? "opacity-100" : "opacity-0"} ${displayStatusText ? displayStatusClass: "text-emerald-400"} `}
+          >
+            {displayStatusText || "Progress Saved"}
+          </p> : null
+          }
         </div>
 
         <div
@@ -283,11 +311,12 @@ export default function SudokuBoardBase({ puzzle = null, solution = null, valida
         />
       </div>
 
-      <p
-        className={`mt-3 text-xs transition-opacity duration-500 ease-out ${displayStatusText ? "opacity-100" : "opacity-0"} ${displayStatusClass}`}
+      {!allCellsReadOnly ? <p
+        className={`absolute -top-4 right-2 text-xs -mt-px lg:mt-1 lg:top-0 lg:static transition-opacity duration-500 ease-out ${displayStatusText ? "opacity-100" : "opacity-0"} ${displayStatusText ? displayStatusClass: "text-emerald-400"} `}
       >
-        {displayStatusText}
-      </p>
+        {displayStatusText || "Progress Saved"}
+      </p> : null
+      }
 
       {showMobileKeypad && isMobileInputMode && !readOnly ? (
         <section className="mt-4 rounded-lg border border-purple-700/60 bg-black/75 p-3">

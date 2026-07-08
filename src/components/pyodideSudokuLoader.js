@@ -1,4 +1,5 @@
 let pyodideInitPromise = null;
+const PYODIDE_SCRIPT_LOAD_TIMEOUT_MS = 20000;
 
 export async function loadPyodideAndSudoku({ onStatusChange = null } = {}) {
   const reportStatus = (message) => {
@@ -20,8 +21,24 @@ export async function loadPyodideAndSudoku({ onStatusChange = null } = {}) {
           const script = document.createElement("script");
           script.src = "https://cdn.jsdelivr.net/pyodide/v0.26.1/full/pyodide.js";
           script.async = true;
-          script.onload = () => resolve(window.loadPyodide);
-          script.onerror = reject;
+          let timedOut = false;
+          const timeoutId = window.setTimeout(() => {
+            timedOut = true;
+            script.remove();
+            reportStatus("Pyodide script timed out.");
+            reject(new Error("Timed out while loading the Pyodide script."));
+          }, PYODIDE_SCRIPT_LOAD_TIMEOUT_MS);
+
+          script.onload = () => {
+            if (timedOut) return;
+            window.clearTimeout(timeoutId);
+            resolve(window.loadPyodide);
+          };
+          script.onerror = () => {
+            if (timedOut) return;
+            window.clearTimeout(timeoutId);
+            reject(new Error("Failed to load the Pyodide script."));
+          };
           document.head.appendChild(script);
         });
 

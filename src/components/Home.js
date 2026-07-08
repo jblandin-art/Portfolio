@@ -59,7 +59,7 @@ export default function Home() {
                                 srcSet={`${basePath}/sudoku-320w.png 320w, ${basePath}/sudoku-480w.png 480w, ${basePath}/sudoku-640w.png 640w, ${basePath}/sudoku-960w.png 960w, ${basePath}/sudoku-1280w.png 1280w, ${basePath}/sudoku-1920w.png 1920w`}
                                 sizes="(min-width:1024px) 33vw, (min-width:768px) 50vw, 100vw"
                                 alt="Sudoku game preview"
-                                className="absolute inset-0 w-full h-full object-cover"
+                                className="absolute inset-0 h-full object-cover"
                             />
                         </div>
                         <h3 className="text-xl leading-tight font-poppins mt-2 tracking-normal text-purple-400">Sudoku</h3>
@@ -77,7 +77,7 @@ export default function Home() {
                     
                     <article className="group flex h-full flex-col rounded-2xl bg-gradient-to-br from-zinc-900/95 to-zinc-950/95 ring-1 ring-inset ring-purple-900/35 p-5 transition-colors duration-300 ease-in-out">
                         <div className="-mx-5 -mt-5 mb-4 overflow-hidden rounded-t-2xl bg-zinc-950/80">
-                            <video className="h-44 w-full object-cover" autoPlay muted loop playsInline preload="metadata">
+                            <video className="h-44 w-full object-cover" autoPlay muted loop playsInline preload="metadata" poster={`${basePath}/NeuralEncodingDashboardSample.png`}>
                                 <source src={`${basePath}/NeuralEncodingDashboardSample.mp4`} type="video/mp4" />
                             </video>
                         </div>
@@ -101,7 +101,7 @@ export default function Home() {
                                 srcSet={`${basePath}/photo-app-comments-320w.png 320w, ${basePath}/photo-app-comments-480w.png 480w, ${basePath}/photo-app-comments-640w.png 640w, ${basePath}/photo-app-comments-960w.png 960w, ${basePath}/photo-app-comments-1280w.png 1280w, ${basePath}/photo-app-comments-1920w.png 1920w`}
                                 sizes="(min-width:1024px) 33vw, (min-width:768px) 50vw, 100vw"
                                 alt="PhotoShare details preview"
-                                className="absolute inset-0 w-full h-full object-cover"
+                                className="absolute inset-0 h-full object-cover"
                             />
                         </div>
                         <h3 className="text-xl leading-tight font-poppins mt-2 tracking-normal text-purple-400">PhotoShare</h3>

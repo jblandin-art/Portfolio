@@ -2,13 +2,17 @@ const fs = require('fs');
 const path = require('path');
 
 const publicDir = path.join(process.cwd(), 'public');
-const images = [
+/*const images = [
   'sudoku.png',
   'photo-app-comments.png',
   'ig-metrics-onboarding.png',
   'nim.png',
   'webwork.png'
 ];
+*/
+const images = [
+  'photo-app-comments.png',
+]
 const widths = [320, 480, 640, 960, 1280, 1920];
 
 function ensureDir(dir) {
