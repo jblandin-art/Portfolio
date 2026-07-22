@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import UserSudokuBoard from "../../../components/UserSudokuBoard";
 import AISudokuBoard from "../../../components/AISudokuBoard";
 
-export default function SudokuContent({ onLoadComplete, onLoadingStatusChange = null }) {
+export default function SudokuContent({ onLoadComplete, onLoadingStatusChange = null, onPuzzleSolved = null }) {
   const [aiLoading, setAiLoading] = useState(true);
   const [userLoading, setUserLoading] = useState(true);
   const [userLoadingStatus, setUserLoadingStatus] = useState("Loading Sudoku runtime…");
@@ -35,6 +35,7 @@ export default function SudokuContent({ onLoadComplete, onLoadingStatusChange = 
         onLoadComplete={onLoadComplete}
         onLoadingChange={setUserLoading}
         onLoadingStatusChange={setUserLoadingStatus}
+        onPuzzleSolved={onPuzzleSolved}
       />
 {/*
       <div className={`mb-6 transition-opacity duration-300 ease-out ${aiLoading ? "opacity-0" : "opacity-100"}`}>

@@ -2,8 +2,10 @@
 import { useEffect, useRef, useState } from "react";
 import SudokuBoardBase from "./SudokuBoardBase";
 import { loadPyodideAndSudoku } from "./pyodideSudokuLoader";
+import { supabase } from "@/lib/supabaseClient";
 
 const STORAGE_KEY = "portfolio.sudoku.user-game";
+const SOLVED_PUZZLES_KEY = "portfolio.sudoku.solved-puzzles";
 
 function createEmptyGrid() {
   return Array.from({ length: 9 }, () => Array(9).fill(0));
@@ -15,6 +17,32 @@ function isValidGridShape(grid) {
 
 function isCompleteGrid(grid) {
   return isValidGridShape(grid) && grid.every((row) => row.every((value) => Number(value) > 0));
+}
+
+function readSolvedPuzzleKeys() {
+  if (typeof window === "undefined") return new Set();
+
+  try {
+    const raw = window.localStorage.getItem(SOLVED_PUZZLES_KEY);
+    if (!raw) return new Set();
+
+    const parsed = JSON.parse(raw);
+    if (!Array.isArray(parsed)) return new Set();
+
+    return new Set(parsed.filter((value) => typeof value === "string"));
+  } catch {
+    return new Set();
+  }
+}
+
+function persistSolvedPuzzleKeys(keys) {
+  if (typeof window === "undefined") return;
+
+  try {
+    window.localStorage.setItem(SOLVED_PUZZLES_KEY, JSON.stringify(Array.from(keys)));
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 function readSavedGame() {
@@ -38,7 +66,7 @@ function readSavedGame() {
   }
 }
 
-export default function UserSudokuBoard({ emptyCells = 45, seed, onLoadComplete, onLoadingChange = null, onLoadingStatusChange = null }) {
+export default function UserSudokuBoard({ emptyCells = 45, seed, onLoadComplete, onLoadingChange = null, onLoadingStatusChange = null, onPuzzleSolved = null }) {
   const savedGame = readSavedGame();
   const [runtimeSeed, setRuntimeSeed] = useState(() => savedGame?.seed ?? seed ?? Math.floor(Math.random() * 1000000));
   const [puzzle, setPuzzle] = useState(null);
@@ -56,6 +84,34 @@ export default function UserSudokuBoard({ emptyCells = 45, seed, onLoadComplete,
   const [savedGrid, setSavedGrid] = useState(() => isValidGridShape(savedGame?.grid) ? savedGame.grid : createEmptyGrid());
   const [saveNoticeVisible, setSaveNoticeVisible] = useState(false);
   const saveNoticeTimeoutRef = useRef(null);
+  const solvedPuzzleKeysRef = useRef(readSolvedPuzzleKeys());
+  const solveRequestInFlightRef = useRef(false);
+
+  async function markPuzzleSolved() {
+    const { data: userData, error: userError } = await supabase.auth.getUser();
+
+    if (userError) {
+      console.error("Failed to load current user:", userError.message);
+      return false;
+    }
+
+    const userId = userData?.user?.id;
+
+    if (!userId) {
+      console.error("Failed to update solved count: no authenticated user.");
+      return false;
+    }
+
+    const { data, error } = await supabase.rpc("increment_puzzles_solved");
+
+    if (error) {
+      console.error("Failed to update solved count:", error.message);
+      return false;
+    }
+
+    console.log("New solved count:", data);
+    return true;
+  }
 
   useEffect(() => {
     onLoadingChange && onLoadingChange(initialLoading);
@@ -103,11 +159,9 @@ export default function UserSudokuBoard({ emptyCells = 45, seed, onLoadComplete,
 
       const jsPuzzle = JSON.parse(puzzleJson);
       setPuzzle(jsPuzzle);
-
-      const puzzleLiteral = puzzleJson.replace(/\\/g, "\\\\").replace(/'/g, "\\'");
       onLoadingStatusChange && onLoadingStatusChange("Solving puzzle…");
       const solutionJson = await pyodide.runPythonAsync(
-        `import json, numpy as np\npuzzle_grid = np.array(json.loads('${puzzleLiteral}'), dtype=int)\nsolver = ImprovedSudokuResolver(puzzle_grid)\nsolver.find_solution()\njson.dumps(solver.grid.tolist())`
+        `import json, numpy as np\npuzzle_grid = np.array(json.loads('${puzzleJson.replace(/\\/g, "\\\\").replace(/'/g, "\\'")}'), dtype=int)\nsolver = ImprovedSudokuResolver(puzzle_grid)\nsolver.find_solution()\njson.dumps(solver.grid.tolist())`
       );
       if (cancelled) return;
 
@@ -151,6 +205,56 @@ export default function UserSudokuBoard({ emptyCells = 45, seed, onLoadComplete,
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
+
+  useEffect(() => {
+    if (initialLoading || boardLoading || !solution) {
+      return;
+    }
+
+    const puzzleKey = `${emptyCells}:${runtimeSeed}`;
+
+    if (solvedPuzzleKeysRef.current.has(puzzleKey)) {
+      return;
+    }
+
+    if (!isCompleteGrid(savedGrid) || solveRequestInFlightRef.current) {
+      return;
+    }
+
+    let cancelled = false;
+
+    async function recordSolvedPuzzle() {
+      solveRequestInFlightRef.current = true;
+      const isValidSolvedGrid = validateGrid ? await validateGrid(savedGrid) : false;
+
+      if (!isValidSolvedGrid) {
+        solveRequestInFlightRef.current = false;
+        return;
+      }
+
+      const success = await markPuzzleSolved();
+
+      solveRequestInFlightRef.current = false;
+
+      if (cancelled) {
+        return;
+      }
+
+      if (!success) {
+        return;
+      }
+
+      onPuzzleSolved && onPuzzleSolved();
+      solvedPuzzleKeysRef.current.add(puzzleKey);
+      persistSolvedPuzzleKeys(solvedPuzzleKeysRef.current);
+    }
+
+    recordSolvedPuzzle();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [emptyCells, initialLoading, boardLoading, runtimeSeed, savedGrid, solution, onPuzzleSolved, validateGrid]);
 
   function handleClearBoard() {
     const emptyGrid = createEmptyGrid();

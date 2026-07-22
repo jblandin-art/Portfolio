@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import Link from 'next/link'
 import SudokuScrollReset from './scroll-reset'
 import SudokuContent from './sudoku-content'
+import AuthWidget from "@/components/AuthWidget.jsx";
+
 
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
 
@@ -17,6 +19,7 @@ export default function SudokuPage() {
     const [loaded, setLoaded] = useState(false);
     const [mounted, setMounted] = useState(false);
     const [loadingStatus, setLoadingStatus] = useState("Preparing the in-browser Sudoku runtime…");
+    const [puzzlesSolved, setPuzzlesSolved] = useState(null);
     useEffect(() => {
     setMounted(true);
 }, []);
@@ -63,6 +66,11 @@ export default function SudokuPage() {
                     </div>
                 </header>
 
+
+                {
+                    //User registration and login section. 
+                }
+                <AuthWidget puzzlesSolved={puzzlesSolved} setPuzzlesSolved={setPuzzlesSolved} />
                 {!loaded && (
                     <div className="mx-auto max-w-5xl py-6">
                         <div className="mb-6 flex items-center gap-4">
@@ -76,7 +84,13 @@ export default function SudokuPage() {
                     </div>
                 )}
 
-                {mounted && <SudokuContent onLoadComplete={setLoaded} onLoadingStatusChange={setLoadingStatus} />}             
+                                {mounted && (
+                                    <SudokuContent
+                                        onLoadComplete={setLoaded}
+                                        onLoadingStatusChange={setLoadingStatus}
+                                        onPuzzleSolved={() => setPuzzlesSolved((previous) => Number(previous ?? 0) + 1)}
+                                    />
+                                )}             
             </main>
         </>
     );
