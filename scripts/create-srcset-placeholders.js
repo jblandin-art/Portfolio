@@ -11,7 +11,7 @@ const publicDir = path.join(process.cwd(), 'public');
 ];
 */
 const images = [
-  'photo-app-comments.png',
+  'flappiestBird.png',
 ]
 const widths = [320, 480, 640, 960, 1280, 1920];
 

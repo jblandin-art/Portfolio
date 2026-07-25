@@ -47,7 +47,7 @@ export default function Home() {
             <section id="projects" className="mt-10 scroll-mt-20">
                 <div className="mb-6">
                     <h2 className="text-2xl font-bold font-poppins text-purple-400">Projects</h2>
-                    <p className="text-sm text-muted-foreground mt-1">Three carefully selected builds that showcase experience in UX, data management, and deployment. 
+                    <p className="text-sm text-muted-foreground mt-1">Four carefully selected builds that showcase experience in UX, data management, gameplay, and deployment. 
                     </p>
                 </div>
 
@@ -201,6 +201,28 @@ export default function Home() {
                             <a target="_blank" rel="noopener noreferrer" href="https://github.com/jblandin-art/WeBWorKMAX" className="inline-flex w-full items-center justify-center rounded-md border border-purple-900/45 bg-zinc-900/60 px-3 py-1.5 text-sm text-zinc-200 hover:bg-zinc-800/90 transition">View on GitHub</a>
                         </div>
                     </article>
+                    { /** The Flappiest Bird 
+                    <article className="group col-span-full flex h-full flex-col rounded-2xl bg-gradient-to-br from-zinc-900/95 to-zinc-950/95 ring-1 ring-inset ring-purple-900/35 p-5 transition-colors duration-300 ease-in-out">
+                        <div className="-mx-5 -mt-5 mb-4 overflow-hidden rounded-t-2xl bg-zinc-950/80 relative h-44">
+                            <img
+                                src={`${basePath}/flappiestBird.png`}
+                                srcSet={`${basePath}/flappiestBird-320w.png 320w, ${basePath}/flappiestBird-480w.png 480w, ${basePath}/flappiestBird-640w.png 640w, ${basePath}/flappiestBird-960w.png 960w, ${basePath}/flappiestBird-1280w.png 1280w, ${basePath}/flappiestBird-1920w.png 1920w`}
+                                sizes="(min-width:1024px) 33vw, (min-width:768px) 50vw, 100vw"
+                                alt="The Flappiest Bird preview"
+                                className="absolute inset-0 h-full w-full object-cover object-cover object-[center_40%]"
+                            />
+                        </div>
+                        <h3 className="text-xl leading-tight font-poppins mt-2 tracking-normal text-purple-400">The Flappiest Bird</h3>
+                        <p className="mt-1 text-base leading-6 text-zinc-300">Unity Game</p>
+                        <div className="mt-2 mb-3 -translate-x-[3px] flex flex-wrap gap-2">
+                            <span className="rounded-lg border border-purple-900/35 bg-zinc-900/60 px-3 py-1 text-xs font-semibold text-zinc-200">C++</span>
+                            <span className="rounded-lg border border-purple-900/35 bg-zinc-900/60 px-3 py-1 text-xs font-semibold text-zinc-200">Unity</span>
+                        </div>
+                        <div className="mt-auto pt-5 grid grid-cols-1 gap-2">
+                            <a target="_blank" rel="noopener noreferrer" href="https://play.unity.com/en/games/acd20706-6397-40e4-a959-d845d0836ad9/the-flappiest-bird" className="inline-flex w-full items-center justify-center rounded-md border border-purple-900/45 bg-zinc-900/60 px-3 py-1.5 text-sm text-zinc-200 hover:bg-zinc-800/90 transition">Play Game</a>
+                        </div>
+                    </article>
+*/ }
                 </div>
                 )}
                 <div className="mt-4 flex justify-center">
@@ -254,10 +276,10 @@ export default function Home() {
                 </p>
             <ul className="list-disc list-inside">
                 <li className="font-sans text-gray-300 tracking-wide leading-8 max-w-2xl mt-2 text-lg">
-                    Managed the full system lifecycle for campus technology, handling OS imaging and preparation to ensure stability through 70+ devices using Microsoft Configuration Mangager and Active Directory.
+                    Used Bash and CMD to troubleshoot and image devices. Allowing the campus to reuse old devices and provide new ones. 
                 </li>
                 <li className="font-sans text-gray-300 tracking-wide leading-8 max-w-2xl mt-2 text-lg">
-                    Debugged software deployment and network authentication issues using Bash commands and enterprise tools.
+                    Set up new devices for faculty. Improved through feedback and criticism from senior staff. Allowing for better labeling of devices, and more efficient deployment. 
                 </li>
             </ul>
             </article>
@@ -287,10 +309,13 @@ export default function Home() {
                 </p>
             <ul className="list-disc list-inside">
                 <li className="font-sans text-gray-300 tracking-wide leading-8 max-w-2xl mt-2 text-lg">
-                    Developed a continuous autosave extension for WebWorK’s grading system using JavaScript, preventing in-progress data loss when grading assignments. 
+                    Developed an autosave extension for WebWorK’s grading system using JavaScript, HTML and CSS. Preventing data loss when refreshing the page. 
                 </li>
                 <li className="font-sans text-gray-300 tracking-wide leading-8 max-w-2xl mt-2 text-lg">
-                    Supervised the learning of 75 students in critical computer science concepts such as algorithm design, recursion, and binary notation. Graded tests, assignments, and hosted office hours for tutoring.
+                    Fixed UI bugs in WebWorK’s grading system using JavaScript, HTML, and CSS, allowing dropdowns to fully display options, and providing a better view of the comment section. 
+                </li>
+                <li className="font-sans text-gray-300 tracking-wide leading-8 max-w-2xl mt-2 text-lg">
+                    Created study guide materials and graded exams using guidelines from senior staff. 
                 </li>
             </ul>
             </article>

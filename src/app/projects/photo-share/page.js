@@ -40,6 +40,10 @@ const responsibilities = [
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
 const screenshotImages = [
   {
+    src: `${basePath}/photo-app-login.png`,
+    alt: "Photo app login view",
+  },
+  {
     src: `${basePath}/photo-app-details.png`,
     alt: "Photo app details view",
   },
