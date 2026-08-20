@@ -45,6 +45,7 @@ export default function SudokuPage() {
                     <p className="mt-4 max-w-3xl text-lg leading-8 text-gray-300">
                         This is a complete, deployment-ready implementation of a web Sudoku application. It's complete with autosave functionality and an extremely modern User Interface. Below you'll notice another Sudoku board that utilizes an AI algorithm to solve sudoku puzzles. The project was originally built in Python, so I utilized Pyodide to run the code directly in the browser, and I used it's output to influence the DOM. The UI utilizes React and Tailwind CSS and it optimized for both mobile and desktops. 
                     </p>
+                    <a href="https://master.d3h8583lgk683l.amplifyapp.com/" className="text-lg text-purple-300 hover:text-purple-200">- Standalone site hosted with AWS here.</a>
 
                     <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
                         <div className="rounded-xl border border-purple-700/50 bg-zinc-900/60 p-4">

@@ -4,58 +4,72 @@ import PhotoShareCarousel from "@/components/PhotoShareCarousel";
 export const metadata = {
   title: "PhotoShare Case Study | Josiah Blanding",
   description:
-    "Case study for a sprint-based team photo sharing app built with React, Node, Express, and MongoDB.",
+    "Case study for a team photo-sharing application built with React, Node, Express, MongoDB, Next.js, Vercel, and AWS S3.",
 };
-
-const sprintHighlights = {
-  sprints1_2: [
-    "Implemented SPA routing shell with a master-detail layout for user list, detail view, and photo view.",
-    "Built route-aware top bar context text that updates to Details of or Photos of the active user.",
-    "Connected UserList, UserDetail, and UserPhotos views to backend APIs using axios.",
-    "Migrated backend routes to MongoDB/Mongoose and returned UI-friendly response payloads.",
-    "Populated comment user references, then reshaped nested objects for frontend compatibility.",
-  ],
-  sprint3: [
-    "Implemented login/logout session flow and server-side session persistence and validation.",
-    "Built route protection and access control to redirect unauthenticated users and block protected endpoints.",
-    "Expanded login/register screen with password validation and new user registration support.",
-    "Added photo commenting with immediate UI refresh and photo uploading with multipart form handling.",
-  ],
-  sprint4: [
-    "Extended MongoDB schema to store mention references within comments and validate mentions against existing users.",
-    "Exposed backend query endpoint for retrieving all photos that mention a specific user.",
-    "Built mention-aware comment entry UI with mention detection and validation.",
-  ],
-};
-
-const responsibilities = [
-  "Scrum Master for a five-person team across all four sprints.",
-  "Led MongoDB/Express API implementation and integration details.",
-  "Completed UserList and UserDetail frontend work in Sprints 1–2.",
-  "Implemented server-side login/logout session flow and session persistence in Sprint 3.",
-  "Designed and implemented backend mentions system for Sprint 4: schema design, validation logic, and query endpoints.",
-  "Primary documentation owner for sprint deliverables and team execution.",
-];
 
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
-const screenshotImages = [
+
+const screenshots = [
+  { src: `${basePath}/photo-app-login.png`, alt: "Photo app login view" },
+  { src: `${basePath}/photo-app-details.png`, alt: "Photo app details view" },
+  { src: `${basePath}/photo-app-photos.png`, alt: "Photo app photos view" },
+  { src: `${basePath}/photo-app-mentions.png`, alt: "Photo app comments view" },
+];
+
+const responsibilities = [
+  "Scrum Master for a five-person Agile team across all four sprints.",
+  "Built and integrated React frontend features including UserList, UserDetail, UserPhotos, routing, and route-aware navigation.",
+  "Implemented MongoDB/Mongoose API routes and reshaped populated database data for frontend use.",
+  "Built login/logout sessions, route protection, registration, comments, photo uploads, and @mention functionality.",
+  "Led the migration from Vite/Express to Next.js and Vercel serverless deployment.",
+  "Integrated AWS S3 for image storage and resolved access, CORS, deployment, and mobile upload issues.",
+];
+
+const features = [
   {
-    src: `${basePath}/photo-app-login.png`,
-    alt: "Photo app login view",
+    title: "Sprints 1–2: Application Foundation",
+    items: [
+      "Built SPA routing and master-detail user/photo views.",
+      "Connected React components to Express/MongoDB APIs.",
+      "Implemented Mongoose population and frontend-friendly response structures.",
+    ],
   },
   {
-    src: `${basePath}/photo-app-details.png`,
-    alt: "Photo app details view",
+    title: "Sprint 3: Authentication & User Content",
+    items: [
+      "Implemented login, logout, registration, and protected routes.",
+      "Added server-side session persistence and validation.",
+      "Built photo uploading and commenting with immediate UI updates.",
+    ],
   },
   {
-    src: `${basePath}/photo-app-photos.png`,
-    alt: "Photo app photos view",
-  },
-  {
-    src: `${basePath}/photo-app-mentions.png`,
-    alt: "Photo app comments view",
+    title: "Sprint 4: @Mentions",
+    items: [
+      "Extended the MongoDB schema to store comment mentions.",
+      "Added mention validation and backend queries for mentioned users.",
+      "Built the mention-aware comment interface.",
+    ],
   },
 ];
+
+const deploymentWork = [
+  "Moved the Express backend into Next.js API routing using serverless-http.",
+  "Converted backend modules toward ES modules for Next.js compatibility.",
+  "Resolved MongoDB Atlas connectivity and authentication issues.",
+  "Integrated AWS S3 and fixed image access and CORS configuration.",
+  "Diagnosed Vercel's 413 mobile upload limit and desktop/mobile upload differences.",
+  "Identified that in-memory sessions do not work reliably with stateless serverless functions and evaluated Mongo-backed sessions versus JWT authentication.",
+  "Fixed a Vercel deployment failure caused by stale Vite framework/build settings after the Next.js migration.",
+];
+
+const awsArchitecture = [
+  "Evaluated Lambda + API Gateway as an alternative serverless backend.",
+  "Planned MongoDB Atlas instead of RDS to retain the existing Mongoose architecture.",
+  "Considered S3 + CloudFront for static frontend hosting.",
+  "Designed around avoiding EC2, RDS, and NAT Gateway costs.",
+];
+
+const LIVE_APP_URL = "https://photo-app-nine-liard.vercel.app/";
 
 export default function PhotoShareCaseStudy() {
   return (
@@ -70,84 +84,73 @@ export default function PhotoShareCaseStudy() {
       </div>
 
       <header className="mb-10">
-        <p className="text-sm font-semibold uppercase tracking-widest text-purple-300">Case Study</p>
-        <h1 className="mt-2 max-w-3xl text-3xl font-bold font-poppins leading-tight text-purple-400 sm:text-4xl lg:text-5xl">
-          PhotoShare - Sprint Based Social Media Platform
+        <p className="text-sm font-semibold uppercase tracking-widest text-purple-300">
+          Case Study
+        </p>
+
+        <h1 className="mt-2 text-3xl font-bold font-poppins leading-tight text-purple-400 sm:text-4xl lg:text-5xl">
+          PhotoShare — Sprint Based Social Media Platform
         </h1>
+
         <p className="mt-4 max-w-3xl text-lg leading-8 text-gray-300">
-          This social media application features a login/registration system, a full commenting system, route awareness, and @mention functionality. All of which was implemented by me and my team. We used an Agile development approach and I led as scrum master for all sprints.
+          A team-built social photo application featuring authentication,
+          photo sharing, comments, user profiles, and @mentions. I served as
+          Scrum Master and full-stack contributor, then led the application's
+          transition into a modern serverless deployment.
         </p>
 
         <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-          <div className="rounded-xl border border-purple-700/50 bg-zinc-900/60 p-4">
-            <p className="text-xs uppercase tracking-wide text-purple-300">Role</p>
-            <p className="mt-1 text-sm">Scrum Master + Full-Stack Contributor</p>
-          </div>
-          <div className="rounded-xl border border-purple-700/50 bg-zinc-900/60 p-4">
-            <p className="text-xs uppercase tracking-wide text-purple-300">Team</p>
-            <p className="mt-1 text-sm">5 developers</p>
-          </div>
-          <div className="rounded-xl border border-purple-700/50 bg-zinc-900/60 p-4">
-            <p className="text-xs uppercase tracking-wide text-purple-300">Timeline</p>
-            <p className="mt-1 text-sm">~1 month (10+ hours personal implementation)</p>
-          </div>
-          <div className="rounded-xl border border-purple-700/50 bg-zinc-900/60 p-4">
-            <p className="text-xs uppercase tracking-wide text-purple-300">Stack</p>
-            <p className="mt-1 text-sm">React, MUI, Node, Express, MongoDB</p>
-          </div>
+          {[
+            ["Role", "Scrum Master + Full-Stack Contributor"],
+            ["Team", "5 developers"],
+            ["Development", "4 Agile sprints"],
+            [
+              "Stack",
+              "React, Next.js, Node, Express, MongoDB, AWS S3, Vercel",
+            ],
+          ].map(([label, value]) => (
+            <div
+              key={label}
+              className="rounded-xl border border-purple-700/50 bg-zinc-900/60 p-4"
+            >
+              <p className="text-xs uppercase tracking-wide text-purple-300">
+                {label}
+              </p>
+              <p className="mt-1 text-sm">{value}</p>
+            </div>
+          ))}
+        </div>
+        <div className="mt-6 rounded-2xl border border-purple-500/70 bg-zinc-900/60 p-6 border-r-purple-500/70 border-r-40">
+          <p className="text-xs font-semibold uppercase tracking-widest text-purple-300">Live App</p>
+          <p className="mt-2 max-w-2xl text-gray-200">
+            This web application is fully deployed and functional. Please check it out for yourself and leave a photo from your favorite movie! 
+          </p>
+          <a
+            href={LIVE_APP_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-4 inline-flex items-center gap-2 rounded-md bg-purple-500 px-6 py-3 text-base font-semibold text-white shadow-lg shadow-purple-900/40 transition hover:bg-purple-400"
+          >
+            Try the Live App
+            <span aria-hidden="true">→</span>
+          </a>
         </div>
       </header>
 
       <section className="mb-12">
-        <h2 className="text-2xl font-bold font-poppins text-purple-400">Problem And Audience</h2>
-        <p className="mt-3 leading-8 text-gray-300">
-          The product solves a simple social problem, helping people share memories and reconnect
-          through photo timelines.
-          The audience is general users, not a niche professional segment.
-        </p>
+        <h2 className="text-2xl font-bold font-poppins text-purple-400">
+          Screenshots
+        </h2>
+
+        <PhotoShareCarousel images={screenshots} />
       </section>
 
       <section className="mb-12">
-        <h2 className="text-2xl font-bold font-poppins text-purple-400">Screenshots</h2>
-        <p className="mt-2 text-sm text-muted-foreground">
-          User details, photo board, and comment thread views from the app.
-        </p>
-        <PhotoShareCarousel images={screenshotImages} />
-      </section>
+        <h2 className="text-2xl font-bold font-poppins text-purple-400">
+          My Responsibilities
+        </h2>
 
-      <section id="sprint-highlights" className="mb-12">
-        <h2 className="text-2xl font-bold font-poppins text-purple-400">Sprint Highlights</h2>
-        <div className="mt-6">
-          <h3 className="text-lg font-semibold text-purple-300">Sprints 1/2: Foundation</h3>
-          <ul className="mt-3 space-y-2 text-gray-300 leading-8 list-disc pl-5">
-            {sprintHighlights.sprints1_2.map((item) => (
-              <li key={item}>{item}</li>
-            ))}
-          </ul>
-        </div>
-
-        <div className="mt-6">
-          <h3 className="text-lg font-semibold text-purple-300">Sprint 3: Sessions, Security, and Input</h3>
-          <ul className="mt-3 space-y-2 text-gray-300 leading-8 list-disc pl-5">
-            {sprintHighlights.sprint3.map((item) => (
-              <li key={item}>{item}</li>
-            ))}
-          </ul>
-        </div>
-
-        <div className="mt-6">
-          <h3 className="text-lg font-semibold text-purple-300">Sprint 4: @Mentions in Comments</h3>
-          <ul className="mt-3 space-y-2 text-gray-300 leading-8 list-disc pl-5">
-            {sprintHighlights.sprint4.map((item) => (
-              <li key={item}>{item}</li>
-            ))}
-          </ul>
-        </div>
-      </section>
-
-      <section className="mb-12">
-        <h2 className="text-2xl font-bold font-poppins text-purple-400">My Responsibilities</h2>
-        <ul className="mt-4 space-y-3 text-gray-300 leading-8 list-disc pl-5">
+        <ul className="mt-4 space-y-2 leading-8 text-gray-300 list-disc pl-5">
           {responsibilities.map((item) => (
             <li key={item}>{item}</li>
           ))}
@@ -155,114 +158,177 @@ export default function PhotoShareCaseStudy() {
       </section>
 
       <section className="mb-12">
-        <h2 className="text-2xl font-bold font-poppins text-purple-400">Implementation Highlights</h2>
+        <h2 className="text-2xl font-bold font-poppins text-purple-400">
+          Sprint Highlights
+        </h2>
+
+        <div className="mt-6 space-y-6">
+          {features.map((section) => (
+            <div key={section.title}>
+              <h3 className="text-lg font-semibold text-purple-300">
+                {section.title}
+              </h3>
+
+              <ul className="mt-2 space-y-1 leading-7 text-gray-300 list-disc pl-5">
+                {section.items.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="mb-12">
+        <h2 className="text-2xl font-bold font-poppins text-purple-400">
+          Key Implementation
+        </h2>
+
         <div className="mt-4 grid gap-4 md:grid-cols-2">
-          <article className="min-w-0 rounded-xl border border-purple-700/50 bg-zinc-900/60 p-4">
-            <h3 className="text-purple-300">SPA Routing Shell</h3>
-            <pre className="mt-3 max-w-full overflow-x-auto rounded-lg bg-zinc-950/80 p-3 text-[11px] text-gray-300 sm:text-xs">
-              {`<HashRouter>
-  <Grid container spacing={8}>
-    <Grid item sm={3}><UserList /></Grid>
-    <Grid item sm={9}>
-      <Switch>
-        <Route path="/users/:userId" render={props => <UserDetail {...props} />} />
-        <Route path="/photos/:userId" render={props => <UserPhotos {...props} />} />
-      </Switch>
-    </Grid>
-  </Grid>
-</HashRouter>`}
-            </pre>
-          </article>
-
-          <article className="min-w-0 rounded-xl border border-purple-700/50 bg-zinc-900/60 p-4">
-            <h3 className="text-purple-300">Route-Aware Top Bar Context</h3>
-            <pre className="mt-3 max-w-full overflow-x-auto rounded-lg bg-zinc-950/80 p-3 text-[11px] text-gray-300 sm:text-xs">
-              {`const path = this.props.location.pathname;
-if (path.includes("/users/") || path.includes("/photos/")) {
-  const userId = path.split("/").pop();
-  axios.get("/user/" + userId).then((response) => {
-    const prefix = path.includes("/photos/") ? "Photos of " : "Details of ";
-    this.setState({ contextText: prefix + response.data.first_name + " " + response.data.last_name });
-  });
-}`}
-            </pre>
-          </article>
-
-          <article className="min-w-0 rounded-xl border border-purple-700/50 bg-zinc-900/60 p-4">
-            <h3 className="text-purple-300">Mongo Route Projection</h3>
-            <pre className="mt-3 max-w-full overflow-x-auto rounded-lg bg-zinc-950/80 p-3 text-[11px] text-gray-300 sm:text-xs">
-              {`app.get("/user/list", function (request, response) {
-  User.find({}, "_id first_name last_name", function (err, users) {
-    if (err) return response.status(500).send(JSON.stringify(err));
-    response.status(200).send(users);
-  });
-});`}
-            </pre>
-          </article>
-
-          <article className="min-w-0 rounded-xl border border-purple-700/50 bg-zinc-900/60 p-4">
-            <h3 className="text-purple-300">Populate + Response Reshape</h3>
-            <pre className="mt-3 max-w-full overflow-x-auto rounded-lg bg-zinc-950/80 p-3 text-[11px] text-gray-300 sm:text-xs">
-              {`Photo.find({ user_id: id }, "_id file_name date_time user_id comments")
-  .populate("comments.user_id", "_id first_name last_name")
-  .exec(function (err, photos) {
-    const plainPhotos = JSON.parse(JSON.stringify(photos));
-    plainPhotos.forEach((photo) => {
-      photo.comments.forEach((c) => {
-        c.user = c.user_id;
-        delete c.user_id;
-      });
-    });
-    res.status(200).send(plainPhotos);
-  });`}
-            </pre>
-          </article>
-        </div>
-      </section>
-
-      <section className="mb-12">
-        <h2 className="text-2xl font-bold font-poppins text-purple-400">Challenges And Solutions</h2>
-        <div className="mt-4 space-y-4">
-          <div className="rounded-xl border border-purple-700/50 bg-zinc-900/60 p-4">
-            <p className="text-purple-300">Challenge: Mongoose model shape mismatched the frontend data contract.</p>
-            <p className="mt-1 text-sm text-gray-300">Solution: Populated nested comment users and reshaped payload objects from user_id to user.</p>
-          </div>
-          <div className="rounded-xl border border-purple-700/50 bg-zinc-900/60 p-4">
-            <p className="text-purple-300">Challenge: Route context and selected user state drifted during navigation.</p>
-            <p className="mt-1 text-sm text-gray-300">Solution: Synced state with route/hash updates and refreshed context text on route changes.</p>
-          </div>
-          <div className="rounded-xl border border-purple-700/50 bg-zinc-900/60 p-4">
-            <p className="text-purple-300">Challenge: Team consistency across sprint workflows.</p>
-            <p className="mt-1 text-sm text-gray-300">Solution: Scrum-driven checkpoints and clear run/rebuild/lint documentation for shared execution.
+          <article className="rounded-xl border border-purple-700/50 bg-zinc-900/60 p-4">
+            <h3 className="font-semibold text-purple-300">
+              Route-Aware React UI
+            </h3>
+            <p className="mt-2 text-sm leading-6 text-gray-300">
+              Built the SPA routing structure and synchronized navigation state
+              with user and photo routes, allowing the interface to display
+              the correct user context throughout navigation.
             </p>
-          </div>
+          </article>
+
+          <article className="rounded-xl border border-purple-700/50 bg-zinc-900/60 p-4">
+            <h3 className="font-semibold text-purple-300">
+              MongoDB API Integration
+            </h3>
+            <p className="mt-2 text-sm leading-6 text-gray-300">
+              Implemented Express/Mongoose routes, populated nested user data,
+              and reshaped database responses to match the React application's
+              data contract.
+            </p>
+          </article>
+
+          <article className="rounded-xl border border-purple-700/50 bg-zinc-900/60 p-4">
+            <h3 className="font-semibold text-purple-300">
+              Authentication &amp; Sessions
+            </h3>
+            <p className="mt-2 text-sm leading-6 text-gray-300">
+              Implemented registration, login/logout, session validation, and
+              protected routes for authenticated users.
+            </p>
+          </article>
+
+          <article className="rounded-xl border border-purple-700/50 bg-zinc-900/60 p-4">
+            <h3 className="font-semibold text-purple-300">
+              Mentions &amp; Comments
+            </h3>
+            <p className="mt-2 text-sm leading-6 text-gray-300">
+              Designed the database support, validation, API queries, and UI
+              behavior required for users to mention other users inside
+              comments.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section id="deployment-evolution" className="mb-12">
+        <h2 className="text-2xl font-bold font-poppins text-purple-400">
+          Deployment &amp; Architecture Evolution
+        </h2>
+
+        <p className="mt-3 leading-8 text-gray-300">
+          After completing the original application, I led its migration from
+          Vite/Express toward Next.js and serverless deployment. This exposed
+          and required solving several production-level issues.
+        </p>
+
+        <ul className="mt-4 space-y-2 leading-8 text-gray-300 list-disc pl-5">
+          {deploymentWork.map((item) => (
+            <li key={item}>{item}</li>
+          ))}
+        </ul>
+
+        <h3 className="mt-8 text-lg font-semibold text-purple-300">
+          AWS Architecture Exploration
+        </h3>
+
+        <ul className="mt-3 space-y-2 leading-8 text-gray-300 list-disc pl-5">
+          {awsArchitecture.map((item) => (
+            <li key={item}>{item}</li>
+          ))}
+        </ul>
+      </section>
+
+      <section className="mb-12">
+        <h2 className="text-2xl font-bold font-poppins text-purple-400">
+          Challenges &amp; Solutions
+        </h2>
+
+        <div className="mt-4 grid gap-4 md:grid-cols-2">
+          {[
+            [
+              "Database / UI mismatch",
+              "Populated nested MongoDB references and reshaped responses to match the frontend.",
+            ],
+            [
+              "Serverless sessions",
+              "Recognized that in-memory sessions are unsuitable for ephemeral functions and evaluated persistent session/JWT alternatives.",
+            ],
+            [
+              "Mobile uploads",
+              "Diagnosed Vercel's 413 payload limit and investigated differences between desktop and mobile upload behavior.",
+            ],
+            [
+              "Vercel migration",
+              "Found stale Vite project settings causing failed Next.js builds and corrected the deployment configuration.",
+            ],
+          ].map(([title, description]) => (
+            <div
+              key={title}
+              className="rounded-xl border border-purple-700/50 bg-zinc-900/60 p-4"
+            >
+              <h3 className="font-semibold text-purple-300">{title}</h3>
+              <p className="mt-2 text-sm leading-6 text-gray-300">
+                {description}
+              </p>
+            </div>
+          ))}
         </div>
       </section>
 
       <section className="mb-12">
-        <h2 className="text-2xl font-bold font-poppins text-purple-400">Project Evolution</h2>
-        <p className="mt-3 leading-8 text-gray-300">
-          PhotoShare evolved from a prototype photo gallery into a fully featured social platform. Sprints 1–2 established the core SPA architecture and API layer. Sprint 3 added the authentication and real-world features sessions, registration, commenting, and file uploads that transformed it from an open demo into a secure, user-aware application. Sprint 4 extended the feature set with @mentions, allowing users to tag each other in comments and browse their mention gallery.
-        </p>
-        <p className="mt-3 leading-8 text-gray-300">
-          The project strengthened my understanding of full-stack architecture: how backend schema decisions shape frontend developer experience, how to balance feature scope with test/lint compliance, and how session and validation logic must work together to keep a platform secure and reliable.
-        </p>
+        <h2 className="text-2xl font-bold font-poppins text-purple-400">
+          What This Project Demonstrates
+        </h2>
+
+        <div className="mt-4 flex flex-wrap gap-2">
+          {[
+            "React",
+            "Next.js",
+            "Express",
+            "MongoDB / Mongoose",
+            "AWS S3",
+            "Vercel",
+            "Serverless Architecture",
+            "Authentication",
+            "REST APIs",
+            "Agile / Scrum",
+            "Deployment Debugging",
+          ].map((skill) => (
+            <span
+              key={skill}
+              className="rounded-full border border-purple-700/50 bg-zinc-900/60 px-3 py-1.5 text-sm text-gray-300"
+            >
+              {skill}
+            </span>
+          ))}
+        </div>
       </section>
 
-      <section className="mb-10 flex flex-wrap gap-3">
-        <a
-          href="#sprint-highlights"
-          className="rounded-md border border-purple-700/60 bg-zinc-900/60 px-4 py-2 text-sm font-medium text-zinc-100 transition hover:bg-zinc-800"
-        >
-          View Sprint Highlights
-        </a>
-        <a
-          href="mailto:josiahblanding@gmail.com"
-          className="rounded-md border border-purple-700/60 bg-zinc-900/60 px-4 py-2 text-sm font-medium text-zinc-100 transition hover:bg-zinc-800"
-        >
-          Contact Me
-        </a>
-      </section>
+      <footer className="border-t border-zinc-800 pt-8 text-sm text-gray-400">
+        PhotoShare demonstrates my ability to work across the full stack,
+        coordinate an Agile team, and continue improving an application beyond
+        its initial implementation through deployment and architecture work.
+      </footer>
     </main>
   );
 }

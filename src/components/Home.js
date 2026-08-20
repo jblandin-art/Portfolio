@@ -74,25 +74,6 @@ export default function Home() {
                             <Link href="/projects/sudoku#play" className="inline-flex w-full items-center justify-center rounded-md border border-purple-900/45 bg-zinc-900/60 px-3 py-1.5 text-sm text-zinc-200 hover:bg-zinc-800/90 transition">Play Game</Link>
                         </div>
                     </article>
-                    
-                    <article className="group flex h-full flex-col rounded-2xl bg-gradient-to-br from-zinc-900/95 to-zinc-950/95 ring-1 ring-inset ring-purple-900/35 p-5 transition-colors duration-300 ease-in-out">
-                        <div className="-mx-5 -mt-5 mb-4 overflow-hidden rounded-t-2xl bg-zinc-950/80">
-                            <video className="h-44 w-full object-cover" autoPlay muted loop playsInline preload="metadata" poster={`${basePath}/NeuralEncodingDashboardSample.png`}>
-                                <source src={`${basePath}/NeuralEncodingDashboardSample.mp4`} type="video/mp4" />
-                            </video>
-                        </div>
-                        <h3 className="text-xl leading-tight font-poppins mt-2 tracking-normal text-purple-400">NeuralEncoding</h3>
-                        <p className="mt-1 text-base leading-6 text-zinc-300">Brain Telemetry Dashboard</p>
-                        <div className="mt-2 mb-3 -translate-x-[3px] flex flex-wrap gap-2">
-                            <span className="rounded-lg border border-purple-900/35 bg-zinc-900/60 px-3 py-1 text-xs font-semibold text-zinc-200">Electron</span>
-                            <span className="rounded-lg border border-purple-900/35 bg-zinc-900/60 px-3 py-1 text-xs font-semibold text-zinc-200">React</span>
-                            <span className="rounded-lg border border-purple-900/35 bg-zinc-900/60 px-3 py-1 text-xs font-semibold text-zinc-200">Python</span>
-                        </div>
-                        <div className="mt-auto pt-5 grid grid-cols-2 gap-2">
-                            <Link href="/projects/neural-encoding" className="inline-flex w-full items-center justify-center rounded-md border border-purple-900/45 bg-zinc-900/60 px-3 py-1.5 text-sm font-medium text-zinc-200 transition hover:bg-zinc-800">Case Study</Link>
-                            <a target="_blank" rel="noopener noreferrer" href="https://github.com/jblandin-art/NeuralEncoding" className="inline-flex w-full items-center justify-center rounded-md border border-purple-900/45 bg-zinc-900/60 px-3 py-1.5 text-sm text-zinc-200 hover:bg-zinc-800/90 transition">Code & Demo</a>
-                        </div>
-                    </article>
 
                     <article className="group flex h-full flex-col rounded-2xl bg-gradient-to-br from-zinc-900/95 to-zinc-950/95 ring-1 ring-inset ring-purple-900/35 p-5 transition-colors duration-300 ease-in-out">
                         <div className="-mx-5 -mt-5 mb-4 overflow-hidden rounded-t-2xl bg-zinc-950/80 relative h-44">
@@ -112,8 +93,27 @@ export default function Home() {
                             <span className="rounded-lg border border-purple-900/35 bg-zinc-900/60 px-3 py-1 text-xs font-semibold text-zinc-200">MongoDB</span>
                         </div>
                         <div className="mt-auto pt-5 grid grid-cols-2 gap-2">
+                            <Link target="_blank" rel="noopener noreferrer" href="https://photo-app-nine-liard.vercel.app/" className="inline-flex w-full items-center justify-center rounded-md border border-purple-900/45 bg-zinc-900/60 px-3 py-1.5 text-sm text-zinc-200 hover:bg-zinc-800/90 transition">Live App</Link>
                             <Link href="/projects/photo-share" className="inline-flex w-full items-center justify-center rounded-md border border-purple-900/45 bg-zinc-900/60 px-3 py-1.5 text-sm font-medium text-zinc-200 transition hover:bg-zinc-800">Case Study</Link>
-                            <Link href="/projects/photo-share#sprint-highlights" className="inline-flex w-full items-center justify-center rounded-md border border-purple-900/45 bg-zinc-900/60 px-3 py-1.5 text-sm text-zinc-200 hover:bg-zinc-800/90 transition">Sprint Highlights</Link>
+                        </div>
+                    </article>
+                    
+                    <article className="group flex h-full flex-col rounded-2xl bg-gradient-to-br from-zinc-900/95 to-zinc-950/95 ring-1 ring-inset ring-purple-900/35 p-5 transition-colors duration-300 ease-in-out">
+                        <div className="-mx-5 -mt-5 mb-4 overflow-hidden rounded-t-2xl bg-zinc-950/80">
+                            <video className="h-44 w-full object-cover" autoPlay muted loop playsInline preload="metadata" poster={`${basePath}/NeuralEncodingDashboardSample.png`}>
+                                <source src={`${basePath}/NeuralEncodingDashboardSample.mp4`} type="video/mp4" />
+                            </video>
+                        </div>
+                        <h3 className="text-xl leading-tight font-poppins mt-2 tracking-normal text-purple-400">NeuralEncoding</h3>
+                        <p className="mt-1 text-base leading-6 text-zinc-300">Brain Telemetry Dashboard</p>
+                        <div className="mt-2 mb-3 -translate-x-[3px] flex flex-wrap gap-2">
+                            <span className="rounded-lg border border-purple-900/35 bg-zinc-900/60 px-3 py-1 text-xs font-semibold text-zinc-200">Electron</span>
+                            <span className="rounded-lg border border-purple-900/35 bg-zinc-900/60 px-3 py-1 text-xs font-semibold text-zinc-200">React</span>
+                            <span className="rounded-lg border border-purple-900/35 bg-zinc-900/60 px-3 py-1 text-xs font-semibold text-zinc-200">Python</span>
+                        </div>
+                        <div className="mt-auto pt-5 grid grid-cols-2 gap-2">
+                            <Link href="/projects/neural-encoding" className="inline-flex w-full items-center justify-center rounded-md border border-purple-900/45 bg-zinc-900/60 px-3 py-1.5 text-sm font-medium text-zinc-200 transition hover:bg-zinc-800">Case Study</Link>
+                            <a target="_blank" rel="noopener noreferrer" href="https://github.com/jblandin-art/NeuralEncoding" className="inline-flex w-full items-center justify-center rounded-md border border-purple-900/45 bg-zinc-900/60 px-3 py-1.5 text-sm text-zinc-200 hover:bg-zinc-800/90 transition">Code & Demo</a>
                         </div>
                     </article>
 
