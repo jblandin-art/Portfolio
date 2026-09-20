@@ -3,6 +3,9 @@ import Link from "next/link";
 export const metadata = {
   title: "IG Metrics Case Study | Josiah Blanding",
   description: "Case study for IG Metrics, a desktop analytics tool built with Electron and React.",
+  alternates: {
+    canonical: "/projects/ig-metrics",
+  },
 };
 
 const architectureItems = [

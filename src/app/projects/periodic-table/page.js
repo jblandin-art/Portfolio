@@ -4,6 +4,9 @@ export const metadata = {
   title: "Periodic Table Case Study | Josiah Blanding",
   description:
     "Case study for a periodic table database refactor and element lookup CLI built with PostgreSQL and Bash.",
+  alternates: {
+    canonical: "/projects/periodic-table",
+  },
 };
 
 const dbFixes = [

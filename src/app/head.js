@@ -7,7 +7,7 @@ export default function Head() {
     "image": "https://webpages.charlotte.edu/jblandin/headshotExtended.jpg",
     "jobTitle": ["Full Stack Developer", "Software Developer"],
     "sameAs": [
-      "https://www.linkedin.com/in/josiahblanding/",
+      "https://www.linkedin.com/in/josiah-blanding",
       "https://github.com/jblandin-art"
     ],
     "email": "mailto:josiahblanding@gmail.com",

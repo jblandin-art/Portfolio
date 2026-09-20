@@ -139,6 +139,27 @@ export default function Home() {
                     <article className="group flex h-full flex-col rounded-2xl bg-gradient-to-br from-zinc-900/95 to-zinc-950/95 ring-1 ring-inset ring-purple-900/35 p-5 transition-colors duration-300 ease-in-out">
                         <div className="-mx-5 -mt-5 mb-4 overflow-hidden rounded-t-2xl bg-zinc-950/80 relative h-44">
                             <img
+                                src={`${basePath}/thunder-frontend-dashboard.png`}
+                                alt="NBA lineup analytics dashboard showing sortable lineup cards with net points per possession, efficiency metrics, and player combinations."
+                                className="absolute inset-0 h-full w-full object-cover"
+                            />
+                        </div>
+                        <h3 className="text-xl leading-tight font-poppins mt-2 tracking-normal text-purple-400">Lineup Intelligence</h3>
+                        <p className="mt-1 text-base leading-6 text-zinc-300">NBA Lineup Analytics Dashboard</p>
+                        <div className="mt-2 mb-3 -translate-x-[3px] flex flex-wrap gap-2">
+                            <span className="rounded-lg border border-purple-900/35 bg-zinc-900/60 px-3 py-1 text-xs font-semibold text-zinc-200">Python</span>
+                            <span className="rounded-lg border border-purple-900/35 bg-zinc-900/60 px-3 py-1 text-xs font-semibold text-zinc-200">Django</span>
+                            <span className="rounded-lg border border-purple-900/35 bg-zinc-900/60 px-3 py-1 text-xs font-semibold text-zinc-200">Angular</span>
+                            <span className="rounded-lg border border-purple-900/35 bg-zinc-900/60 px-3 py-1 text-xs font-semibold text-zinc-200">PostgreSQL</span>
+                        </div>
+                        <div className="mt-auto pt-5 grid grid-cols-2 gap-2">
+                            <a target="_blank" rel="noopener noreferrer" href="https://thunder-sandy.vercel.app/" className="inline-flex w-full items-center justify-center rounded-md border border-purple-900/45 bg-zinc-900/60 px-3 py-1.5 text-sm text-zinc-200 hover:bg-zinc-800/90 transition">Live App</a>
+                            <Link href="/projects/lineup-intelligence" className="inline-flex w-full items-center justify-center rounded-md border border-purple-900/45 bg-zinc-900/60 px-3 py-1.5 text-sm font-medium text-zinc-200 transition hover:bg-zinc-800">Case Study</Link>
+                        </div>
+                    </article>
+                    <article className="group flex h-full flex-col rounded-2xl bg-gradient-to-br from-zinc-900/95 to-zinc-950/95 ring-1 ring-inset ring-purple-900/35 p-5 transition-colors duration-300 ease-in-out">
+                        <div className="-mx-5 -mt-5 mb-4 overflow-hidden rounded-t-2xl bg-zinc-950/80 relative h-44">
+                            <img
                                 src={`${basePath}/ig-metrics-onboarding-640w.png`}
                                 srcSet={`${basePath}/ig-metrics-onboarding-320w.png 320w, ${basePath}/ig-metrics-onboarding-480w.png 480w, ${basePath}/ig-metrics-onboarding-640w.png 640w, ${basePath}/ig-metrics-onboarding-960w.png 960w, ${basePath}/ig-metrics-onboarding-1280w.png 1280w, ${basePath}/ig-metrics-onboarding-1920w.png 1920w`}
                                 sizes="(min-width:1024px) 33vw, (min-width:768px) 50vw, 100vw"
@@ -252,7 +273,7 @@ export default function Home() {
             <h2 className="text-2xl font-bold font-poppins text-purple-400 mb-4">Experience</h2>
             <article className="rounded-2xl bg-gradient-to-br from-zinc-900/80 to-zinc-950/70 p-5 ring-1 ring-inset ring-purple-900/35">
                 
-                <h3 className="text-xl font-semibold font-poppins text-zinc-300 mb-1">Client Support Technician</h3>
+                <h3 className="text-xl font-semibold font-poppins text-zinc-300 mb-1">IT Support Technician</h3>
                 <p className="text-lg text-muted-foreground font-playfair italic">
                     <span className="inline-flex items-center gap-2">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-muted-foreground">
@@ -279,7 +300,7 @@ export default function Home() {
                     Used Bash and CMD to troubleshoot and image devices. Allowing the campus to reuse old devices and provide new ones. 
                 </li>
                 <li className="font-sans text-gray-300 tracking-wide leading-8 max-w-2xl mt-2 text-lg">
-                    Set up new devices for faculty. Improved through feedback and criticism from senior staff. Allowing for better labeling of devices, and more efficient deployment. 
+                    Set up new devices for faculty. Improved device deployment and organization using feedback from senior staff and thorough labeling practices.
                 </li>
             </ul>
             </article>

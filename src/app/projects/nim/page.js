@@ -9,6 +9,9 @@ export const metadata = {
   title: "Play Nim | Josiah Blanding",
   description:
     "A simple implementation of the game Nim. Play against an AI opponent that uses an Adversarial Search algorithm to find the optimal move. Designed with Next.js and Tailwind CSS.",
+  alternates: {
+    canonical: "/projects/nim",
+  },
 };
 
 export default function NimPage() {

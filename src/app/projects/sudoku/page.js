@@ -4,6 +4,9 @@ export const metadata = {
     title: "Play Sudoku | Josiah Blanding",
     description:
         "An in-browser Sudoku experience using Pyodide for puzzle generation and solving, with an AI reveal mode.",
+    alternates: {
+        canonical: "/projects/sudoku",
+    },
 };
 
 export default function SudokuPage() {

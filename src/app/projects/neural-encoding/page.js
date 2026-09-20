@@ -4,6 +4,9 @@ export const metadata = {
   title: "NeuralEncoding Case Study | Josiah Blanding",
   description:
     "Case study for NeuralEncoding, an Electron desktop telemetry dashboard built with React and a Python FastAPI backend.",
+  alternates: {
+    canonical: "/projects/neural-encoding",
+  },
 };
 
 const stack = [

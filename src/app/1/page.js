@@ -2,6 +2,15 @@ import Link from "next/link";
 
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
 
+export const metadata = {
+  title: "Josiah Blanding - Full Stack Developer",
+  description:
+    "Full stack software developer specializing in React, Next.js, and modern web development.",
+  alternates: {
+    canonical: "/1",
+  },
+};
+
 export default function IGMetricsCaseStudy() {
   return (
     <main className="mx-auto max-w-5xl px-6 py-8 sm:py-10 text-gray-200">

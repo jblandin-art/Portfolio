@@ -5,6 +5,9 @@ export const metadata = {
   title: "PhotoShare Case Study | Josiah Blanding",
   description:
     "Case study for a team photo-sharing application built with React, Node, Express, MongoDB, Next.js, Vercel, and AWS S3.",
+  alternates: {
+    canonical: "/projects/photo-share",
+  },
 };
 
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
